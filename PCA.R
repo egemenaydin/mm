@@ -1,18 +1,5 @@
 data <- read.csv("try.csv", header = TRUE)
-log.ir <- log(data[, 1:8])
-ir.species <- data[, 1]
-ir.pca <- prcomp(log.ir, center = TRUE, scale. = TRUE) 
-print(ir.pca)
-write.csv(ir.pca[Rotation], file = "pca.csv")
-library(devtools)
-install_github("ggbiplot", "vqv")
-library(ggbiplot)
-g <- ggbiplot(ir.pca, obs.scale = 1, var.scale = 1, groups = ir.species, ellipse = TRUE,
-              circle = TRUE)
-g <- g + scale_color_discrete(name = '')
-g <- g + theme(legend.direction = 'horizontal',
-               legend.position = 'top')
-print(g)
+
 
 require(caret)
 trans = preProcess(data[,1:8],
@@ -36,7 +23,24 @@ legend("topright", pch = 20, ncol = 2, col = c("green", "red", "blue", "orange",
 dev.copy(pdf, file = "airspargePCA.pdf")
 dev.off()
 
+----------------
+        
+        log.ir <- log(data[, 1:8])
+ir.species <- data[, 1]
+ir.pca <- prcomp(log.ir, center = TRUE, scale. = TRUE) 
+print(ir.pca)
+write.csv(ir.pca[Rotation], file = "pca.csv")
+library(devtools)
+install_github("ggbiplot", "vqv")
+library(ggbiplot)
+g <- ggbiplot(ir.pca, obs.scale = 1, var.scale = 1, groups = ir.species, ellipse = TRUE,
+              circle = TRUE)
+g <- g + scale_color_discrete(name = '')
+g <- g + theme(legend.direction = 'horizontal',
+               legend.position = 'top')
+print(g)
 
+----------------------
 
 library(corrplot)
 #corrplot: the library to compute correlation matrix.
