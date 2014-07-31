@@ -1,34 +1,42 @@
-data <- read.csv("air-sparge-2.csv")
+data <- read.csv("1100-log2-triplicates-nocomp.csv")
 
 data[data == 0] <- -9
 
-data.frame(data[1:2893, ], data$p <- apply(data[1:2893, ], 1, function(x) {
-        t.test(x[4:6], x[22:24], paired = TRUE)$p.value
+data.frame(data[1:2991, ], data$p <- apply(data[1:2991, ], 1, function(x) {
+        t.test(x[1:3], x[4:6], paired = TRUE)$p.value
 } ))
 
-data.frame(data[1:2893, ], data$log_p <- apply(data[1:2893, ], 1, function(y){
-        -log10(y[25])
+data.frame(data[1:2991, ], data$log_p <- apply(data[1:2991, ], 1, function(y){
+        -log10(y[7])
 }))
 
-data.frame(data[1:2893, ], data$dif <- apply(data[1:2893, ], 1, function(z){
-        mean(z[4:6] - z[22:24], na.rm = TRUE)
+data.frame(data[1:2991, ], data$dif <- apply(data[1:2991, ], 1, function(z){
+        mean(z[1:3] - z[4:6], na.rm = TRUE)
 }))
 
-data2 <- read.csv("air-sparge.csv")
+data2 <- read.csv("1100-log2-triplicates.csv")
 
 data$compound <- data2[, 1]
 
-data$threshold <- as.factor(abs(data$dif) > 2 & data$log_p > 2)
+data$upreg <- as.factor(data$dif > 2 & data$log_p > 2)
 
 df <- data.frame(data)
 
-x <- subset(df, df$threshold == "TRUE")
+t1 <- subset(df, df$upreg == "TRUE")
 
-y <- subset(df, df$threshold == "FALSE")
+f1 <- subset(df, df$upreg == "FALSE")
+
+df$downreg <- as.factor(data$dif < -2 & data$log_p > 2)
+
+t2 <- subset(df, df$downreg == "TRUE")
+
+f2 <- subset(df, df$downreg == "FALSE")
 
 with(df, plot(dif, log_p, xlab = "log2 Fold Change", ylab = "-log10(P)", pch = 20))
 
-with(x, points(dif, log_p, col = "red", pch = 20))
+with(t1, points(dif, log_p, col = "red", pch = 20))
+
+with(t2, points(dif, log_p, col = "blue", pch = 20))
 
 
 >>>>>>> bd621aca86a402c44600c1fcc526256cb8e9047d
