@@ -14,7 +14,7 @@ data.frame(data[1:2991, ], data$dif <- apply(data[1:2991, ], 1, function(z){
         mean(z[1:3] - z[4:6], na.rm = TRUE)
 }))
 
-data2 <- read.csv("217-log-2-triplicates-nocomp.csv")
+data2 <- read.csv("217-log-2-triplicates.csv")
 
 data$compound <- data2[, 1]
 
@@ -38,8 +38,8 @@ with(t1, points(dif, log_p, col = "red", pch = 20))
 
 with(t2, points(dif, log_p, col = "blue", pch = 20))
 
-legend("top", pch = 20, col = c("red", "blue"), legend = c("decreased", "increased"))
+legend("top", pch = 20, col = c("red", "blue"), legend = c("decreased", "increased"), bty = "n")
 
-dev.copy(jpeg, "217AvsD.jpg")
+dev.copy(pdf, "217AvsD.pdf")
 
 dev.off()
