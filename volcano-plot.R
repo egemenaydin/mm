@@ -18,25 +18,27 @@ data2 <- read.csv("217-log-2-triplicates-nocomp.csv")
 
 data$compound <- data2[, 1]
 
-data$upreg <- as.factor(data$dif > 2 & data$log_p > 2)
+data$decreased <- as.factor(data$dif > 2 & data$log_p > 2)
 
 df <- data.frame(data)
 
-t1 <- subset(df, df$upreg == "TRUE")
+t1 <- subset(df, df$decreased == "TRUE")
 
-f1 <- subset(df, df$upreg == "FALSE")
+f1 <- subset(df, df$decreased == "FALSE")
 
-df$downreg <- as.factor(data$dif < -2 & data$log_p > 2)
+df$increased <- as.factor(data$dif < -2 & data$log_p > 2)
 
-t2 <- subset(df, df$downreg == "TRUE")
+t2 <- subset(df, df$increased == "TRUE")
 
-f2 <- subset(df, df$downreg == "FALSE")
+f2 <- subset(df, df$increased == "FALSE")
 
 with(df, plot(dif, log_p, xlab = "log2 Fold Change", ylab = "-log10(P)", pch = 20))
 
 with(t1, points(dif, log_p, col = "red", pch = 20))
 
 with(t2, points(dif, log_p, col = "blue", pch = 20))
+
+legend("top", pch = 20, col = c("red", "blue"), legend = c("decreased", "increased"))
 
 dev.copy(jpeg, "217AvsD.jpg")
 
