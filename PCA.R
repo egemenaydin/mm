@@ -1,11 +1,11 @@
-data <- read.csv("try.csv", header = TRUE)
+data <- read.csv("air-sparge-all-log-2-no-comp.csv", header = TRUE)
 
 
 require(caret)
-trans = preProcess(data[,1:8],
+trans = preProcess(data[,1:33],
                    method=c("BoxCox", "center",
                             "scale", "pca"))
-PC = predict(trans, data[,1:8])
+PC = predict(trans, data[,1:33])
 x <- trans$rotation
 write.csv(x, file = "PCA.csv")
 
