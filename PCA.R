@@ -1,11 +1,11 @@
-data <- read.csv("air-sparge-all-log-2-no-comp.csv", header = TRUE)
+data <- read.csv("air-sparge-all-log-2-no-comp-no-mq.csv.csv", header = TRUE)
 data[data == 0] <- NA
 
 require(caret)
-trans = preProcess(data[,1:30],
+trans = preProcess(data[,1:27],
                    method=c("BoxCox", "center",
                             "scale", "pca"))
-PC = predict(trans, data[,1:30])
+PC = predict(trans, data[,1:27])
 x <- trans$rotation
 write.csv(x, file = "PCA.csv")
 
@@ -19,9 +19,8 @@ with(y[13:15, ], points(PC1, PC2, col = "black", pch = 20))
 with(y[16:18, ], points(PC1, PC2, col = "yellow", pch = 20))
 with(y[19:21, ], points(PC1, PC2, col = "pink", pch = 20))
 with(y[22:24, ], points(PC1, PC2, col = "purple", pch = 20))
-with(y[25:27, ], points(PC1, PC2, col = "cadetblue1", pch = 20))
-with(y[28:30, ], points(PC1, PC2, col = "seagreen", pch = 20))
-legend("topright", pch = 20, ncol = 2, col = c("green", "red", "blue", "orange", "black", "yellow", "pink", "purple"), legend = c("MW1", "MW2", "MW3", "MW4", "MW5", "MW6", "MW7", "MW8"))
+
+legend("bottomleft", pch = 20, ncol = 2, col = c("green", "red", "blue", "orange", "black", "yellow", "pink", "purple"), legend = c("MW1", "MW2", "MW3", "MW4", "MW5", "MW6", "MW7", "MW8"), pt.cex=1, cex=0.5)
 dev.copy(pdf, file = "airspargePCA.pdf")
 dev.off()
 
