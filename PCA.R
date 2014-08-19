@@ -20,7 +20,7 @@ with(y[16:18, ], points(PC1, PC2, col = "yellow", pch = 20, cex = 1.7))
 with(y[19:21, ], points(PC1, PC2, col = "pink", pch = 20, cex = 1.7))
 with(y[22:24, ], points(PC1, PC2, col = "purple", pch = 20, cex = 1.7))
 
-legend("bottomright", pch = 20, ncol = 2, col = c("green", "red", "blue", "orange", "black", "yellow", "pink", "purple"), legend = c("MW1", "MW2", "MW3", "MW4", "MW5", "MW6", "MW7", "MW8"), pt.cex=1, cex=0.7)
+legend("bottomleft", pch = 20, ncol = 2, col = c("green", "red", "blue", "orange", "black", "yellow", "pink", "purple"), legend = c("MW1", "MW2", "MW3", "MW4", "MW5", "MW6", "MW7", "MW8"), pt.cex=1, cex=0.7)
 dev.copy(pdf, file = "airspargePCA.pdf")
 dev.off()
 
