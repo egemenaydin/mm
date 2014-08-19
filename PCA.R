@@ -1,5 +1,7 @@
-data <- read.csv("air-sparge-all-log-2-no-comp-no-mq.csv", header = TRUE)
+data <- read.csv("air-sparge-S-raw-no-comp.csv", header = TRUE)
 data[data == 0] <- NA
+rownames(data) <- make.names(data[, 1], unique = TRUE)
+data$Compound <- NULL
 
 require(caret)
 trans <- preProcess(data[,1:24], method=c("BoxCox", "center", "scale", "pca"))
