@@ -1,6 +1,6 @@
-data <- read.csv("217-log-2-triplicates-nocomp.csv")
+data <- read.csv("511-log-2-triplicates-nocomp.csv")
 
-data[data == 0] <- -9
+data[data == 0] <- 0.00000000001
 
 data.frame(data[1:2991, ], data$p <- apply(data[1:2991, ], 1, function(x) {
         t.test(x[1:3], x[4:6], paired = TRUE)$p.value
@@ -14,11 +14,11 @@ data.frame(data[1:2991, ], data$dif <- apply(data[1:2991, ], 1, function(z){
         mean(z[1:3] - z[4:6], na.rm = TRUE)
 }))
 
-data2 <- read.csv("217-log-2-triplicates.csv")
+data2 <- read.csv("511-log-2-triplicates.csv")
 
 data$compound <- data2[, 1]
 
-data$decreased <- as.factor(data$dif > 2 & data$log_p > 2)
+data$decreased <- as.factor(data$dif > 1 & data$log_p > 2)
 
 df <- data.frame(data)
 
@@ -26,7 +26,7 @@ t1 <- subset(df, df$decreased == "TRUE")
 
 f1 <- subset(df, df$decreased == "FALSE")
 
-df$increased <- as.factor(data$dif < -2 & data$log_p > 2)
+df$increased <- as.factor(data$dif < -1 & data$log_p > 2)
 
 t2 <- subset(df, df$increased == "TRUE")
 
@@ -39,7 +39,3 @@ with(t1, points(dif, log_p, col = "red", pch = 20))
 with(t2, points(dif, log_p, col = "blue", pch = 20))
 
 legend("top", pch = 20, col = c("red", "blue"), legend = c("decreased", "increased"), bty = "n")
-
-dev.copy(pdf, "217AvsD.pdf")
-
-dev.off()
