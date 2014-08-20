@@ -1,22 +1,21 @@
-data <- read.csv("trial.csv")
+data <- read.csv("camelina-raw.csv")
 
 data[data == 0] <- 0.00000000001
 
-data.frame(data[1:2376, ], data$p <- apply(data[1:2376, ], 1, function(x) {
+rownames(data) <- make.names(data[, 1], unique = TRUE)
+data$Compound <- NULL
+
+data.frame(data[1:573, ], data$p <- apply(data[1:573, ], 1, function(x) {
         t.test(x[1:3], x[4:6], paired = TRUE)$p.value
 } ))
 
-data.frame(data[1:2376, ], data$log_p <- apply(data[1:2376, ], 1, function(y){
+data.frame(data[1:573, ], data$log_p <- apply(data[1:573, ], 1, function(y){
         -log10(y[7])
 }))
 
-data.frame(data[1:2376, ], data$dif <- apply(data[1:2376, ], 1, function(z){
+data.frame(data[1:573, ], data$dif <- apply(data[1:573, ], 1, function(z){
         log2(mean(z[1:3], na.rm = TRUE) / mean(z[4:6], na.rm = TRUE))
 }))
-
-data2 <- read.csv("511-log-2-triplicates.csv")
-
-data$compound <- data2[, 1]
 
 data$decreased <- as.factor(data$dif > 1 & data$log_p > 2)
 
