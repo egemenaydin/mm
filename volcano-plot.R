@@ -38,3 +38,5 @@ with(t1, points(dif, log_p, col = "red", pch = 20))
 with(t2, points(dif, log_p, col = "blue", pch = 20))
 
 legend("top", pch = 20, col = c("red", "blue"), legend = c("decreased", "increased"), bty = "n")
+
+dev.print(pdf, "cam-first-end2.pdf", height=5, width=5)
