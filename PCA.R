@@ -22,7 +22,6 @@ with(y[22:24, ], points(PC1, PC2, col = "purple", pch = 20, cex = 1.7))
 
 legend("bottomleft", pch = 20, ncol = 2, col = c("green", "red", "blue", "orange", "black", "yellow", "pink", "purple"), legend = c("MW1", "MW2", "MW3", "MW4", "MW5", "MW6", "MW7", "MW8"), pt.cex=1, cex=0.7)
 dev.print(pdf, file = "airspargePCA.pdf", height=5, width=5)
-dev.off()
 
 ----------------
         
