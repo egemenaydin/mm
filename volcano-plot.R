@@ -1,4 +1,4 @@
-data <- read.csv("camelina-raw.csv")
+data <- read.csv("PoE_217AandD_raw_nonaveraged.csv")
 
 rownames(data) <- make.names(data[, 1], unique = TRUE)
 data$Compound <- NULL
@@ -37,4 +37,8 @@ with(t2, points(dif, log_p, col = "red", pch = 20))
 
 legend("top", pch = 20, col = c("blue", "red"), legend = c("decreased", "increased"), bty = "n")
 
-dev.print(pdf, "cam-first-end2.pdf", height=5, width=5)
+dev.print(pdf, "217AvsD.pdf", height=5, width=5)
+
+write.csv(t1, "217AvsD_decreased.csv")
+
+write.csv(t2, "217AvsD_increased.csv")
