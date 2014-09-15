@@ -1,18 +1,18 @@
-data <- read.csv("PoE_217AandD_raw_nonaveraged.csv")
+data <- read.csv("B-B124-16.csv")
 
 rownames(data) <- make.names(data[, 1], unique = TRUE)
-data$Compound <- NULL
-
+data$Taxon <- NULL
+data[data == 0] <- 0.000000001
 data.frame(data, data$p <- apply(data, 1, function(x) {
-        t.test(x[1:3], x[4:6], paired = TRUE)$p.value
+        t.test(x[1:2], x[3:4], paired = TRUE)$p.value
 } ))
 
 data.frame(data, data$log_p <- apply(data, 1, function(y){
-        -log10(y[7])
+        -log10(y[5])
 }))
 
 data.frame(data, data$dif <- apply(data, 1, function(z){
-        log2(mean(z[4:6], na.rm = TRUE) / mean(z[1:3], na.rm = TRUE))
+        log2(mean(z[1:2], na.rm = TRUE) / mean(z[3:4], na.rm = TRUE))
 }))
 
 data$decreased <- as.factor(data$dif < -1 & data$log_p > 2)
@@ -35,9 +35,9 @@ with(t1, points(dif, log_p, col = "blue", pch = 20))
 
 with(t2, points(dif, log_p, col = "red", pch = 20))
 
-legend("top", pch = 20, col = c("blue", "red"), legend = c("decreased", "increased"), bty = "n")
+legend("topleft", pch = 20, col = c("blue", "red"), legend = c("decreased", "increased"), bty = "n")
 
-dev.print(pdf, "217AvsD.pdf", height=5, width=5)
+dev.print(pdf, "brick-0cm-volcano.pdf", height=5, width=5)
 
 write.csv(t1, "217AvsD_decreased.csv")
 

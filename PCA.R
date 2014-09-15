@@ -1,27 +1,27 @@
-data <- read.csv("air-sparge-S-raw-no-comp.csv", header = TRUE)
+data <- read.csv("Bac_Abundance_Class_no_rarefaction.csv", header = TRUE)
 data[data == 0] <- NA
 rownames(data) <- make.names(data[, 1], unique = TRUE)
-data$Compound <- NULL
+data$Taxon <- NULL
 
 require(caret)
-trans <- preProcess(data[,1:24], method=c("BoxCox", "center", "scale", "pca"))
-PC <- predict(trans, data[,1:24])
+trans <- preProcess(data[,1:12], method=c("BoxCox", "center", "scale", "pca"))
+PC <- predict(trans, data[,1:12])
 x <- trans$rotation
 write.csv(x, file = "PCA.csv")
 
 y <- read.csv("PCA.csv", row.names = 1)
 with(y, plot(PC1, PC2, pch = 20))
-with(y[1:3, ], points(PC1, PC2, col = "green", pch = 20, cex = 1.7))
-with(y[4:6, ], points(PC1, PC2, col = "red", pch = 20, cex = 1.7))
-with(y[7:9, ], points(PC1, PC2, col = "blue", pch = 20, cex = 1.7))
-with(y[10:12, ], points(PC1, PC2, col = "orange", pch = 20, cex = 1.7))
-with(y[13:15, ], points(PC1, PC2, col = "black", pch = 20, cex = 1.7))
-with(y[16:18, ], points(PC1, PC2, col = "yellow", pch = 20, cex = 1.7))
-with(y[19:21, ], points(PC1, PC2, col = "pink", pch = 20, cex = 1.7))
-with(y[22:24, ], points(PC1, PC2, col = "purple", pch = 20, cex = 1.7))
+with(y[1:2, ], points(PC1, PC2, col = "green", pch = 20, cex = 1.7))
+with(y[3:4, ], points(PC1, PC2, col = "red", pch = 20, cex = 1.7))
+with(y[5:6, ], points(PC1, PC2, col = "blue", pch = 20, cex = 1.7))
+with(y[7:8, ], points(PC1, PC2, col = "orange", pch = 20, cex = 1.7))
+with(y[9:10, ], points(PC1, PC2, col = "purple", pch = 20, cex = 1.7))
+with(y[11:12, ], points(PC1, PC2, col = "yellow", pch = 20, cex = 1.7))
+#with(y[19:21, ], points(PC1, PC2, col = "pink", pch = 20, cex = 1.7))
+#with(y[22:24, ], points(PC1, PC2, col = "purple", pch = 20, cex = 1.7))
 
-legend("bottomleft", pch = 20, ncol = 2, col = c("green", "red", "blue", "orange", "black", "yellow", "pink", "purple"), legend = c("MW1", "MW2", "MW3", "MW4", "MW5", "MW6", "MW7", "MW8"), pt.cex=1, cex=0.7)
-dev.print(pdf, file = "airspargePCA.pdf", height=5, width=5)
+legend("bottomleft", pch = 20, ncol = 2, col = c("green", "red", "blue", "orange", "purple", "yellow"), legend = c("Brick B124 After (0 cm)", "Brick B124 Before (0 cm)", "Brick B124 After (16 cm)", "Brick B124 Before (16 cm)", "Wood B124 After", "Wood B124 Before"), pt.cex=1, cex=0.7)
+dev.print(pdf, file = "bacteria-PCA.pdf", height=7, width=11)
 
 ----------------
         
