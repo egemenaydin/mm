@@ -14,3 +14,5 @@ write.csv(x, file = "PCA.csv")
 y <- read.csv("PCA.csv", row.names = 1)
 
 qplot(PC1, PC2, data = y, color = row.names(y))
+
+dev.print(pdf, file = "PCA.pdf", height=7, width=11)
