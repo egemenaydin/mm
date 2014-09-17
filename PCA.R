@@ -1,27 +1,38 @@
-data <- read.csv("Bac_Abundance_Class_no_rarefaction.csv", header = TRUE)
-data[data == 0] <- NA
+data <- read.csv("PoE_all_raw_nonaveraged.csv", header = TRUE)
+
 rownames(data) <- make.names(data[, 1], unique = TRUE)
-data$Taxon <- NULL
+data$Compound <- NULL
 
 require(caret)
-trans <- preProcess(data[,1:12], method=c("BoxCox", "center", "scale", "pca"))
-PC <- predict(trans, data[,1:12])
+trans <- preProcess(data[ ,1:length(data)], method=c("BoxCox", "center", "scale", "pca"))
+PC <- predict(trans, data[ ,1:length(data)])
 x <- trans$rotation
 write.csv(x, file = "PCA.csv")
 
 y <- read.csv("PCA.csv", row.names = 1)
 with(y, plot(PC1, PC2, pch = 20))
-with(y[1:2, ], points(PC1, PC2, col = "green", pch = 20, cex = 1.7))
-with(y[3:4, ], points(PC1, PC2, col = "red", pch = 20, cex = 1.7))
-with(y[5:6, ], points(PC1, PC2, col = "blue", pch = 20, cex = 1.7))
-with(y[7:8, ], points(PC1, PC2, col = "orange", pch = 20, cex = 1.7))
-with(y[9:10, ], points(PC1, PC2, col = "purple", pch = 20, cex = 1.7))
-with(y[11:12, ], points(PC1, PC2, col = "yellow", pch = 20, cex = 1.7))
-#with(y[19:21, ], points(PC1, PC2, col = "pink", pch = 20, cex = 1.7))
-#with(y[22:24, ], points(PC1, PC2, col = "purple", pch = 20, cex = 1.7))
+with(y[1:3, ], points(PC1, PC2, col = "salmon", pch = 20, cex = 1.7))
+with(y[4:6, ], points(PC1, PC2, col = "forestgreen", pch = 20, cex = 1.7))
+with(y[7:9, ], points(PC1, PC2, col = "darkolivegreen1", pch = 20, cex = 1.7))
+with(y[10:12, ], points(PC1, PC2, col = "orange", pch = 20, cex = 1.7))
+with(y[13:15, ], points(PC1, PC2, col = "darkorange", pch = 20, cex = 1.7))
+with(y[16:18, ], points(PC1, PC2, col = "cornsilk2", pch = 20, cex = 1.7))
+with(y[19:21, ], points(PC1, PC2, col = "cornsilk4", pch = 20, cex = 1.7))
+with(y[22:24, ], points(PC1, PC2, col = "yellow", pch = 20, cex = 1.7))
+with(y[25:27, ], points(PC1, PC2, col = "yellow4", pch = 20, cex = 1.7))
+with(y[28:30, ], points(PC1, PC2, col = "navyblue", pch = 20, cex = 1.7))
+with(y[31:33, ], points(PC1, PC2, col = "deepskyblue", pch = 20, cex = 1.7))
+with(y[34:36, ], points(PC1, PC2, col = "plum1", pch = 20, cex = 1.7))
+with(y[37:39, ], points(PC1, PC2, col = "plum4", pch = 20, cex = 1.7))
+with(y[40:42, ], points(PC1, PC2, col = "turquoise", pch = 20, cex = 1.7))
+with(y[43:45, ], points(PC1, PC2, col = "steelblue4", pch = 20, cex = 1.7))
+with(y[46:48, ], points(PC1, PC2, col = "red4", pch = 20, cex = 1.7))
+with(y[49:51, ], points(PC1, PC2, col = "red", pch = 20, cex = 1.7))
+with(y[52:54, ], points(PC1, PC2, col = "palevioletred1", pch = 20, cex = 1.7))
 
-legend("bottomleft", pch = 20, ncol = 2, col = c("green", "red", "blue", "orange", "purple", "yellow"), legend = c("Brick B124 After (0 cm)", "Brick B124 Before (0 cm)", "Brick B124 After (16 cm)", "Brick B124 Before (16 cm)", "Wood B124 After", "Wood B124 Before"), pt.cex=1, cex=0.7)
-dev.print(pdf, file = "bacteria-PCA.pdf", height=7, width=11)
+
+legend("bottomright", pch = 20, ncol = 2, col = c("cornsilk2", "cornsilk4", "plum1", "plum4", "yellow", "yellow4", "navyblue", "deepskyblue", "turquoise", "steelblue4", "red4", "red", "palevioletred1", "salmon", "forestgreen", "darkolivegreen1", "orange", "darkorange"), legend = c("14-NPR-PW-0161A-DW", "14-NPR-PW-0161D-DW", "14-NPR-PW-0511A-DW", "14-NPR-PW-0511D3-DW", "14-NPR-PW-0217A-DW", "14-NPR-PW-0217D-DW", "14-NPR-PW-1230-GW", "14-NPR-MW-130-GW", "14-NPR-MW-304-15-GW", "14-NPR-MW-164B-GW", "14-NPR-PW-1095A-DW", "14-NPR-PW-1095B-DW", "14-NPR-PW-1095C1-DW", "14-NPR-PW-1095D-DW", "14-NPR-PW-0607A-DW", "14-NPR-PW-0607D-DW", "14-NPR-PW-1100A-DW", "14-NPR-PW-1100D-DW"), pt.cex=1, cex=0.7)
+dev.print(pdf, file = "PoE-PCA-2.pdf", height=7, width=11)
 
 ----------------
         
