@@ -1,4 +1,4 @@
-data <- read.csv("PoE_all_raw_nonaveraged.csv", header = TRUE)
+data <- read.csv("sample.csv", header = TRUE)
 
 rownames(data) <- make.names(data[, 1], unique = TRUE)
 data$Compound <- NULL
