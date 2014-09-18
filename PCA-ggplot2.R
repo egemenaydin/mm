@@ -13,6 +13,8 @@ write.csv(x, file = "PCA.csv")
 
 y <- read.csv("PCA.csv", row.names = 1)
 
-qplot(PC1, PC2, data = y, color = row.names(y))
+g <- ggplot(y, aes(PC1, PC2))
+
+g + geom_point(aes(color = row.names(y)), size = 2.5) + theme_bw(base_size = 12, base_family = "Times")
 
 dev.print(pdf, file = "PCA.pdf", height=7, width=11)
