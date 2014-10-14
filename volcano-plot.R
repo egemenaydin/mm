@@ -39,7 +39,7 @@ with(t2, points(dif, log_p, col = "red", pch = 20))
 
 legend(-35, 7, xpd= TRUE,  pch = 20, col = c("blue", "red"), legend = c("Decreased", "Increased"), bty = "n")
 
-dev.print(pdf, "161AandD.pdf", height=5, width=5)
+dev.print(pdf, "161AandD.pdf", height=5, width=8.5)
 
 write.csv(t1, "161AandD_decreased.csv")
 
