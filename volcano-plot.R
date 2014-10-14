@@ -1,4 +1,4 @@
-data <- read.csv("PoE_1095AandD_raw_nonaveraged.csv")
+data <- read.csv("PoE_1100AandD_raw_nonaveraged.csv")
 
 rownames(data) <- make.names(data[, 1], unique = TRUE)
 data$Compound <- NULL
@@ -12,7 +12,7 @@ data.frame(data, data$log_p <- apply(data, 1, function(y){
 }))
 
 data.frame(data, data$dif <- apply(data, 1, function(z){
-        log2(mean(z[1:3], na.rm = TRUE) / mean(z[4:6], na.rm = TRUE))
+        log2(mean(z[4:6], na.rm = TRUE) / mean(z[1:3], na.rm = TRUE))
 }))
 
 data$decreased <- as.factor(data$dif < -1 & data$log_p > 2)
@@ -35,16 +35,16 @@ par(xpd = TRUE, mar = par()$mar + c(0, 5, 0, 0))
 
 with(df, plot(dif, log_p, xlab = "log2 Fold Change", ylab = "-log10(P)", pch = 20))
 
-with(t1, points(dif, log_p, col = "blue", pch = 20))
+with(t1, points(dif, log_p, col = "red", pch = 20))
 
-with(t2, points(dif, log_p, col = "red", pch = 20))
+with(t2, points(dif, log_p, col = "blue", pch = 20))
 
-legend(-38, 8, xpd= TRUE,  pch = 20, col = c("blue", "red"), legend = c("Decreased", "Increased"), bty = "n")
+legend(-40, 6, xpd= TRUE,  pch = 20, col = c("red", "blue"), legend = c("Decreased", "Increased"), bty = "n")
 
-dev.print(pdf, "1095AandD.pdf", height=5, width=8.5)
+dev.print(pdf, "1100AandD.pdf", height=5, width=8.5)
 
-write.csv(t1, "1095AandD_decreased.csv")
+write.csv(t1, "1100AandD_decreased.csv")
 
-write.csv(t2, "1095AandD_increased.csv")
+write.csv(t2, "1100AandD_increased.csv")
 
-write.csv(all_false, "1095AandD_unchanged.csv")
+write.csv(all_false, "1100AandD_unchanged.csv")
