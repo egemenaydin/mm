@@ -1,4 +1,4 @@
-data <- read.csv("PoE_1100AandD_raw_nonaveraged.csv")
+data <- read.csv("PoE_1095CandD_raw_nonaveraged.csv")
 
 rownames(data) <- make.names(data[, 1], unique = TRUE)
 data$Compound <- NULL
@@ -33,18 +33,18 @@ all_false <- subset(df, df$increased == "FALSE" & df$decreased == "FALSE")
 
 par(xpd = TRUE, mar = par()$mar + c(0, 5, 0, 0))
 
-with(df, plot(dif, log_p, xlab = "log2 Fold Change", ylab = "-log10(P)", pch = 20))
+with(df, plot(dif, log_p, xlab = "log2 Fold Change", ylab = "-log10(P)", pch = 20, col = "skyblue"))
 
-with(t1, points(dif, log_p, col = "red", pch = 20))
+with(t1, points(dif, log_p, col = "maroon", pch = 20))
 
-with(t2, points(dif, log_p, col = "blue", pch = 20))
+with(t2, points(dif, log_p, col = "golden rod", pch = 20))
 
-legend(-40, 6, xpd= TRUE,  pch = 20, col = c("red", "blue"), legend = c("Decreased", "Increased"), bty = "n")
+legend(-38, 6, xpd= TRUE,  pch = 20, col = c("maroon", "golden rod"), legend = c("Decreased", "Increased"), bty = "n")
 
-dev.print(pdf, "1100AandD.pdf", height=5, width=8.5)
+dev.print(pdf, "1095CandD.pdf", height=5, width=8.5)
 
-write.csv(t1, "1100AandD_decreased.csv")
+write.csv(t1, "1095CandD_decreased.csv")
 
-write.csv(t2, "1100AandD_increased.csv")
+write.csv(t2, "1095CandD_increased.csv")
 
-write.csv(all_false, "1100AandD_unchanged.csv")
+write.csv(all_false, "1095CandD_unchanged.csv")
