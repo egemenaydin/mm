@@ -1,4 +1,4 @@
-data <- read.csv("PoE_161AandD_raw_nonaveraged.csv")
+data <- read.csv("PoE_1095AandD_raw_nonaveraged.csv")
 
 rownames(data) <- make.names(data[, 1], unique = TRUE)
 data$Compound <- NULL
@@ -29,6 +29,8 @@ t2 <- subset(df, df$increased == "TRUE")
 
 f2 <- subset(df, df$increased == "FALSE")
 
+all_false <- subset(df, df$increased == "FALSE" & df$decreased == "FALSE")
+
 par(xpd = TRUE, mar = par()$mar + c(0, 5, 0, 0))
 
 with(df, plot(dif, log_p, xlab = "log2 Fold Change", ylab = "-log10(P)", pch = 20))
@@ -37,10 +39,12 @@ with(t1, points(dif, log_p, col = "blue", pch = 20))
 
 with(t2, points(dif, log_p, col = "red", pch = 20))
 
-legend(-35, 7, xpd= TRUE,  pch = 20, col = c("blue", "red"), legend = c("Decreased", "Increased"), bty = "n")
+legend(-38, 8, xpd= TRUE,  pch = 20, col = c("blue", "red"), legend = c("Decreased", "Increased"), bty = "n")
 
-dev.print(pdf, "161AandD.pdf", height=5, width=8.5)
+dev.print(pdf, "1095AandD.pdf", height=5, width=8.5)
 
-write.csv(t1, "161AandD_decreased.csv")
+write.csv(t1, "1095AandD_decreased.csv")
 
-write.csv(t2, "161AandD_increased.csv")
+write.csv(t2, "1095AandD_increased.csv")
+
+write.csv(all_false, "1095AandD_unchanged.csv")
