@@ -1,18 +1,18 @@
-data <- read.csv("B-B124-16.csv")
+data <- read.csv("PoE_161AandD_raw_nonaveraged.csv")
 
 rownames(data) <- make.names(data[, 1], unique = TRUE)
-data$Taxon <- NULL
-data[data == 0] <- 0.000000001
+data$Compound <- NULL
+
 data.frame(data, data$p <- apply(data, 1, function(x) {
-        t.test(x[1:2], x[3:4], paired = TRUE)$p.value
+        t.test(x[1:3], x[4:6], paired = TRUE)$p.value
 } ))
 
 data.frame(data, data$log_p <- apply(data, 1, function(y){
-        -log10(y[5])
+        -log10(y[7])
 }))
 
 data.frame(data, data$dif <- apply(data, 1, function(z){
-        log2(mean(z[1:2], na.rm = TRUE) / mean(z[3:4], na.rm = TRUE))
+        log2(mean(z[1:3], na.rm = TRUE) / mean(z[4:6], na.rm = TRUE))
 }))
 
 data$decreased <- as.factor(data$dif < -1 & data$log_p > 2)
