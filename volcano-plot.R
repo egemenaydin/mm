@@ -1,8 +1,8 @@
-data <- read.csv("PoE_1095CandD_raw_nonaveraged.csv")
+data <- read.csv("camelina-raw-1-end.csv", check.names = FALSE)
 
 rownames(data) <- make.names(data[, 1], unique = TRUE)
 data$Compound <- NULL
-
+data[is.na(data)] <- 1
 data.frame(data, data$p <- apply(data, 1, function(x) {
         t.test(x[1:3], x[4:6], paired = TRUE)$p.value
 } ))
@@ -41,10 +41,10 @@ with(t2, points(dif, log_p, col = "golden rod", pch = 20))
 
 legend(-38, 6, xpd= TRUE,  pch = 20, col = c("maroon", "golden rod"), legend = c("Decreased", "Increased"), bty = "n")
 
-dev.print(pdf, "1095CandD.pdf", height=5, width=8.5)
+dev.print(pdf, "camelina-firstvsend.pdf", height=5, width=8.5)
 
-write.csv(t1, "1095CandD_decreased.csv")
+write.csv(t1, "camelina-firstvsend_decreased.csv")
 
-write.csv(t2, "1095CandD_increased.csv")
+write.csv(t2, "camelina-firstvsend_increased.csv")
 
-write.csv(all_false, "1095CandD_unchanged.csv")
+write.csv(all_false, "camelina-firstvsend_unchanged.csv")
