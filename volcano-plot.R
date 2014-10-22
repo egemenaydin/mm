@@ -1,8 +1,9 @@
-data <- read.csv("camelina-raw-1-end.csv", check.names = FALSE)
+data <- read.csv("dialysis-ideom-pos-d5-n5.csv", check.names = FALSE)
 
 rownames(data) <- make.names(data[, 1], unique = TRUE)
 data$Compound <- NULL
 data[is.na(data)] <- 1
+data[data == 0] <- 1
 data.frame(data, data$p <- apply(data, 1, function(x) {
         t.test(x[1:3], x[4:6], paired = TRUE)$p.value
 } ))
