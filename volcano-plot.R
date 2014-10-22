@@ -34,11 +34,11 @@ all_false <- subset(df, df$increased == "FALSE" & df$decreased == "FALSE")
 
 par(xpd = TRUE, mar = par()$mar + c(0, 5, 0, 0))
 
-with(df, plot(dif, log_p, xlab = "log2 Fold Change", ylab = "-log10(P)", pch = 20, col = "skyblue"))
+with(df, plot(dif, log_p, xlab = "log2 Fold Change", ylab = "-log10(P)", pch = 20, col = "skyblue", cex = 0.5))
 
-with(t1, points(dif, log_p, col = "maroon", pch = 20))
+with(t1, points(dif, log_p, col = "maroon", pch = 20, cex = 0.5))
 
-with(t2, points(dif, log_p, col = "golden rod", pch = 20))
+with(t2, points(dif, log_p, col = "golden rod", pch = 20, cex = 0.5))
 
 legend(-38, 6, xpd= TRUE,  pch = 20, col = c("maroon", "golden rod"), legend = c("Decreased", "Increased"), bty = "n")
 
