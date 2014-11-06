@@ -20,10 +20,10 @@ loadings <- pca$rotation
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
-xlab <- sprintf ('PC1 (%0.1f%%)', 100*pca$sdev[1]^2/sum(pca$sdev^2))
+x_lab <- sprintf ('PC1 (%0.1f%%)', 100*pca$sdev[1]^2/sum(pca$sdev^2))
+y_lab <- sprintf ('PC2 (%0.1f%%)', 100*pca$sdev[2]^2/sum(pca$sdev^2))
 
 g <- ggplot(y, aes(PC1, PC2))
-g + geom_point(aes(color = Samples), size = 3) + theme_bw(base_size = 12)
-
+g + geom_point(aes(color = Samples), size = 3) + theme_bw(base_size = 12) + xlab(x_lab) + ylab(y_lab)
 
 dev.print(pdf, file = "PCA.pdf", height=7, width=11)
