@@ -1,30 +1,35 @@
-data <- read.csv("dialysis-ideom-pos-d5-n5.csv", check.names = FALSE)
+data <- read.csv("PoE_161AandD_raw_nonaveraged.csv", check.names = FALSE)
 
 rownames(data) <- make.names(data[, 1], unique = TRUE)
 data$Compound <- NULL
 data[is.na(data)] <- 1
 data[data == 0] <- 1
-data.frame(data, data$p <- apply(data, 1, function(x) {
+
+data_polished <- data[rowSums(data) != ncol(data), ]
+as.matrix(data_polished[data_polished == 1] <- 0.5*(min(data_polished[data_polished>1],na.rm=TRUE)))
+
+
+data.frame(data_polished, data_polished$p <- apply(data_polished, 1, function(x) {
         t.test(x[1:3], x[4:6], paired = TRUE)$p.value
 } ))
 
-data.frame(data, data$log_p <- apply(data, 1, function(y){
+data.frame(data_polished, data_polished$log_p <- apply(data_polished, 1, function(y){
         -log10(y[7])
 }))
 
-data.frame(data, data$dif <- apply(data, 1, function(z){
+data.frame(data_polished, data_polished$dif <- apply(data_polished, 1, function(z){
         log2(mean(z[4:6], na.rm = TRUE) / mean(z[1:3], na.rm = TRUE))
 }))
 
-data$decreased <- as.factor(data$dif < -1 & data$log_p > 2)
+data_polished$decreased <- as.factor(data_polished$dif < -1 & data_polished$log_p > 2)
 
-df <- data.frame(data)
+df <- data.frame(data_polished)
 
 t1 <- subset(df, df$decreased == "TRUE")
 
 f1 <- subset(df, df$decreased == "FALSE")
 
-df$increased <- as.factor(data$dif > 1 & data$log_p > 2)
+df$increased <- as.factor(data_polished$dif > 1 & data_polished$log_p > 2)
 
 t2 <- subset(df, df$increased == "TRUE")
 
