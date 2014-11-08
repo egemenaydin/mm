@@ -1,6 +1,6 @@
 library(ggplot2)
 library(RColorBrewer)
-data <- read.csv("fold-change-1095a.csv", header = TRUE, check.names = FALSE)
+data <- read.csv("sample.csv", header = TRUE, check.names = FALSE)
 
 data_polished <- data[data[1] != 1 | data[2] != 1 | data[3] != 1 | data[4] != 1 | data[5] != 1 | data[6] != 1, ]
 
@@ -42,3 +42,6 @@ windowsFonts(Times=windowsFont("TT Times New Roman"))
 
 g <- ggplot(fold1, aes(fold_change, Mass))
 g + geom_point(aes(color = "Marooon"), size = 3) + theme_bw(base_size = 16, base_family = "Times") + geom_abline(intercept = 400, slope = 0, color = "darkgreen", size = 2) + geom_vline(xintercept = 0, color = "darkgreen", size = 2) + theme(legend.position = "none")
+
+dev.print(pdf, file = "mass-vs-fold-change.pdf", height=5, width=5)
+
