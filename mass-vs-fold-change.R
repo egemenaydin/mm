@@ -40,4 +40,4 @@ data.frame(fold1, fold1$fold_change <- apply(fold1, 1, function(x){
 
 
 g <- ggplot(fold1, aes(fold_change, Mass))
-g + geom_point(aes(color = "Marooon"), size = 3) + theme_bw(base_size = 16, base_family = "Times")
+g + geom_point(aes(color = "Marooon"), size = 3) + theme_bw(base_size = 16) + geom_abline(intercept = 400, slope = 0, color = "darkgreen", size = 2) + geom_vline(xintercept = 0, color = "darkgreen", size = 2) + theme(legend.position = "none")
