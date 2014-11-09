@@ -26,4 +26,4 @@ ggplot(data, aes(x = Sample, y = Abundance)) +
         annotate( "text", x = 8, y = 40000, label = "Not detected", angle = 90, size = 7, family = "Times") + 
         annotate( "text", x = 11:14, y = 40000, label = "Not detected", angle = 90, size = 7, family = "Times") 
         
-dev.print(pdf, file = "sulfolane-abundance-change.pdf", height=8, width=10)
+dev.print(tiff, file = "sulfolane-abundance-change.tif", res = 600, height = 8, width = 10, units = "in")
