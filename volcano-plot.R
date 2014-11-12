@@ -1,4 +1,4 @@
-data <- read.csv("PoE_161AandD_raw_nonaveraged.csv", check.names = FALSE)
+data <- read.csv("red-biovsend.csv", check.names = FALSE)
 
 rownames(data) <- make.names(data[, 1], unique = TRUE)
 data$Compound <- NULL
@@ -6,7 +6,7 @@ data[is.na(data)] <- 1
 data[data == 0] <- 1
 
 data_polished <- data[rowSums(data) != ncol(data), ]
-as.matrix(data_polished[data_polished == 1] <- 0.5*(min(data_polished[data_polished>1],na.rm=TRUE)))
+data_polished[data_polished == 1] <- 0.5*(min(data_polished[data_polished>1],na.rm=TRUE))
 
 
 data.frame(data_polished, data_polished$p <- apply(data_polished, 1, function(x) {
@@ -45,12 +45,12 @@ with(t1, points(dif, log_p, col = "maroon", pch = 20, cex = 0.5))
 
 with(t2, points(dif, log_p, col = "golden rod", pch = 20, cex = 0.5))
 
-legend(-38, 6, xpd= TRUE,  pch = 20, col = c("maroon", "golden rod"), legend = c("Decreased", "Increased"), bty = "n")
+legend(-18, 6, xpd= TRUE,  pch = 20, col = c("maroon", "golden rod"), legend = c("Biofilm", "Planktonic"), bty = "n")
 
-dev.print(pdf, "camelina-firstvsend.pdf", height=5, width=8.5)
+dev.print(pdf, "red-biofilmvsend.pdf", height=5, width=8.5)
 
-write.csv(t1, "camelina-firstvsend_decreased.csv")
+write.csv(t1, "red-biofilmvsend_biofilm.csv")
 
-write.csv(t2, "camelina-firstvsend_increased.csv")
+write.csv(t2, "red-biofilmvsend_planktonic.csv")
 
-write.csv(all_false, "camelina-firstvsend_unchanged.csv")
+write.csv(all_false, "red-biofilmvsend_unchanged.csv")
