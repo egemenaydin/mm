@@ -21,9 +21,9 @@ ggplot(data, aes(x = Sample, y = Abundance)) +
         geom_errorbar(aes(ymax = Abundance + Sdev, ymin = Abundance - Sdev), width = 0.30) + 
         theme(axis.text.x = element_text(angle = 90, hjust = -0.25, vjust = 0.5)) + 
         scale_x_discrete(limits = (data$Sample)[order(data$Category)]) + 
-        annotate("text", x = 1, y = 40000, label = "Not detected", angle = 90, size = 7, family = "Times") +
-        annotate("text", x = 4:6, y = 40000, label = "Not detected", angle = 90, size = 7, family = "Times") + 
-        annotate( "text", x = 8, y = 40000, label = "Not detected", angle = 90, size = 7, family = "Times") + 
-        annotate( "text", x = 11:14, y = 40000, label = "Not detected", angle = 90, size = 7, family = "Times") 
+        annotate("text", x = 2, y = 40000, label = "Not detected", angle = 90, size = 7, family = "Times") +
+        annotate("text", x = 4, y = 40000, label = "Not detected", angle = 90, size = 7, family = "Times") + 
+        annotate( "text", x = 10, y = 40000, label = "Not detected", angle = 90, size = 7, family = "Times") + 
+        annotate( "text", x = 12:18, y = 40000, label = "Not detected", angle = 90, size = 7, family = "Times") 
         
 dev.print(tiff, file = "sulfolane-abundance-change.tif", res = 600, height = 8, width = 10, units = "in")
