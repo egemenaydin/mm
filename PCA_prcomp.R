@@ -2,15 +2,15 @@ library(ggplot2)
 library(RColorBrewer)
 data <- read.csv("sample2.csv", header = TRUE, check.names = FALSE)
 data2 <- read.csv("sample2.csv", header = TRUE, check.names = FALSE)
-rownames(data) <- make.names(data$Compound, unique = TRUE)
-data$Compound <- NULL
+
+data$sample <- NULL
 
 data_polished <- data[, apply(data, 2, var, na.rm = TRUE) != 0]
-data_polished[data_polished == 1] <- 0.5*(min(data_polished[data_polished>0],na.rm=TRUE))
+data_polished[data_polished == 0] <- 0.5*(min(data_polished[data_polished>0],na.rm=TRUE))
 
 log.data <- log(data_polished[ , 2:length(data_polished)])
 
-Samples <- data2$Compound
+Samples <- data2$sample
 pca <- prcomp(log.data, center = TRUE, scale. = TRUE)
 
 PC <- predict(pca)
