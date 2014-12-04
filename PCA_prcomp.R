@@ -8,7 +8,7 @@ data$sample <- NULL
 data_polished <- data[, apply(data, 2, var, na.rm = TRUE) != 0]
 data_polished[data_polished == 0] <- 0.5*(min(data_polished[data_polished>0],na.rm=TRUE))
 
-log.data <- log2(data_polished[ , 1:length(data_polished)])
+log.data <- log(data_polished[ , 1:length(data_polished)], base = 2)
 
 Samples <- data2$sample
 pca <- prcomp(log.data, center = TRUE, scale. = TRUE)
@@ -34,7 +34,7 @@ y_lab <- sprintf ('PC2 (%0.1f%%)', 100*pca$sdev[2]^2/sum(pca$sdev^2))
 g <- ggplot(x, aes(PC1, PC2))
 g + geom_point(aes(color = Samples), size = 5) + theme_bw(base_size = 12) + xlab(x_lab) + ylab(y_lab) + scale_colour_manual(values = my.palette)
 
-dev.print(pdf, file = "PCA.pdf", height=7, width=11)
+dev.print(pdf, file = "PCA.pdf", height=11, width=11)
 
 d <- ggplot(y, aes(PC1, PC2))
 d + geom_point(size = 2) + theme_bw(base_size = 12) + xlab(x_lab) + ylab(y_lab)
