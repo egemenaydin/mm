@@ -32,7 +32,7 @@ x_lab <- sprintf ('PC1 (%0.1f%%)', 100*pca$sdev[1]^2/sum(pca$sdev^2))
 y_lab <- sprintf ('PC2 (%0.1f%%)', 100*pca$sdev[2]^2/sum(pca$sdev^2))
 
 g <- ggplot(x, aes(PC1, PC2))
-g + geom_point(aes(color = Samples), size = 5) + theme_bw(base_size = 12) + xlab(x_lab) + ylab(y_lab) + scale_colour_manual(values = my.palette)
+g + geom_point(aes(color = Samples), size = 5) + theme_bw(base_size = 22) + xlab(x_lab) + ylab(y_lab) + scale_colour_manual(values = my.palette)
 
 dev.print(pdf, file = "PCA.pdf", height=11, width=11)
 
