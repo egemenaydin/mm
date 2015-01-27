@@ -21,6 +21,6 @@ cols <- colorRampPalette(c("black","red"))(75)
 
 heatmap.2(data_matrix, Rowv = TRUE, Colv = "NA", 
           dendrogram = "row", col = cols, scale = c("none"),
-          key = T, key.title = NULL, keysize = 2, density.info = "none", 
+          key = T, key.title = "NULL", keysize = 1, density.info = "none", 
           trace = "none", labCol = NA)
-dev.print(pdf, "heatmap-below-400.pdf", height = 5, width = 10)
+dev.print(pdf, "heatmap.pdf", height = 10, width = 10)
