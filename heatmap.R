@@ -13,8 +13,7 @@ data <- read.csv("sample2.csv", check.names = FALSE)
 rnames <- data[ ,1]
 data$sample <- NULL
 
-data_polished <- data[, apply(data, 2, var, na.rm = TRUE) != 0]
-data_polished[data_polished == 0] <- 1
+
 
 log.data <- data.frame(log2(data_polished[ , 1:length(data)]), check.names = FALSE)
 
