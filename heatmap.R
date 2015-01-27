@@ -17,12 +17,10 @@ log_data <- data.frame(log2(data[ , 1:length(data)]))
 data_matrix <- data.matrix(log_data[ , 1:length(log_data)])
 rownames(data_matrix) <- rnames
 
-
-
 cols <- colorRampPalette(c("black","red"))(75)
 
-heatmap.2(as.matrix(data), Rowv = TRUE, Colv = TRUE, 
-          dendrogram = "column", col = cols, scale = c("row"),
+heatmap.2(data_matrix, Rowv = TRUE, Colv = "NA", 
+          dendrogram = "row", col = cols, scale = c("none"),
           key = T, key.title = NULL, keysize = 2, density.info = "none", 
-          trace = "none", labRow = NA)
+          trace = "none", labCol = NA)
 dev.print(pdf, "heatmap-below-400.pdf", height = 5, width = 10)
