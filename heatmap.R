@@ -1,5 +1,13 @@
-require(gplots)
-require(RColorBrewer)
+if(!require("gplots")){
+        install.packages("gplots", dependencies = TRUE)
+        library(gplots)
+}
+
+if(!require("RColorBrewer")){
+        install.packages("RColorBrewer", dependencies = TRUE)
+        library(RColorBrewer)
+}
+
 
 data <- read.csv("sample2-transposed.csv", check.names = FALSE)
 rownames(data) <- make.names(data[, 1], unique = TRUE)
