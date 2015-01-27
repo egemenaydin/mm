@@ -12,10 +12,11 @@ if(!require("RColorBrewer")){
 data <- read.csv("sample2.csv", check.names = FALSE)
 rnames <- data[ ,1]
 data$sample <- NULL
+data[data == 0] <- 0.5*(min(data[data>0],na.rm=TRUE))
+log_data <- data.frame(log2(data[ , 1:length(data)]))
+data_matrix <- data.matrix(log_data[ , 1:length(log_data)])
+rownames(data_matrix) <- rnames
 
-
-
-log.data <- data.frame(log2(data_polished[ , 1:length(data)]), check.names = FALSE)
 
 
 cols <- colorRampPalette(c("black","red"))(75)
