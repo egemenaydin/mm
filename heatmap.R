@@ -9,9 +9,9 @@ if(!require("RColorBrewer")){
 }
 
 
-data <- read.csv("sample2-transposed.csv", check.names = FALSE)
-rownames(data) <- make.names(data[, 1], unique = TRUE)
-data$Compound <- NULL
+data <- read.csv("sample2.csv", check.names = FALSE)
+rnames <- data[ ,1]
+data$sample <- NULL
 
 data_polished <- data[, apply(data, 2, var, na.rm = TRUE) != 0]
 data_polished[data_polished == 0] <- 1
