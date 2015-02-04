@@ -12,7 +12,7 @@ if(!require("RColorBrewer")){
 data <- read.csv("sample.csv", check.names = FALSE)
 rnames <- colnames(data)
 data$sample <- NULL
-data[data == 0] <- 0.5*(min(data[data>0],na.rm=TRUE))
+data[data == 0] <- 0.3*(min(data[data>0],na.rm=TRUE))
 log_data <- data.frame(log2(data[ , 1:length(data)]))
 data_matrix <- data.matrix(log_data[ , 1:length(log_data)])
 colnames(data_matrix) <- rnames[2:46]
