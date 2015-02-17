@@ -35,4 +35,11 @@ by(pf$friend_count, pf$gender, summary)
 ```
 
 ##Tenure
+```{r}
+qplot(data = pf, x = tenure/365, binwidth = 0.25, 
+      xlab = "Number of years using Facebook",
+      ylab = "Number of users",
+      color = I("black"), fill = I("#099DD9"))+
+        scale_x_continuous(limits = c(0, 7), breaks = seq(0, 7, 1))
+```
 
