@@ -1,0 +1,38 @@
+---
+title: "Lesson 3"
+author: "Egemen Aydin"
+date: "Monday, February 16, 2015"
+output: html_document
+---
+
+##Load the datset
+```{r}
+pf <- read.csv("pseudo_facebook.tsv", sep = "\t")
+names(pf)
+
+```
+
+##Histogram for birthdays
+```{r}
+library(ggplot2)
+names(pf)
+qplot(data = pf, x = dob_day, binwidth = 1) +
+        scale_x_discrete(breaks = 1:31)+
+        facet_wrap(~dob_month, ncol = 3)
+```
+
+##Histogram for friend counts
+```{r}
+qplot(data = subset(pf, !is.na(gender)), x = friend_count, binwidth = 25)+
+        scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50))+
+        facet_wrap(~gender)
+```
+
+##Statistics by gender
+```{r}
+table(pf$gender)
+by(pf$friend_count, pf$gender, summary)
+```
+
+##Tenure
+
