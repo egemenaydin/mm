@@ -128,8 +128,33 @@ PeakML.xcms.write.SingleMeasurement(xset=xset3,
         filename=sampleList$outputfilenames, ionisation="detect", ppm=5,
 	addscans=0, ApodisationFilter=TRUE, nSlaves = slaves)
 
+mzmatch.ipeak.Combine(sampleList=sampleList, v=T, rtwindow=60, 
+   combination="set", ppm=5, nSlaves = slaves)
 
+mzmatch.ipeak.filter.RSDFilter(sampleList=sampleList, rsd=0.25,
+   v=T, nSlaves = slaves)
 
+INPUTDIR <- "combined_RSD_filtered"
+FILESf <- dir (INPUTDIR,full.names=TRUE,pattern="\\.peakml$")
+mzmatch.ipeak.Combine(i=paste(FILESf,collapse=","), v=T, rtwindow=60, 
+   o="final_combined.peakml", combination="set", ppm=5)
+
+PeakML.GapFiller(filename = "final_combined_blank_filtered.peakml",
+   ionisation = "detect", 
+   outputfile = "final_combined_gapfilled.peakml", ppm = 0, 
+   rtwin = 0, fillAll=TRUE, Rawpath=NULL)
+
+mzmatch.ipeak.sort.RelatedPeaks(i="final_combined_DF.peakml", v=T,
+   o="final_combined_related.peakml", 
+   basepeaks="final_combined_basepeaks.peakml", ppm=5, rtwindow=30)
+
+DBS <- dir(paste(.find.package("mzmatch.R"), "/dbs", sep=""),
+   full.names=TRUE)
+DBS
+DBS <- paste(DBS[c(1,2,3,4,5)],collapse=",")
+mzmatch.ipeak.util.Identify(i="final_combined_related.peakml", v=T,
+   o="final_combined_related_identified.peakml", ppm=5, databases=DBS,
+   adducts="M+H,M+ACN+Na,M+Na,M+K,M+ACN+H")
 
 ```
 
