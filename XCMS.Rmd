@@ -7,7 +7,7 @@ XCMS workflow
 This file contains a script for recursive peak picking and alignment workflow using XCMS. 
 
 
-The code below is for peak picking and alignment of samples for different pairwise comparison. Please save your raw data in different folders and group them according to the comparison you wish to make. When the code asks for the location of *mzXML* files, please select the main folder containing group folders. *detectCores()* command in *parallel* package detects number of cores in the processer and *nSlaves* argument is adjusted accordingly.
+The code below is an XCMS-only workflow for peak picking and alignment of samples for different pairwise comparison. Please save your raw data in different folders and group them according to the comparison you wish to make. When the code asks for the location of *mzXML* files, please select the main folder containing group folders. *detectCores()* command in *parallel* package detects number of cores in the processer and *nSlaves* argument is adjusted accordingly.
 
 ```{r}
 if(!require("xcms")){
@@ -45,3 +45,100 @@ for(i in 1:length(dirs)){
 
 }
 ```
+
+The next step is integrating mzmatch to XCMS workflow to identify peaks with adducts and isotopes.
+
+```{r}
+if(!require("xcms")){
+        source("http://bioconductor.org/biocLite.R")
+        biocLite("xcms", dependencies = TRUE)
+        library(xcms)
+}
+
+if(!require("rChoiceDialogs")){
+        install.packages("rChoiceDialogs", dependencies = TRUE)
+        library(rChoiceDialogs)
+}
+
+if(!require("parallel")){
+        install.packages("parallel", dependencies = TRUE)
+        library(parallel)
+}
+
+if(!require("rJava")){
+        install.packages("rJava", dependencies = TRUE)
+        library(rJava)
+}
+
+if(!require("XML")){
+        install.packages("XML", dependencies = TRUE)
+        library(XML)
+}
+
+if(!require("snow")){
+        install.packages("snow", dependencies = TRUE)
+        library(snow)
+}
+
+if(!require("caTools")){
+        install.packages("caTools", dependencies = TRUE)
+        library(caTools)
+}
+
+if(!require("bitops")){
+        install.packages("bitops", dependencies = TRUE)
+        library(bitops)
+}
+
+if(!require("ptw")){
+        install.packages("ptw", dependencies = TRUE)
+        library(ptw)
+}
+
+if(!require("gplots")){
+        install.packages("gplots", dependencies = TRUE)
+        library(gplots)
+}
+
+if(!require("tcltk2")){
+        install.packages("tcltk2", dependencies = TRUE)
+        library(tcltk2)
+}
+
+if(!require("R.utils")){
+        install.packages("R.utils", dependencies = TRUE)
+        library(R.utils)
+}
+
+if(!require("mzmatch.R")){
+        source ("http://puma.ibls.gla.ac.uk/mzmatch.R/install_mzmatch.R")
+}
+
+require (mzmatch.R)
+mzmatch.init (version.1=FALSE)
+
+
+slaves <- detectCores(logical = FALSE)
+
+wd <- jchoose.dir(default = getwd(), caption = "Please select directory containing mzXML files")
+
+setwd(wd)
+
+mzmatch.R.Setup()
+
+
+xset <- xcmsSet(method ="centWave", ppm =5, peakwidth = c(10 , 120), snthresh = 3, prefilter = c(3,500), integrate = 1, fitgauss = FALSE)
+xset1 <- retcor(xset, method = "obiwarp", plottype = c("deviation"))
+dev.print(pdf, "RTDvsRT.pdf", height = 10, width = 10)
+xset2 <- group(xset1, bw = 5, minfrac = 0.5, mzwid = 0.015)
+xset3 <- fillPeaks(xset2)
+
+PeakML.xcms.write.SingleMeasurement(xset=xset3,
+        filename=sampleList$outputfilenames, ionisation="detect", ppm=5,
+	addscans=0, ApodisationFilter=TRUE, nSlaves = slaves)
+
+
+
+
+```
+
