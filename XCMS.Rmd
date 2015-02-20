@@ -67,47 +67,38 @@ if(!require("parallel")){
 
 if(!require("rJava")){
         install.packages("rJava", dependencies = TRUE)
-        library(rJava)
 }
 
 if(!require("XML")){
         install.packages("XML", dependencies = TRUE)
-        library(XML)
 }
 
 if(!require("snow")){
         install.packages("snow", dependencies = TRUE)
-        library(snow)
 }
 
 if(!require("caTools")){
         install.packages("caTools", dependencies = TRUE)
-        library(caTools)
 }
 
 if(!require("bitops")){
         install.packages("bitops", dependencies = TRUE)
-        library(bitops)
 }
 
 if(!require("ptw")){
         install.packages("ptw", dependencies = TRUE)
-        library(ptw)
 }
 
 if(!require("gplots")){
         install.packages("gplots", dependencies = TRUE)
-        library(gplots)
 }
 
 if(!require("tcltk2")){
         install.packages("tcltk2", dependencies = TRUE)
-        library(tcltk2)
 }
 
 if(!require("R.utils")){
         install.packages("R.utils", dependencies = TRUE)
-        library(R.utils)
 }
 
 if(!require("mzmatch.R")){
