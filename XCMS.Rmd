@@ -118,7 +118,7 @@ setwd(wd)
 mzmatch.R.Setup()
 
 
-xset <- xcmsSet(method ="centWave", ppm =5, peakwidth = c(10 , 120), snthresh = 3, prefilter = c(3,500), integrate = 1, fitgauss = FALSE)
+xset <- xcmsSet(method ="centWave", ppm =5, peakwidth = c(10 , 120), snthresh = 3, prefilter = c(3,1000), integrate = 1, fitgauss = FALSE)
 xset1 <- retcor(xset, method = "obiwarp", plottype = c("deviation"))
 dev.print(pdf, "RTDvsRT.pdf", height = 10, width = 10)
 xset2 <- group(xset1, bw = 5, minfrac = 0.5, mzwid = 0.015)
