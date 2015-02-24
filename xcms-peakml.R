@@ -76,7 +76,7 @@ xset3 <- fillPeaks(xset2)
 
 PeakML.xcms.write.SingleMeasurement(xset = xset3,
                                     filename = sampleList$outputfilenames, ionisation = "detect", ppm = 5,
-                                    addscans = 0, ApodisationFilter = FALSE, nSlaves = slaves)
+                                    addscans = 2, ApodisationFilter = TRUE, nSlaves = slaves)
 
 mzmatch.ipeak.Combine(sampleList=sampleList, v=T, rtwindow=60, 
                       combination="set", ppm=5, nSlaves = slaves)
