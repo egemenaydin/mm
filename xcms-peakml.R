@@ -68,7 +68,7 @@ mzmatch.R.Setup()
 
 
 xset <- xcmsSet(method ="centWave", 
-                nSlaves = slaves, ppm =5, peakwidth = c(10 , 120), snthresh = 3, prefilter = c(3,1000), integrate = 1, fitgauss = FALSE)
+                nSlaves = slaves, ppm =5, peakwidth = c(10 , 120), snthresh = 3, prefilter = c(3,500), integrate = 1, fitgauss = FALSE)
 xset1 <- retcor(xset, method = "obiwarp", plottype = c("deviation"))
 dev.print(pdf, "RTDvsRT.pdf", height = 9, width = 16)
 xset2 <- group(xset1, bw = 5, minfrac = 0.5, mzwid = 0.015)
@@ -76,13 +76,13 @@ xset3 <- fillPeaks(xset2)
 
 PeakML.xcms.write.SingleMeasurement(xset = xset3,
                                     filename = sampleList$outputfilenames, ionisation = "detect", ppm = 5,
-                                    addscans = 2, ApodisationFilter = TRUE, nSlaves = slaves)
+                                    addscans = 2, ApodisationFilter = TRUE)
 
 mzmatch.ipeak.Combine(sampleList=sampleList, v=T, rtwindow=60, 
-                      combination="set", ppm=5, nSlaves = slaves)
+                      combination="set", ppm=5)
 
 mzmatch.ipeak.filter.RSDFilter(sampleList=sampleList, rsd=0.25,
-                               v=T, nSlaves = slaves)
+                               v=T)
 
 INPUTDIR <- "combined_RSD_filtered"
 FILESf <- dir (INPUTDIR,full.names=TRUE,pattern="\\.peakml$")
@@ -98,10 +98,21 @@ mzmatch.ipeak.sort.RelatedPeaks(i="final_combined_gapfilled.peakml", v=T,
                                 o="final_combined_related.peakml", 
                                 basepeaks="final_combined_basepeaks.peakml", ppm=5, rtwindow=30)
 
-DBS <- dir(paste(.find.package("mzmatch.R"), "/dbs", sep=""),
+mzmatch.ipeak.convert.ConvertToText (
+        i="final_combined_related.peakml",
+        o= "final_combined_related.txt", 
+        annotations="relation.id,relation.ship,codadw,charge")
+
+DBS <- dir(paste(find.package("mzmatch.R"), "/dbs", sep=""),
            full.names=TRUE)
 DBS
 DBS <- paste(DBS[c(1,2,3,4,5)],collapse=",")
 mzmatch.ipeak.util.Identify(i="final_combined_related.peakml", v=T,
                             o="final_combined_related_identified.peakml", ppm=5, databases=DBS,
                             adducts="M+H,M+ACN+Na,M+Na,M+K,M+ACN+H")
+
+mzmatch.ipeak.convert.ConvertToText (
+        i="final_combined_related_identified.peakml",
+        o= "final_combined_related_identified.txt", 
+        annotations="relation.id,relation.ship,codadw,charge, identification, adduct, ppm")
+
