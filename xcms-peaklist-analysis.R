@@ -1,5 +1,5 @@
-negative_PL <- as.data.frame(read.csv("negative_peaklist.csv"))
-negative_IPL <- as.data.frame(subset(negative_PL, negative_PL$isotopes != ""))
+#negative_PL <- as.data.frame(read.csv("negative_peaklist.csv"))
+#negative_IPL <- as.data.frame(subset(negative_PL, negative_PL$isotopes != ""))
 
 #for positive mode only
 # no_frag <- pspec2metfrag(anP)
@@ -22,43 +22,51 @@ all_masses <- do.call("rbind", lapply(1:length(anN@pspectra), function(x) {
         }))
 }))
 
+
 all_masses_data <- as.data.frame(all_masses)
 
-for (i in length(all_masses$peaknum)) {
-        do.call()
-}
+x <- as.matrix(anN@groupInfo[all_masses_data$peaknum[1:length(all_masses_data$peaknum)], c(4, 16:39)])
 
-withinppm <- function(m1, m2, ppm=5) {   abs(m1-m2)/m1*1E6 < 5   }
+y <- cbind(all_masses_data, x)
 
-hcl_pairs <- do.call("rbind",lapply(which(all_masses[,"rule"] == 1), function(x) {
-        mh <- all_masses[x,,drop=F]
-        a_pair <- all_masses[
-                all_masses[,"psg"] == mh[,"psg"] &
-                        withinppm(all_masses[,"neutral"], mh[,"neutral"]) &
-                        all_masses[,"rule"] == 7,
-                
-                ,drop=F]
-        
-        if(nrow(a_pair) < 1) {return(NULL)}
-        
-        cbind(neutral=mh[,"neutral"],psg = mh[,"psg"], mh_peaknum = mh[,"peaknum"], mcl_peaknum = a_pair[,"peaknum"])
-        
-}))
+write.csv(y, "negative_all_int.csv")
 
-h_pairs <- do.call("rbind",lapply(which(all_masses[,"rule"] == 1), function(x) {
-        mh <- all_masses[x,,drop=F]
-        a_pair <- all_masses[
-                all_masses[,"psg"] == mh[,"psg"] &
-                        withinppm(all_masses[,"neutral"], mh[,"neutral"]) &
-                        all_masses[,"rule"] == 1,
-                
-                ,drop=F]
-        
-        if(nrow(a_pair) < 1) {return(NULL)}
-        
-        cbind(neutral=mh[,"neutral"],psg = mh[,"psg"], mh_peaknum = mh[,"peaknum"], mcl_peaknum = a_pair[,"peaknum"])
-        
-}))
+z <- subset(y, y$rule == 1)
+
+write.csv(z, "negative_base_int.csv")
+
+#selecting ions more than one adduct
+# withinppm <- function(m1, m2, ppm=5) {   abs(m1-m2)/m1*1E6 < 5   }
+# 
+# h_pairs <- do.call("rbind",lapply(which(y[,"rule"] == 1), function(x) {
+#         mh <- y[x,,drop=F]
+#         a_pair <- y[
+#                 y[,"psg"] == mh[,"psg"] &
+#                         withinppm(y[,"neutral"], mh[,"neutral"]) &
+#                         y[,"rule"] == 1,
+#                 
+#                 ,drop=F]
+#         
+#         if(nrow(a_pair) < 1) {return(NULL)}
+#         
+#         cbind(neutral=mh[,"neutral"],psg = mh[,"psg"], mh_peaknum = mh[,"peaknum"], mcl_peaknum = a_pair[,"peaknum"])
+#         
+# }))
+# 
+# hcl_pairs <- do.call("rbind",lapply(which(all_masses[,"rule"] == 1), function(x) {
+#         mh <- all_masses[x,,drop=F]
+#         a_pair <- all_masses[
+#                 all_masses[,"psg"] == mh[,"psg"] &
+#                         withinppm(all_masses[,"neutral"], mh[,"neutral"]) &
+#                         all_masses[,"rule"] == 7,
+#                 
+#                 ,drop=F]
+#         
+#         if(nrow(a_pair) < 1) {return(NULL)}
+#         
+#         cbind(neutral=mh[,"neutral"],psg = mh[,"psg"], mh_peaknum = mh[,"peaknum"], mcl_peaknum = a_pair[,"peaknum"])
+#         
+# }))
 
 #nontarget
 negative_nontarget <- subset(negative_PL, select = c(mz, MW8a, rt))
