@@ -65,6 +65,8 @@ write.csv(P_base, "positive_base_int.csv")
 
 all_base <- rbind(N_base, P_base)
 
+write.csv(all_base, "all_base_int.csv")
+
 #selecting ions more than one adduct
 # withinppm <- function(m1, m2, ppm=5) {   abs(m1-m2)/m1*1E6 < 5   }
 # 
