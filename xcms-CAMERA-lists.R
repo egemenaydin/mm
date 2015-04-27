@@ -106,7 +106,7 @@ anN <- annotate(xset3N, nSlaves = slaves, perfwhm = 0.75, cor_eic_th = 0.75, min
 # an_N <- findIsotopes(an_N, mzabs = 0.01)
 # an_N <- groupCorr(an_N, cor_eic_th = 0.75)
 # anN <- findAdducts(an_N, polarity="negative", rules = rulesN)
-peaklistN <- getPeaklist(anP)
+peaklistN <- getPeaklist(anN)
 write.csv(peaklistN, file = "negative_featurelist.csv")
 
 save(list=ls(all=TRUE), file="air-sparge-neg-camera-out.RData")
