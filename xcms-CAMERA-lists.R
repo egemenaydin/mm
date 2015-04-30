@@ -33,7 +33,7 @@ xset1P <- retcor(xsetP, method = "obiwarp", plottype = c("deviation"), profStep 
 dev.print(pdf, "RTDvsRT_pos.pdf", height = 10, width = 10)
 xset2P <- group(xset1P, bw = 5, minfrac = 0.5, mzwid = 0.015)
 xset3P <- fillPeaks(xset2P)
-drP <- diffreport(xset3P, class1 = "MW8", class2 = "MW2", "MW2vsMW8", eicmax = 300,  metlin = 0.01)
+peaktable_P <- peakTable(xset3P, filebase = "peaktable")
 
 save(list=ls(all=TRUE), file="air-sparge-pos-xcms-out.RData")
 
@@ -91,7 +91,7 @@ xset1N <- retcor(xsetN, method = "obiwarp", plottype = c("deviation"))
 dev.print(pdf, "RTDvsRT_neg.pdf", height = 10, width = 10)
 xset2N <- group(xset1N, bw = 5, minfrac = 0.5, mzwid = 0.015)
 xset3N <- fillPeaks(xset2N)
-drN <- diffreport(xset3N, class1 = "MW8", class2 = "MW2", "MW2vsMW8", eicmax = 300,  metlin = 0.01)
+peaktable_N <- peakTable(xset3N, filebase = "peaktable")
 
 save(list=ls(all=TRUE), file="air-sparge-neg-xcms-out.RData")
 
