@@ -23,9 +23,10 @@ slaves <- detectCores(logical = FALSE)
 
 #XCMS for positive mode 
 
-wd <- jchoose.dir(default = getwd(), caption = "Please select directory")
+wd_P <- jchoose.dir(default = getwd(), caption = "Please select directory for positive mode")
+wd_N <- jchoose.dir(default = getwd(), caption = "Please select directory for negative mode")
 
-setwd(wd)
+setwd(wd_P)
 
 xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 15, peakwidth = c(10 , 60), snthr = 6, mzdiff = 0.015, prefilter = c(3, 1000))
 xset1P <- retcor(xsetP, method = "obiwarp", plottype = c("deviation"), profStep = 0.5)
@@ -83,9 +84,7 @@ save(list=ls(all=TRUE), file="air-sparge-pos-peak-list-out.RData")
 
 #XCMS for negative mode
 
-wd <- jchoose.dir(default = getwd(), caption = "Please select directory")
-
-setwd(wd)
+setwd(wd_N)
 
 xsetN <- xcmsSet(method ="centWave", nSlaves = slaves, ppm =15, peakwidth = c(10 , 60), snthr = 6, mzdiff = 0.015, prefilter = c(3, 500))
 xset1N <- retcor(xsetN, method = "obiwarp", plottype = c("deviation"))
