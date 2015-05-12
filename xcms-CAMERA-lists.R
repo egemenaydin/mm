@@ -41,8 +41,9 @@ peaktable_P <- peakTable(xset3P, filebase = "peaktable")
 save(list=ls(all=TRUE), file="air-sparge-pos-xcms-out.RData")
 
 #CAMERA for positive mode
-
-anP <- annotate(xset3P, nSlaves = slaves, perfwhm = 0.75, cor_eic_th = 0.75, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015)
+library(chemhelper)
+rulesP <- load.camera.rules("pos")
+anP <- annotate(xset3P, nSlaves = slaves, perfwhm = 0.75, cor_eic_th = 0.75, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015, rules = rulesP)
 
 #library(chemhelper)
 #rulesP <- load.camera.rules("pos")
@@ -102,9 +103,11 @@ save(list=ls(all=TRUE), file="air-sparge-neg-xcms-out.RData")
 
 
 #CAMERA for negative mode
-anN <- annotate(xset3N, nSlaves = slaves, perfwhm = 0.75, cor_eic_th = 0.75, minfrac = 0.5, ppm = 5, polarity = "negative", mzabs = 0.015)
+library(chemhelper)
+rulesN <- load.camera.rules("neg")
+anN <- annotate(xset3N, nSlaves = slaves, perfwhm = 0.75, cor_eic_th = 0.75, minfrac = 0.5, ppm = 5, polarity = "negative", mzabs = 0.015, rules = rulesN)
 
-# rulesN <- load.camera.rules("neg")
+
 # an_N <- xsAnnotate(xset3N, nSlaves = slaves)
 # an_N <- groupFWHM(an_N, perfwhm = 0.6)
 # an_N <- findIsotopes(an_N, mzabs = 0.01)
