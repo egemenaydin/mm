@@ -18,7 +18,7 @@ if(!require("rChoiceDialogs")){
         library(rChoiceDialogs)
 }
 
-slaves <- detectCores(logical = FALSE)
+slaves <- 4
 
 
 #XCMS for positive mode 
@@ -31,7 +31,7 @@ setwd(wd_P)
 
 n_samples_P <- length(list.dirs(recursive = FALSE))
 
-xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 8, peakwidth = c(10 , 60), snthr = 6, mzdiff = 0.015, prefilter = c(3, 1000))
+xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 8, peakwidth = c(10 , 60), snthr = 6, mzdiff = 0.01, prefilter = c(3, 1000), noise = 10)
 xset1P <- retcor(xsetP, method = "obiwarp", plottype = c("deviation"), profStep = 0.5)
 dev.print(pdf, "RTDvsRT_pos.pdf", height = 10, width = 10)
 xset2P <- group(xset1P, bw = 5, minfrac = 0.5, mzwid = 0.015)
@@ -43,7 +43,7 @@ save(list=ls(all=TRUE), file="air-sparge-pos-xcms-out.RData")
 #CAMERA for positive mode
 library(chemhelper)
 rulesP <- load.camera.rules("pos")
-anP <- annotate(xset3P, nSlaves = slaves, perfwhm = 0.75, cor_eic_th = 0.75, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015, rules = rulesP)
+anP <- annotate(xset3P, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015, rules = rulesP)
 
 #library(chemhelper)
 #rulesP <- load.camera.rules("pos")
@@ -92,8 +92,8 @@ setwd(wd_N)
 
 n_samples_N <- length(list.dirs(recursive = FALSE))
 
-xsetN <- xcmsSet(method ="centWave", nSlaves = slaves, ppm =8, peakwidth = c(10 , 60), snthr = 6, mzdiff = 0.015, prefilter = c(3, 500))
-xset1N <- retcor(xsetN, method = "obiwarp", plottype = c("deviation"))
+xsetN <- xcmsSet(method ="centWave", nSlaves = slaves, ppm =8, peakwidth = c(10 , 60), snthr = 6, mzdiff = 0.01, prefilter = c(3, 500), noise = 10)
+xset1N <- retcor(xsetN, method = "obiwarp", plottype = c("deviation"), profStep = 0.5)
 dev.print(pdf, "RTDvsRT_neg.pdf", height = 10, width = 10)
 xset2N <- group(xset1N, bw = 5, minfrac = 0.5, mzwid = 0.015)
 xset3N <- fillPeaks(xset2N)
@@ -105,7 +105,7 @@ save(list=ls(all=TRUE), file="air-sparge-neg-xcms-out.RData")
 #CAMERA for negative mode
 library(chemhelper)
 rulesN <- load.camera.rules("neg")
-anN <- annotate(xset3N, nSlaves = slaves, perfwhm = 0.75, cor_eic_th = 0.75, minfrac = 0.5, ppm = 5, polarity = "negative", mzabs = 0.015, rules = rulesN)
+anN <- annotate(xset3N, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, minfrac = 0.5, ppm = 5, polarity = "negative", mzabs = 0.015, rules = rulesN)
 
 
 # an_N <- xsAnnotate(xset3N, nSlaves = slaves)
