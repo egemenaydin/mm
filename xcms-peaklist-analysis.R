@@ -2,17 +2,30 @@
 #negative_IPL <- as.data.frame(subset(negative_PL, negative_PL$isotopes != ""))
 
 #for positive mode only
-no_frag <- pspec2metfrag(anP)
+no_fragP <- pspec2metfrag(anP)
 
-no_fragment <- data.frame(mass = 0, rt = 0, ID = 0)
+no_fragmentP <- data.frame(mass = 0, rt = 0, ID = 0)
 
-for (i in 1:length(no_frag)){
-        no_fragment[i,1] <- no_frag[[i]]$ParentMass
-        no_fragment[i,2] <- no_frag[[i]]$RentionTime
-        no_fragment[i,3] <- no_frag[[i]]$AnnotationID
+for (i in 1:length(no_fragP)){
+        no_fragmentP[i,1] <- no_fragP[[i]]$ParentMass
+        no_fragmentP[i,2] <- no_fragP[[i]]$RentionTime
+        no_fragmentP[i,3] <- no_fragP[[i]]$AnnotationID
 }
 
 write.csv(no_fragment, "positive_base_peaks.csv")
+
+no_fragN <- pspec2metfrag(anN)
+
+no_fragmentN <- data.frame(mass = 0, rt = 0, ID = 0)
+
+for (i in 1:length(no_fragN)){
+        no_fragmentN[i,1] <- no_fragN[[i]]$ParentMass
+        no_fragmentN[i,2] <- no_fragN[[i]]$RentionTime
+        no_fragmentN[i,3] <- no_fragN[[i]]$AnnotationID
+}
+
+write.csv(no_fragment, "negative_base_peaks.csv")
+
 
 #negative
 masses_N <- do.call("rbind", lapply(1:length(anN@pspectra), function(x) {
