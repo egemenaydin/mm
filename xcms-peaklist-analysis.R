@@ -12,7 +12,7 @@ for (i in 1:length(no_fragP)){
         no_fragmentP[i,3] <- no_fragP[[i]]$AnnotationID
 }
 
-write.csv(no_fragment, "positive_base_peaks.csv")
+write.csv(no_fragmentP, "positive_base_peaks.csv")
 
 no_fragN <- pspec2metfrag(anN)
 
@@ -24,7 +24,7 @@ for (i in 1:length(no_fragN)){
         no_fragmentN[i,3] <- no_fragN[[i]]$AnnotationID
 }
 
-write.csv(no_fragment, "negative_base_peaks.csv")
+write.csv(no_fragmentN, "negative_base_peaks.csv")
 
 
 #negative
