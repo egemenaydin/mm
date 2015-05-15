@@ -18,6 +18,11 @@ if(!require("rChoiceDialogs")){
         library(rChoiceDialogs)
 }
 
+if(!require("dplyr")){
+        install.packages("dplyr", dependencies = TRUE)
+        library(dplyr)
+}
+
 slaves <- 1 #I use it as 1 for now because it looks like there is a bug on CAMERA. When 4 coresused all masses under annoID is represented in last pspgrp.
 
 
@@ -77,6 +82,8 @@ intensity_P <- as.matrix(anP@groupInfo[masses_data_P$peaknum[1:length(masses_dat
 P_all <- cbind(masses_data_P, intensity_P)
 
 P_all_ionization <- cbind(P_all, ionization = "positive")
+
+P_all_ionization <- distinct(P_all_ionization, mass)
 
 write.csv(P_all_ionization, "positive_all_int.csv")
 
@@ -138,6 +145,8 @@ intensity_N <- as.matrix(anN@groupInfo[masses_data_N$peaknum[1:length(masses_dat
 N_all <- cbind(masses_data_N, intensity_N)
 
 N_all_ionization <- cbind(N_all, ionization = "negative")
+
+N_all_ionization <- distinct(N_all_ionization, mass)
 
 write.csv(N_all_ionization, "negative_all_int.csv")
 
