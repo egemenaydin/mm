@@ -31,7 +31,7 @@ setwd(wd_P)
 
 n_samples_P <- length(list.dirs(recursive = FALSE))
 
-xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 8, peakwidth = c(10 , 60), snthr = 6, mzdiff = 0.01, prefilter = c(3, 1000), noise = 10)
+xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 15, peakwidth = c(10 , 60), snthr = 6, mzdiff = 0.01, prefilter = c(3, 1000), noise = 10, polarity = "positive")
 xset1P <- retcor(xsetP, method = "obiwarp", plottype = c("deviation"), profStep = 0.5)
 dev.print(pdf, "RTDvsRT_pos.pdf", height = 10, width = 10)
 xset2P <- group(xset1P, bw = 5, minfrac = 0.5, mzwid = 0.015)
@@ -41,17 +41,17 @@ peaktable_P <- peakTable(xset3P, filebase = "peaktable")
 save(list=ls(all=TRUE), file="air-sparge-pos-xcms-out.RData")
 
 #CAMERA for positive mode
-library(chemhelper)
-rulesP <- load.camera.rules("pos")
-anP <- annotate(xset3P, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015, rules = rulesP)
+#library(chemhelper)
+#rulesP <- load.camera.rules("pos")
+#anP <- annotate(xset3P, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015)
 
 #library(chemhelper)
 #rulesP <- load.camera.rules("pos")
-# an_P <- xsAnnotate(xset3P, nSlaves = slaves)
-# an_P <- groupFWHM(an_P, perfwhm = 0.6)
-# an_P <- findIsotopes(an_P, mzabs = 0.01)
-# an_P <- groupCorr(an_P, cor_eic_th = 0.75)
-# anP <- findAdducts(an_P, polarity="positive", rules = rulesP)
+an_P <- xsAnnotate(xset3P, nSlaves = slaves)
+an_P <- groupFWHM(an_P, perfwhm = 0.6)
+an_P <- findIsotopes(an_P, mzabs = 0.01)
+an_P <- groupCorr(an_P, cor_eic_th = 0.75)
+anP <- findAdducts(an_P, polarity="positive")
 peaklistP <- getPeaklist(anP)
 write.csv(peaklistP, file = "positive_featurelist.csv")
 
@@ -92,7 +92,7 @@ setwd(wd_N)
 
 n_samples_N <- length(list.dirs(recursive = FALSE))
 
-xsetN <- xcmsSet(method ="centWave", nSlaves = slaves, ppm =8, peakwidth = c(10 , 60), snthr = 6, mzdiff = 0.01, prefilter = c(3, 500), noise = 10)
+xsetN <- xcmsSet(method ="centWave", nSlaves = slaves, ppm =15, peakwidth = c(10 , 60), snthr = 6, mzdiff = 0.01, prefilter = c(3, 500), noise = 10, polarity = "negative")
 xset1N <- retcor(xsetN, method = "obiwarp", plottype = c("deviation"), profStep = 0.5)
 dev.print(pdf, "RTDvsRT_neg.pdf", height = 10, width = 10)
 xset2N <- group(xset1N, bw = 5, minfrac = 0.5, mzwid = 0.015)
@@ -103,16 +103,16 @@ save(list=ls(all=TRUE), file="air-sparge-neg-xcms-out.RData")
 
 
 #CAMERA for negative mode
-library(chemhelper)
-rulesN <- load.camera.rules("neg")
-anN <- annotate(xset3N, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, minfrac = 0.5, ppm = 5, polarity = "negative", mzabs = 0.015, rules = rulesN)
+#library(chemhelper)
+#rulesN <- load.camera.rules("neg")
+#anN <- annotate(xset3N, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, minfrac = 0.5, ppm = 5, polarity = "negative", mzabs = 0.015)
 
 
-# an_N <- xsAnnotate(xset3N, nSlaves = slaves)
-# an_N <- groupFWHM(an_N, perfwhm = 0.6)
-# an_N <- findIsotopes(an_N, mzabs = 0.01)
-# an_N <- groupCorr(an_N, cor_eic_th = 0.75)
-# anN <- findAdducts(an_N, polarity="negative", rules = rulesN)
+an_N <- xsAnnotate(xset3N, nSlaves = slaves)
+an_N <- groupFWHM(an_N, perfwhm = 0.6)
+an_N <- findIsotopes(an_N, mzabs = 0.01)
+an_N <- groupCorr(an_N, cor_eic_th = 0.75)
+anN <- findAdducts(an_N, polarity="negative")
 peaklistN <- getPeaklist(anN)
 write.csv(peaklistN, file = "negative_featurelist.csv")
 
