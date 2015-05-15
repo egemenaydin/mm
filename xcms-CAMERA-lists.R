@@ -18,7 +18,7 @@ if(!require("rChoiceDialogs")){
         library(rChoiceDialogs)
 }
 
-slaves <- 4
+slaves <- 1 #I use it as 1 for now because it looks like there is a bug on CAMERA. When 4 coresused all masses under annoID is represented in last pspgrp.
 
 
 #XCMS for positive mode 
