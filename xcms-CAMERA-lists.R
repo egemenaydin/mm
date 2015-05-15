@@ -159,6 +159,10 @@ write.csv(N_base, "negative_base_int.csv")
 
 all_base <- rbind(N_base, P_base)
 
+all <- rbind(N_all_ionization, P_all_ionization)
+
 write.csv(all_base, "all_base_int.csv")
+
+write.csv(all_base, "all_int.csv")
 
 save(list=ls(all=TRUE), file="air-sparge-all-out.RData")
