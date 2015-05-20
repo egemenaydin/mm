@@ -175,7 +175,7 @@ peaklistP$mass <- peaklistP$mz-1.007276
 
 all_peaklist <- rbind(peaklistN, peaklistP)
 
-all_peaklist <- select(all_peaklist, mz, mass, rt, MW1a:pcgroup)
+all_peaklist <- select(all_peaklist, mz, mass, rt, MW1a:ionization)
 
 all_peaklist <- distinct(all_peaklist, mass)
 
