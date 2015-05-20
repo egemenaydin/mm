@@ -1,11 +1,6 @@
 library(dplyr)
-N_all_ionization <- read.csv("negative_all_int.csv")
-P_all_ionization <- read.csv("positive_all_int.csv")
-all <- rbind(N_all_ionization, P_all_ionization)
-all_unique <- distinct(all, mass)
-write.csv(all_unique, "all.csv")
 
-data <- read.csv("all_ions.csv")
+data <- read.csv("all_peaklist.csv")
 ppm.limit <- 10
 
 sup <- as.matrix(select(data, mz, mass))
@@ -14,35 +9,37 @@ DB <- read.csv("~/mm/KEGG_DB.csv")
 DB <- filter(DB, KEGGid != "")
 db.mass <- DB$Mass
 
-KEGG_comp <- matrix("", ncol = 6)
+KEGG_comp <- matrix("", ncol = 7)
 
 for(i in 1:nrow(data)) {
         mass <- sup[i, 2]
         logical <- abs(((mass - db.mass)/db.mass)*10^6) < ppm.limit
         if(sum(logical)) {
                 for(j in 1:length(which(logical))) {
-                        KEGG_comp1 <- matrix("", nrow = 1, ncol = 6)
+                        KEGG_comp1 <- matrix("", nrow = 1, ncol = 7)
                         KEGG_comp1[1, 1:2] <- sup[i, 1:2]
                         KEGG_comp1[1, 3] <- db.mass[which(logical)][j]
                         KEGG_comp1[1, 4] <- as.vector(DB[which(logical), "KEGGid"])[j]
                         KEGG_comp1[1, 5] <- as.vector(DB[which(logical), "Formula"])[j]
-                        KEGG_comp1[1, 6] <- as.vector(DB[which(logical), "Pathway"])[j]
+                        KEGG_comp1[1, 6] <- as.vector(DB[which(logical), "Metabolite"])[j]
+                        KEGG_comp1[1, 7] <- as.vector(DB[which(logical), "Pathway"])[j]
                         KEGG_comp <- rbind(KEGG_comp, KEGG_comp1)
                 }
                 
         }
         else {
-                KEGG_comp1 <- matrix("", nrow = 1, ncol = 6) 
+                KEGG_comp1 <- matrix("", nrow = 1, ncol = 7) 
                 KEGG_comp1[1, 1:2] <- sup[i, 1:2]
                 KEGG_comp1[1, 3] <- "no match"
                 KEGG_comp1[1, 4] <- "no match"
                 KEGG_comp1[1, 5] <- "no match"
                 KEGG_comp1[1, 6] <- "no match"
+                KEGG_comp1[1, 7] <- "no match"
                 KEGG_comp <- rbind(KEGG_comp, KEGG_comp1)
         }
 }
 
-header <- c("mz", "mass", "massDB", "KEGG ID", "Formula", "Pathway")
+header <- c("mz", "mass", "massDB", "KEGG ID", "Formula", "Metabolite", "Pathway")
 colnames(KEGG_comp) <- header
 KEGG_comparison <- data.frame(KEGG_comp[-1, ])
 KEGG_int <- merge(KEGG_comparison, data, by = "mz")
@@ -80,4 +77,5 @@ KEGG_int_for_pathview_2 <- select(KEGG_int_for_pathview_2, MW1:MW8)
 KEGG_int_for_pathview_norm <- data.frame(apply(KEGG_int_for_pathview_2, 1, function(x) -1+2*(x-min(x))/(max(x)-min(x))))
 KEGG_int_for_pathview_matrix <- t(as.matrix(KEGG_int_for_pathview_norm))
 head(KEGG_int_for_pathview_matrix)
+#KEGG_int_for_pathview_matrix2$kegg.names <- rownames(KEGG_int_for_pathview_matrix2) 
 write.csv(KEGG_int_for_pathview_matrix, "KEGG_comp.csv")
