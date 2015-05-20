@@ -165,4 +165,20 @@ write.csv(all_base, "all_base_int.csv")
 
 write.csv(all, "all_int.csv")
 
+peaklistN$ionization <- "negative"
+
+peaklistN$mass <- peaklistN$mz+1.007276
+
+peaklistP$ionization <- "positive"
+
+peaklistP$mass <- peaklistP$mz-1.007276
+
+all_peaklist <- rbind(peaklistN, peaklistP)
+
+all_peaklist <- select(all_peaklist, mz, mass, rt, MW1a:pcgroup)
+
+all_peaklist <- distinct(all_peaklist, mass)
+
+write.csv(all_peaklist, "all_peaklist.csv")
+
 save(list=ls(all=TRUE), file="air-sparge-all-out.RData")
