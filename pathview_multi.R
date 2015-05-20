@@ -1,8 +1,11 @@
 library(pathview)
 #xenobiotics degradation and metabolism
 pv.out_xy_deg <- pathview(cpd.data = KEGG_int_for_pathview_matrix[, 1:ncol(KEGG_int_for_pathview_matrix)], pathway.id = "00622", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T)
+xy_deg <- merge(pv.out_xy_deg$plot.data.cpd, KEGG_int_for_pathview, by.x = "kegg.names", by.y = "KEGG.ID")
 pv.out_tol_deg <- pathview(cpd.data = KEGG_int_for_pathview_matrix[, 1:ncol(KEGG_int_for_pathview_matrix)], pathway.id = "00623", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T)
+tol_deg <- merge(pv.out_tol_deg$plot.data.cpd, KEGG_int_for_pathview, by.x = "kegg.names", by.y = "KEGG.ID")
 pv.out_nap_deg <- pathview(cpd.data = KEGG_int_for_pathview_matrix[, 1:ncol(KEGG_int_for_pathview_matrix)], pathway.id = "00626", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T)
+nap_deg <- merge(pv.out_nap_deg$plot.data.cpd, KEGG_int_for_pathview, by.x = "kegg.names", by.y = "KEGG.ID")
 pv.out_eb_deg <- pathview(cpd.data = KEGG_int_for_pathview_matrix[, 1:ncol(KEGG_int_for_pathview_matrix)], pathway.id = "00642", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T)
 pv.out_benzoate_deg <- pathview(cpd.data = KEGG_int_for_pathview_matrix[, 1:ncol(KEGG_int_for_pathview_matrix)], pathway.id = "00362", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T)
 pv.out_styrene_deg <- pathview(cpd.data = KEGG_int_for_pathview_matrix[, 1:ncol(KEGG_int_for_pathview_matrix)], pathway.id = "00643", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T)
