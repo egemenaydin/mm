@@ -1,0 +1,30 @@
+---
+title: "Air sparge system pathway analysis"
+author: "Egemen Aydin"
+date: "05/21/2015"
+output: html_document
+runtime: shiny
+---
+
+This document contains pathway analysis of air sparge samples collected from monitoring wells 1 to 8 (MW1-MW8). I used feature list generated and aligned by XCMS to identify KEGG IDs. Each detected feature was compared to KEGG database containing ~14,000 compounds. A compound within 10 ppm range of a KEGG compound is attributed with putative identification as the KEGG compound.
+
+The abundance changes of each detected compound is presented with a colour code ranging between blue and yellow in each samples. Nodes of the pathways (i.e. circles representing compounds) has 8 divisions. Each division represents one sample and divisions are in order of MW1 to MW8.
+
+```{r, echo=FALSE}
+library(shiny)
+inputPanel(
+        selectInput("name", label = "Choose a degradation pathway:",
+            choices = c("xylene", "toluene", "naphtalene"), selected = "xylene"
+        )
+)
+
+renderImage({
+        filename <- normalizePath(file.path("./", paste(input$name, "_pathway", ".png", sep = "")))
+        list(src = filename)
+}, deleteFile = FALSE)
+```
+
+
+
+
+
