@@ -1,7 +1,7 @@
 library(dplyr)
 
 data <- read.csv("all_peaklist.csv")
-ppm.limit <- 10
+ppm.limit <- 2
 
 sup <- as.matrix(select(data, mz, mass))
 
