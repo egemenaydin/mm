@@ -6,15 +6,20 @@ output: html_document
 runtime: shiny
 ---
 
-This document contains pathway analysis of air sparge samples collected from monitoring wells 1 to 8 (MW1-MW8). I used feature list generated and aligned by XCMS to identify KEGG IDs. Each detected feature was compared to KEGG database containing ~14,000 compounds. A compound within 10 ppm range of a KEGG compound is attributed with putative identification as the KEGG compound.
+This document contains pathway analysis of air sparge samples collected from monitoring wells 1 to 8 (MW1-MW8). I used feature list generated and aligned by XCMS to identify KEGG IDs. Exact mass of each detected feature was compared to exact masses of ~14,000 compounds in KEGG database. A compound within 2 ppm range of a KEGG compound is attributed with putative identification.
 
 The abundance changes of each detected compound is presented with a colour code ranging between blue and yellow in each samples. Nodes of the pathways (i.e. circles representing compounds) has 8 divisions. Each division represents one sample and divisions are in order of MW1 to MW8.
+
+Since the compounds were putatively identified using only exact mass of a detected feature, we need to be careful while interpreting this data. On the onther hand, the change of metabolites on a pathway are in accordance with application of air sparging. In other words, while abundances of compounds at starting of a pathway is higher in upgradient sample---MW8---which is before air sparge system, abundances of intermediate metabolites are higher in downgradient samples (e.g. MW2). This is an indicator for *higher* confidence of identifications. 
+
+If we can corralate this analysis with genomic data, the idetifations will be more solid. Please see below for KEGG maps of degradation of different compounds.
+
 
 ```{r, echo=FALSE}
 library(shiny)
 inputPanel(
         selectInput("name", label = "Choose a degradation pathway:",
-            choices = c("xylene", "toluene", "naphtalene"), selected = "xylene"
+            choices = c("xylene", "toluene", "naphtalene", "ethylbenzene", "benzoate", "styrene", "dioxin", "PAH"), selected = "xylene"
         )
 )
 
