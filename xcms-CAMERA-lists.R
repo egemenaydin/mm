@@ -36,7 +36,7 @@ setwd(wd_P)
 
 n_samples_P <- length(list.dirs(recursive = FALSE))
 
-xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 8, peakwidth = c(10 , 100), snthr = 6, mzdiff = 0.01, prefilter = c(3, 1000), noise = 10, polarity = "positive")
+xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 10, peakwidth = c(10 , 100), snthr = 6, mzdiff = 0.01, prefilter = c(3, 100), polarity = "positive")
 xset1P <- retcor(xsetP, method = "obiwarp", plottype = c("deviation"), profStep = 0.5)
 dev.print(pdf, "RTDvsRT_pos.pdf", height = 10, width = 10)
 xset2P <- group(xset1P, bw = 5, minfrac = 0.5, mzwid = 0.015)
@@ -77,7 +77,7 @@ masses_P <- do.call("rbind", lapply(1:length(anP@pspectra), function(x) {
 
 masses_data_P <- as.data.frame(masses_P)
 
-intensity_P <- as.matrix(anP@groupInfo[masses_data_P$peaknum[1:length(masses_data_P$peaknum)], c(4, (8+n_samples_P):ncol(anP@groupInfo))])
+intensity_P <- as.matrix(anP@groupInfo[masses_data_P$peaknum[1:length(masses_data_P$peaknum)], c(1, 4, (8+n_samples_P):ncol(anP@groupInfo))])
 
 P_all <- cbind(masses_data_P, intensity_P)
 
@@ -99,7 +99,7 @@ setwd(wd_N)
 
 n_samples_N <- length(list.dirs(recursive = FALSE))
 
-xsetN <- xcmsSet(method ="centWave", nSlaves = slaves, ppm =8, peakwidth = c(10 , 100), snthr = 6, mzdiff = 0.01, prefilter = c(3, 500), noise = 10, polarity = "negative")
+xsetN <- xcmsSet(method ="centWave", nSlaves = slaves, ppm =10, peakwidth = c(10 , 100), snthr = 6, mzdiff = 0.01, prefilter = c(3, 100), polarity = "negative")
 xset1N <- retcor(xsetN, method = "obiwarp", plottype = c("deviation"), profStep = 0.5)
 dev.print(pdf, "RTDvsRT_neg.pdf", height = 10, width = 10)
 xset2N <- group(xset1N, bw = 5, minfrac = 0.5, mzwid = 0.015)
@@ -140,7 +140,7 @@ masses_N <- do.call("rbind", lapply(1:length(anN@pspectra), function(x) {
 
 masses_data_N <- as.data.frame(masses_N)
 
-intensity_N <- as.matrix(anN@groupInfo[masses_data_N$peaknum[1:length(masses_data_N$peaknum)], c(4, (8+n_samples_N):ncol(anN@groupInfo))])
+intensity_N <- as.matrix(anN@groupInfo[masses_data_N$peaknum[1:length(masses_data_N$peaknum)], c(1, 4, (8+n_samples_N):ncol(anN@groupInfo))])
 
 N_all <- cbind(masses_data_N, intensity_N)
 
