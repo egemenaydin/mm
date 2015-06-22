@@ -2,6 +2,7 @@ library(dplyr)
 data <- read.csv("positive_featurelist.csv")
 iso.data <- filter(data, isotopes != "")
 base <- filter(iso.data, grepl("\\[M\\]\\+", isotopes))
+write.csv(base, "base_in_feature_extract.csv")
 base$log.Art.SW <- log2(base$Art.SW)
 base$log.FE1.2 <- log2(base$FE1.2)
 base$fold_change <- base$log.FE1.2 / base$log.Art.SW
