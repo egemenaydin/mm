@@ -15,8 +15,11 @@ df$Formula <- gsub("(Hg)", "X", df$Formula)
 df$C <- as.numeric(genXtract(df$Formula, "C", "~"))
 df$H <- as.numeric(genXtract(df$Formula, "H", "~"))
 df$O <- as.numeric(genXtract(df$Formula, "O", "~"))
-
+df$N <- as.numeric(genXtract(df$Formula, "N", "~"))
 df[is.na(df)] <- 0
+df$DBE <- df$C - (df$H/2) + (df$N/2) + 1
+
+
 
 df$OC <- df$O/df$C
 df$HC <- df$H/df$C
