@@ -1,14 +1,14 @@
 library(ggplot2)
 library(qdap)
-df <- read.csv("van-kravelen-trial.csv")
+df <- read.csv("formula.csv")
 
 df$Formula <- gsub("([0-9])([A-Z])", "\\1~\\2", df$Formula)
 df$Formula <- gsub("([A-Z])([A-Z])", "\\1~\\2", df$Formula)
 df$Formula <- gsub("([A-Z])([A-Z])", "\\1~\\2", df$Formula)
 df$Formula <- paste0(df$Formula, "~")
 df$Formula <- gsub("([A-Z])(~)", "\\11\\2", df$Formula)
-
-
+df$Formula <- gsub("(Cl)", "X", df$Formula)
+df$Formula <- gsub("(Hg)", "X", df$Formula)
 
 df$C <- as.numeric(genXtract(df$Formula, "C", "~"))
 df$H <- as.numeric(genXtract(df$Formula, "H", "~"))
