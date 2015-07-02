@@ -11,6 +11,8 @@ rn <- t0t2$X
 
 baseC <- read.csv("base_in_feature_extract.csv")
 baseC <- slice(baseC, rn)
+baseC_long <- select(baseC, mz, rt, FE4.tp0.a:FE20.tp4.b)
+write.csv(baseC_long, "Camelina_rsw.csv")
 baseC <- select(baseC, mz, rt, FE3.tp0.a:FE3.tp4.b)
 colnames(baseC) <- c("mz", "rt", "Day0a", "Day0b", "Day20a", "Day20b", "Day40a", "Day40b")
 
@@ -27,7 +29,7 @@ baseC$mass <- baseC$mz - 1.007276
 ggplot(baseC, aes(x = rt, y = mass, color = logDay0, size = logDay0)) +
         geom_point(position = "jitter") +
         scale_size("logDay0", guide = FALSE) +
-        scale_colour_gradient(low = "lightgreen", high ="red", name = "Norm. abundance") +
+        scale_colour_gradient(low = "green", high ="red", name = "Norm. abundance", limits = c(12,19)) +
         theme_bw(base_size = 16) +
         xlab("Retention time (sec)") +
         ylab("Mass (Da)") +
@@ -38,7 +40,7 @@ dev.print(pdf, "Camelina-tp0.pdf", height = 6, width = 9)
 ggplot(baseC, aes(x = rt, y = mass, color = logDay20, size = logDay20)) +
         geom_point(position = "jitter") +
         scale_size("logDay20", guide = FALSE) +
-        scale_colour_gradient(low = "lightgreen", high ="red", name = "Norm. abundance") +
+        scale_colour_gradient(low = "green", high ="red", name = "Norm. abundance", limits = c(12,19)) +
         theme_bw(base_size = 16) +
         xlab("Retention time (sec)") +
         ylab("Mass (Da)") +
@@ -49,7 +51,7 @@ dev.print(pdf, "Camelina-tp1.pdf", height = 6, width = 9)
 ggplot(baseC, aes(x = rt, y = mass, color = logDay40, size = logDay40)) +
         geom_point(position = "jitter") +
         scale_size("logDay40", guide = FALSE) +
-        scale_colour_gradient(low = "lightgreen", high ="red", name = "Norm. abundance") +
+        scale_colour_gradient(low = "lightgreen", high ="red", name = "Norm. abundance", limits = c(12,19)) +
         theme_bw(base_size = 16) +
         xlab("Retention time (sec)") +
         ylab("Mass (Da)") +
