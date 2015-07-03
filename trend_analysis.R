@@ -49,7 +49,7 @@ df2 <- rbind(df_decrease, df_increase)
 write.csv(df2, "increase_decrease.csv")
 
 p <- ggplot(df2, aes(x = mz))
-p +  geom_histogram(binwidth = 10)+ facet_grid(trend~.) + theme_bw(base_size = 18)
+p +  geom_histogram(binwidth = 10)+ facet_grid(trend~.) + theme_bw(base_size = 22) + xlab("Mass") + ylab("Number of compounds")
 
 
 dev.print(pdf, "camelina_increase_decrease_hist.pdf", height = 5, width = 10)
@@ -151,7 +151,7 @@ df2 <- rbind(df_decrease, df_increase)
 write.csv(df2, "increase_decrease.csv")
 
 p <- ggplot(df2, aes(x = mz))
-p +  geom_histogram(binwidth = 10)+ facet_grid(trend~.) + theme_bw(base_size = 22)
+p +  geom_histogram(binwidth = 10)+ facet_grid(trend~.) + theme_bw(base_size = 22) + xlab("Mass") + ylab("Number of compounds")
 
 
 dev.print(pdf, "F76_increase_decrease_hist.pdf", height = 5, width = 10)
