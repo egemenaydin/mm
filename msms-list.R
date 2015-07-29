@@ -74,7 +74,8 @@ write.csv(iso.S, "S-compounds-iso.csv")
 write.csv(base.S, "S-compounds-base.csv")
 
 #prepare S compounds data for PCA
-
+base.S.PCA <- base.S[ , fNames]
+base.S.PCA <- data.frame(t(base.S.PCA))
 
 
 #MSMS list creation
