@@ -1,5 +1,8 @@
 library(dplyr)
 
+#read phenodata
+PhD <- read.csv("PhD.csv")
+fNames <- as.matrix(PhD$X)
 #positive ionization mode
 dataP <- read.csv("positive_featurelist.csv")
 dataP$ionization <- "positive"
@@ -25,7 +28,7 @@ tBase <- data.frame(t(baseAll))
 write.csv(tBase, "transpose_base_peaks.csv")
 
 #lists for plots
-dataAll_PCA <- select(dataAll, MW1a:MW8c)
+dataAll_PCA <- select(dataAll, fNames[,1])
 dataAll_PCA <- data.frame(t(dataAll_PCA))
 baseAll_PCA <- select(baseAll, MW1a:MW8c)
 baseAll_PCA <- data.frame(t(baseAll_PCA))
@@ -33,6 +36,7 @@ Samples <- c("MW1", "MW1", "MW1", "MW2", "MW2", "MW2", "MW3", "MW3", "MW3", "MW4
 
 #S containing compounds
 ##positive
+iso.dataP$peaknum <- gsub(".*\\[([0-9]+).*", "\\1", iso.dataP$isotopes)
 SCompP <- select(iso.dataP, isotopes, MW8a)
 SCompP$peaknum <- gsub(".*\\[([0-9]+).*", "\\1", SCompP$isotopes)
 SbaseP<- filter(SCompP, grepl("\\[M\\]\\+", isotopes))
@@ -41,16 +45,35 @@ SxP <- merge(Splus2P, SbaseP, by = "peaknum")
 SxP$ratio <- (SxP$MW8a.x/SxP$MW8a.y)*100
 S1CompP <- filter(SxP, 3.5 < ratio, ratio < 7)
 S2CompP <- filter(SxP, 7.5 < ratio, ratio < 11.5)
+iso.S1P <- filter(iso.dataP, peaknum %in% S1CompP$peaknum)
+iso.S2P <- filter(iso.dataP, peaknum %in% S2CompP$peaknum)
+iso.SP <- bind_rows(iso.S1P, iso.S2P)
+base.SP <- filter(iso.SP, grepl("\\[M\\]\\+", isotopes))
+
 
 ##negative
+iso.dataN$peaknum <- gsub(".*\\[([0-9]+).*", "\\1", iso.dataN$isotopes)
 SCompN <- select(iso.dataN, isotopes, MW8a)
 SCompN$peaknum <- gsub(".*\\[([0-9]+).*", "\\1", SCompN$isotopes)
 SbaseN<- filter(SCompN, grepl("\\[M\\]\\-", isotopes))
-Splus2N <- filter(SCompN, grepl("\\[M\\+2\\]\\-]", isotopes))
+Splus2N <- filter(SCompN, grepl("\\[M\\+2\\]\\-", isotopes))
 SxN <- merge(Splus2N, SbaseN, by = "peaknum")
 SxN$ratio <- (SxN$MW8a.x/SxN$MW8a.y)*100
 S1CompN <- filter(SxN, 3.5 < ratio, ratio < 7)
 S2CompN <- filter(SxN, 7.5 < ratio, ratio < 11.5)
+iso.S1N <- filter(iso.dataN, peaknum %in% S1CompN$peaknum)
+iso.S2N <- filter(iso.dataN, peaknum %in% S2CompN$peaknum)
+iso.SN <- bind_rows(iso.S1N, iso.S2N)
+base.SN <- filter(iso.SN, grepl("\\[M\\]\\-", isotopes))
+
+##all S
+iso.S <- bind_rows(iso.SP, iso.SN)
+base.S <- bind_rows(base.SP, base.SN)
+write.csv(iso.S, "S-compounds-iso.csv")
+write.csv(base.S, "S-compounds-base.csv")
+
+#prepare S compounds data for PCA
+
 
 
 #MSMS list creation
