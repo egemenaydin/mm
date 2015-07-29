@@ -56,7 +56,7 @@ base.SP <- filter(iso.SP, grepl("\\[M\\]\\+", isotopes))
 iso.dataN$peaknum <- gsub(".*\\[([0-9]+).*", "\\1", iso.dataN$isotopes)
 SCompN <- select(iso.dataN, isotopes, MW8a)
 SCompN$peaknum <- gsub(".*\\[([0-9]+).*", "\\1", SCompN$isotopes)
-SbaseN<- filter(SCompN, grepl("\\[M\\]\\-", isotopes))
+SbaseN<- filter(SCompN, grepl("\\[M\\]\\-", bind_rows(iso.SP, iso.SN), isotopes))
 Splus2N <- filter(SCompN, grepl("\\[M\\+2\\]\\-", isotopes))
 SxN <- merge(Splus2N, SbaseN, by = "peaknum")
 SxN$ratio <- (SxN$MW8a.x/SxN$MW8a.y)*100
@@ -68,10 +68,18 @@ iso.SN <- bind_rows(iso.S1N, iso.S2N)
 base.SN <- filter(iso.SN, grepl("\\[M\\]\\-", isotopes))
 
 ##all S
+iso.S1 <- bind_rows(iso.S1P, iso.S1N)
+iso.S2 <- bind_rows(iso.S2P, iso.S2N)
 iso.S <- bind_rows(iso.SP, iso.SN)
 base.S <- bind_rows(base.SP, base.SN)
+base.S1 <- filter(iso.S1, grepl("\\[M\\]", isotopes))
+base.S2 <- filter(iso.S2, grepl("\\[M\\]", isotopes))
 write.csv(iso.S, "S-compounds-iso.csv")
 write.csv(base.S, "S-compounds-base.csv")
+write.csv(iso.S1, "S1-compounds-iso.csv")
+write.csv(iso.S2, "S2-compounds-iso.csv")
+write.csv(base.S1, "S1-compounds-base.csv")
+write.csv(base.S2, "S2-compounds-base.csv")
 
 #prepare S compounds data for PCA
 base.S.PCA <- base.S[ , fNames]
