@@ -32,14 +32,25 @@ baseAll_PCA <- data.frame(t(baseAll_PCA))
 Samples <- c("MW1", "MW1", "MW1", "MW2", "MW2", "MW2", "MW3", "MW3", "MW3", "MW4", "MW4", "MW4", "MW5", "MW5", "MW5", "MW6", "MW6", "MW6", "MW7", "MW7", "MW7", "MW8", "MW8", "MW8")
 
 #S containing compounds
-SComp <- select(iso.dataP, isotopes, MW8a)
-SComp$peaknum <- gsub(".*\\[([0-9]+).*", "\\1", SComp$isotopes)
-Sbase<- filter(SComp, grepl("\\[M\\]\\+", isotopes))
-Splus2 <- filter(SComp, grepl("\\[M\\+2\\]\\+", isotopes))
-Sx <- merge(Splus2, Sbase, by = "peaknum")
-Sx$ratio <- (Sx$MW8a.x/Sx$MW8a.y)*100
-S1Comp <- filter(Sx, 3.5 < ratio, ratio < 7)
-S2Comp <- filter(Sx, 7.5 < ratio, ratio < 11.5)
+##positive
+SCompP <- select(iso.dataP, isotopes, MW8a)
+SCompP$peaknum <- gsub(".*\\[([0-9]+).*", "\\1", SCompP$isotopes)
+SbaseP<- filter(SCompP, grepl("\\[M\\]\\+", isotopes))
+Splus2P <- filter(SCompP, grepl("\\[M\\+2\\]\\+", isotopes))
+SxP <- merge(Splus2P, SbaseP, by = "peaknum")
+SxP$ratio <- (SxP$MW8a.x/SxP$MW8a.y)*100
+S1CompP <- filter(SxP, 3.5 < ratio, ratio < 7)
+S2CompP <- filter(SxP, 7.5 < ratio, ratio < 11.5)
+
+##negative
+SCompN <- select(iso.dataN, isotopes, MW8a)
+SCompN$peaknum <- gsub(".*\\[([0-9]+).*", "\\1", SCompN$isotopes)
+SbaseN<- filter(SCompN, grepl("\\[M\\]\\-", isotopes))
+Splus2N <- filter(SCompN, grepl("\\[M\\+2\\]\\-]", isotopes))
+SxN <- merge(Splus2N, SbaseN, by = "peaknum")
+SxN$ratio <- (SxN$MW8a.x/SxN$MW8a.y)*100
+S1CompN <- filter(SxN, 3.5 < ratio, ratio < 7)
+S2CompN <- filter(SxN, 7.5 < ratio, ratio < 11.5)
 
 
 #MSMS list creation
