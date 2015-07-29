@@ -1,8 +1,9 @@
 library(dplyr)
 
 #read phenodata
-PhD <- read.csv("PhD.csv")
-fNames <- as.matrix(PhD$X)
+PhD <- data.frame(read.csv("PhD.csv"))
+fNames <- as.character(levels(PhD$X))
+fSamples <- as.character(PhD$class)
 #positive ionization mode
 dataP <- read.csv("positive_featurelist.csv")
 dataP$ionization <- "positive"
@@ -28,12 +29,12 @@ tBase <- data.frame(t(baseAll))
 write.csv(tBase, "transpose_base_peaks.csv")
 
 #lists for plots
-dataAll_PCA <- select(dataAll, fNames[,1])
+dataAll_PCA <- dataAll[ , fNames]
 dataAll_PCA <- data.frame(t(dataAll_PCA))
-baseAll_PCA <- select(baseAll, MW1a:MW8c)
+baseAll_PCA <- baseAll[ , fNames]
 baseAll_PCA <- data.frame(t(baseAll_PCA))
-Samples <- c("MW1", "MW1", "MW1", "MW2", "MW2", "MW2", "MW3", "MW3", "MW3", "MW4", "MW4", "MW4", "MW5", "MW5", "MW5", "MW6", "MW6", "MW6", "MW7", "MW7", "MW7", "MW8", "MW8", "MW8")
-
+Samples <- fSamples
+        
 #S containing compounds
 ##positive
 iso.dataP$peaknum <- gsub(".*\\[([0-9]+).*", "\\1", iso.dataP$isotopes)
