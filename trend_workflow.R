@@ -73,7 +73,7 @@ for (i in 1:x){
 }
 DR <- data.frame(names(p2))
 colnames(DR) <- "name"
-write.csv(DR, "downregulated.csv")
+write.csv(DR, "downregulated_name.csv")
 
 ##upregulated
 
@@ -117,4 +117,12 @@ for (i in 1:x){
 }
 UR <- data.frame(names(p4))
 colnames(UR) <- "name"
-write.csv(UR, "upregulated.csv")
+write.csv(UR, "upregulated_name.csv")
+
+#subset upregulated and downregulated compounds
+
+DR.C <- merge(df.m, DR, by = "name")
+UR.C <- merge(df.m, UR, by = "name")
+
+write.csv(DR.C, "downregulated_compounds.csv")
+write.csv(UR.C, "upregulated_compounds.csv")
