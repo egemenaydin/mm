@@ -6,8 +6,7 @@ df.m <- read.delim("XCMS.annotated.diffreport.tsv")
 
 #tidy data
 ##select base peaks
-df <- filter(df.m, isotopes != "")
-df <- filter(df, grepl("\\[M\\]\\+", isotopes))
+df <- filter(df.m, grepl("\\[M\\]\\+", isotopes))
 
 ##subset peak names and samples
 df <- select(df, name, M1a:Blank_002)
@@ -34,7 +33,7 @@ df$p3 <- apply(select(df, HB1a:HB3b, Blank_004:Blank_002), 1, function(x) {
 df$logp3 <- log(df$p1, base = 10)
 
 df.D <- filter(df, NoBiocide > LC & NoBiocide > HC & NoBiocide > Blank & NoBiocide > 10*media)
-df.D <- filter(df.D, logp1 < -2 | logp2 < -2)
+df.D <- filter(df.D, logp1 < -3 | logp2 < -3)
 Csub.D <- select(df.D, name:Blank_002)
 row.names(Csub.D) <- Csub.D$name
 Csub.D$name <- NULL
@@ -78,7 +77,7 @@ write.csv(DR, "downregulated_name.csv")
 ##upregulated
 
 df.U <- filter(df, NoBiocide < LC | NoBiocide < HC & LC > 10*media)
-df.U <- filter(df.U, logp1 < -2 | logp2 < -2)
+df.U <- filter(df.U, logp1 < -3 | logp2 < -3)
 Csub2 <- select(df.U, name:Blank_002)
 row.names(Csub2) <- Csub2$name
 Csub2$name <- NULL
