@@ -76,7 +76,8 @@ write.csv(DR, "downregulated_name.csv")
 
 ##upregulated
 
-df.U <- filter(df, NoBiocide < LC | NoBiocide < HC & LC > 10*media)
+df.U <- filter(df, HC > 5*media) 
+df.U <- filter(df.U, NoBiocide < HC)
 df.U <- filter(df.U, logp1 < -3 | logp2 < -3)
 Csub2 <- select(df.U, name:Blank_002)
 row.names(Csub2) <- Csub2$name
@@ -97,7 +98,7 @@ p3 <- ggplot(m2, aes(sample1, value)) +
         #scale_x_discrete(lables = c("media", "No Biocide", "Low Concentration", "High Concentration", "Blank"))
         xlab("Samples") +
         ylab("Intensity (counts)") +
-        ggtitle(m2$variable) +
+        #ggtitle(m2$variable) +
         theme_bw(base_size =16) +
         theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -109,9 +110,9 @@ tit2 <- df.U$name
 
 x2 <- length(p4)
 
-for (i in 1:x){
-        png(file = paste(tit2[[i]], ".png", sep = ""))
-        print(p4[[i]])
+for (j in 1:x2){
+        png(file = paste(tit2[[j]], ".png", sep = ""))
+        print(p4[[j]])
         dev.off()
 }
 UR <- data.frame(names(p4))
