@@ -126,3 +126,10 @@ UR.C <- merge(df.m, UR, by = "name")
 
 write.csv(DR.C, "downregulated_compounds.csv")
 write.csv(UR.C, "upregulated_compounds.csv")
+
+#MSMS list creation
+
+msms.list.D <- select(DR.C, mzmed, rtmed)
+msms.list.U <- select(UR.C, mzmed, rtmed)
+write.csv(msms.list.D, "msms_downregulated.csv")
+write.csv(msms.list.U, "msms_upregulated.csv")
