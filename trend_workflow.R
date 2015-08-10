@@ -25,15 +25,15 @@ df$p2 <- apply(select(df, HB1a:HB3b, High1a:High3b), 1, function(x) {
         t.test(x[1:6], x[7:12], paired = FALSE)$p.value
 } )
 
-df$logp2 <- log(df$p1, base = 10)
+df$logp2 <- log(df$p2, base = 10)
 
 df$p3 <- apply(select(df, HB1a:HB3b, Blank_004:Blank_002), 1, function(x) {
         t.test(x[1:6], x[7:12], paired = FALSE)$p.value
 } )
-df$logp3 <- log(df$p1, base = 10)
+df$logp3 <- log(df$p3, base = 10)
 
 df.D <- filter(df, NoBiocide > LC & NoBiocide > HC & NoBiocide > Blank & NoBiocide > 10*media)
-df.D <- filter(df.D, logp1 < -3 | logp2 < -3)
+df.D <- filter(df.D, logp1 < -3 & logp2 < -3)
 Csub.D <- select(df.D, name:Blank_002)
 row.names(Csub.D) <- Csub.D$name
 Csub.D$name <- NULL
