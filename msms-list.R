@@ -3,7 +3,9 @@ library(dplyr)
 #read phenodata
 PhD <- data.frame(read.csv("PhD.csv"))
 fNames <- as.character(levels(PhD$X))
+fNames <- gsub("-", "\\.", fNames)
 fSamples <- as.character(PhD$class)
+fSamples <- gsub("-", "\\.", fSamples)
 #positive ionization mode
 dataP <- read.csv("positive_featurelist.csv")
 dataP$ionization <- "positive"
