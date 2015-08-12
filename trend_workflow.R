@@ -2,14 +2,21 @@ library(dplyr)
 library(ggplot2)
 
 #load data
-df.m <- read.delim("XCMS.annotated.diffreport.tsv")
+df.m <- read.csv("positive_featurelist.csv")
+
+#read phenodata
+PhD <- data.frame(read.csv("PhD.csv"))
+fNames <- as.character(levels(PhD$X))
+fNames <- gsub("-", "\\.", fNames)
+fSamples <- as.character(PhD$class)
+fSamples <- gsub("-", "\\.", fSamples)
 
 #tidy data
 ##select base peaks
 df <- filter(df.m, grepl("\\[M\\]\\+", isotopes))
 
 ##subset peak names and samples
-df <- select(df, name, M1a:Blank_002)
+df <- df[ , c("name", fNames)]
 row.names(df) <- df$name
 df$media <- apply(select(df, M1a:M3b), 1, mean)
 df$NoBiocide <- apply(select(df, contains("HB")), 1, mean)
