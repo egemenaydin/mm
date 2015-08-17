@@ -43,6 +43,7 @@ xset2P <- group(xset1P, bw = 5, minfrac = 0.5, mzwid = 0.015)
 xset3P <- fillPeaks(xset2P)
 #peaktable_P <- peakTable(xset3P, filebase = "peaktable")
 annotateDiffreport(xset3P, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, calcCaS = TRUE, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015)
+write.csv(xsetP@phenoData, "PhDP.csv")
 
 save(list=ls(all=TRUE), file="air-sparge-pos-xcms-out.RData")
 
@@ -107,6 +108,7 @@ xset2N <- group(xset1N, bw = 5, minfrac = 0.5, mzwid = 0.015)
 xset3N <- fillPeaks(xset2N)
 #peaktable_N <- peakTable(xset3N, filebase = "peaktable")
 annotateDiffreport(xset3P, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, calcCaS = TRUE, minfrac = 0.5, ppm = 5, polarity = "negative", mzabs = 0.015)
+write.csv(xsetN@phenoData, "PhDN.csv")
 
 save(list=ls(all=TRUE), file="air-sparge-neg-xcms-out.RData")
 
