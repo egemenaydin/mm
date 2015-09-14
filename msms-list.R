@@ -1,7 +1,7 @@
 library(dplyr)
 
 #read phenodata
-PhD <- data.frame(read.csv("PhD.csv"))
+PhD <- data.frame(read.csv("PhDP.csv"))
 fNames <- as.character(levels(PhD$X))
 fNames <- gsub("-", "\\.", fNames)
 fSamples <- as.character(PhD$class)
