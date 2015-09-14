@@ -9,6 +9,8 @@ fSamples <- gsub("-", "\\.", fSamples)
 #positive ionization mode
 dataP <- read.csv("positive_featurelist.csv")
 dataP$ionization <- "positive"
+#create names
+dataP$name <- paste("M", round(df.m$mz, 2), "T", round(df.m$rt, 3), sep = "")
 iso.dataP <- filter(dataP, isotopes != "")
 baseP <- filter(iso.dataP, grepl("\\[M\\]\\+", isotopes))
 write.csv(baseP, "positive_base_in_feature_extract.csv")
