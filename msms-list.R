@@ -46,6 +46,8 @@ baseAll_PCA <- baseAll[ , c("name", fNames)]
 rownames(baseAll_PCA) <- baseAll_PCA$name
 baseAll_PCA$name <- NULL
 baseAll_PCA <- data.frame(t(baseAll_PCA))
+write.csv(dataAll_PCA, "all_ions_for_PCA.csv")
+write.csv(baseAll_PCA, "base_ions_for_PCA.csv")
 Samples <- fSamples
         
 #S containing compounds
@@ -99,6 +101,7 @@ base.S.PCA <- base.S[ , c("name", fNames)]
 rownames(base.S.PCA) <- base.S.PCA$name
 base.S.PCA$name <- NULL
 base.S.PCA <- data.frame(t(base.S.PCA))
+write.csv(base.S.PCA, "S_compounds_for_PCA.csv")
 
 
 #MSMS list creation
