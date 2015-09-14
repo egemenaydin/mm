@@ -38,9 +38,13 @@ tBase <- data.frame(t(baseAll))
 write.csv(tBase, "transpose_base_peaks.csv")
 
 #lists for plots
-dataAll_PCA <- dataAll[ , fNames]
+dataAll_PCA <- dataAll[ , c("name", fNames)]
+rownames(dataAll_PCA) <- dataAll_PCA$name
+dataAll_PCA$name <- NULL
 dataAll_PCA <- data.frame(t(dataAll_PCA))
-baseAll_PCA <- baseAll[ , fNames]
+baseAll_PCA <- baseAll[ , c("name", fNames)]
+rownames(baseAll_PCA) <- baseAll_PCA$name
+baseAll_PCA$name <- NULL
 baseAll_PCA <- data.frame(t(baseAll_PCA))
 Samples <- fSamples
         
@@ -91,7 +95,9 @@ write.csv(base.S1, "S1-compounds-base.csv")
 write.csv(base.S2, "S2-compounds-base.csv")
 
 #prepare S compounds data for PCA
-base.S.PCA <- base.S[ , fNames]
+base.S.PCA <- base.S[ , c("name", fNames)]
+rownames(base.S.PCA) <- base.S.PCA$name
+base.S.PCA$name <- NULL
 base.S.PCA <- data.frame(t(base.S.PCA))
 
 
