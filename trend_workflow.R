@@ -10,6 +10,7 @@ fNames <- as.character(levels(PhD$X))
 fNames <- gsub("-", "\\.", fNames)
 fSamples <- as.character(PhD$class)
 fSamples <- gsub("-", "\\.", fSamples)
+grs <- unique(fSamples)
 
 #tidy data
 ##select base peaks
@@ -18,11 +19,11 @@ df <- filter(df.m, grepl("\\[M\\]\\+", isotopes))
 ##subset peak names and samples
 df <- df[ , c("name", fNames)]
 row.names(df) <- df$name
-df$media <- apply(select(df, M1a:M3b), 1, mean)
-df$NoBiocide <- apply(select(df, contains("HB")), 1, mean)
-df$LC <- apply(select(df, contains("Low")), 1, mean)
-df$HC <- apply(select(df, contains("High")), 1, mean)
-df$Blank <- apply(select(df, contains("Blank")), 1, mean)
+
+for (i in 1:length(grs)) {
+        df[[paste(grs[[i]])]] <- apply(df[,grepl(grs[[i]], colnames(df))], 1, mean)
+}
+
 df$p1 <- apply(select(df, HB1a:Low3b), 1, function(x) {
         t.test(x[1:6], x[7:12], paired = FALSE)$p.value
 } )
