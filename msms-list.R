@@ -2,12 +2,12 @@ library(dplyr)
 
 #read phenodata
 PhD <- data.frame(read.csv("PhDP.csv"))
-fNames <- as.character(levels(PhD$X))
+fNames <- as.vector(PhD$X)
 fNames <- gsub("-", "\\.", fNames)
-fSamples <- as.character(PhD$class)
+fSamples <- as.vector(PhD$class)
 fSamples <- gsub("-", "\\.", fSamples)
 #positive ionization mode
-dataP <- read.csv("positive_featurelist2.csv")
+dataP <- read.csv("positive_featurelist.csv")
 dataP$ionization <- "positive"
 #create names
 if("name" %in% colnames(dataP)){
