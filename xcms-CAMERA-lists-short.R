@@ -36,10 +36,10 @@ setwd(wd_P)
 
 n_samples_P <- length(list.dirs(recursive = FALSE))
 
-xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 10, peakwidth = c(2 , 20), snthr = 6, mzdiff = 0.01, prefilter = c(2, 300), polarity = "positive")
-xset1P <- retcor(xsetP, method = "obiwarp", plottype = c("deviation"), profStep = 1)
+xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 10, peakwidth = c(2 , 20), snthr = 6, mzdiff = 0.01, prefilter = c(0, 300), polarity = "positive")
+xset1P <- retcor(xsetP, method = "obiwarp", plottype = c("deviation"), profStep = 0.01)
 dev.print(pdf, "RTDvsRT_pos.pdf", height = 10, width = 10)
-xset2P <- group(xset1P, bw = 3, minfrac = 0.5, mzwid = 0.015)
+xset2P <- group(xset1P, bw = 2, minfrac = 0.5, mzwid = 0.025)
 xset3P <- fillPeaks(xset2P)
 #peaktable_P <- peakTable(xset3P, filebase = "peaktable")
 #annotateDiffreport(xset3P, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, calcCaS = TRUE, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015)
