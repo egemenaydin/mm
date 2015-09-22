@@ -23,7 +23,7 @@ if(!require("dplyr")){
         library(dplyr)
 }
 
-slaves <- 1 #I use it as 1 for now because it looks like there is a bug on CAMERA. When 4 coresused all masses under annoID is represented in last pspgrp.
+slaves <- 4 #I use it as 1 for now because it looks like there is a bug on CAMERA. When 4 coresused all masses under annoID is represented in last pspgrp.
 
 
 #XCMS for positive mode 
@@ -36,33 +36,33 @@ setwd(wd_P)
 
 n_samples_P <- length(list.dirs(recursive = FALSE))
 
-xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 10, peakwidth = c(5 , 20), snthr = 6, mzdiff = 0.01, prefilter = c(1, 100), polarity = "positive")
+xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 10, peakwidth = c(2 , 20), snthr = 6, mzdiff = 0.01, prefilter = c(2, 300), polarity = "positive")
 xset1P <- retcor(xsetP, method = "obiwarp", plottype = c("deviation"), profStep = 1)
 dev.print(pdf, "RTDvsRT_pos.pdf", height = 10, width = 10)
-xset2P <- group(xset1P, bw = 5, minfrac = 0.5, mzwid = 0.015)
+xset2P <- group(xset1P, bw = 3, minfrac = 0.5, mzwid = 0.015)
 xset3P <- fillPeaks(xset2P)
 #peaktable_P <- peakTable(xset3P, filebase = "peaktable")
-annotateDiffreport(xset3P, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, calcCaS = TRUE, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015)
+#annotateDiffreport(xset3P, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, calcCaS = TRUE, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015)
 write.csv(xsetP@phenoData, "PhDP.csv")
 
-save(list=ls(all=TRUE), file="air-sparge-pos-xcms-out.RData")
+save(list=ls(all=TRUE), file="pos-xcms-out.RData")
 
 #CAMERA for positive mode
 #library(chemhelper)
 #rulesP <- load.camera.rules("pos")
 #anP <- annotate(xset3P, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, calcCaS = TRUE, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015)
 
-#library(chemhelper)
-#rulesP <- load.camera.rules("pos")
-# an_P <- xsAnnotate(xset3P, nSlaves = slaves)
-# an_P <- groupFWHM(an_P, perfwhm = 0.6)
-# an_P <- findIsotopes(an_P, mzabs = 0.01)
-# an_P <- groupCorr(an_P, cor_eic_th = 0.75, calcCaS = TRUE)
-# anP <- findAdducts(an_P, polarity="positive")
+library(chemhelper)
+rulesP <- load.camera.rules("pos")
+an_P <- xsAnnotate(xset3P, nSlaves = slaves)
+an_P <- groupFWHM(an_P, perfwhm = 0.6)
+an_P <- findIsotopes(an_P, mzabs = 0.01, ppm = 5, minfrac = 0.1)
+an_P <- groupCorr(an_P, cor_eic_th = 0.75)
+anP <- findAdducts(an_P, polarity="positive", rules = rulesP)
 peaklistP <- getPeaklist(anP)
 write.csv(peaklistP, file = "positive_featurelist.csv")
 
-save(list=ls(all=TRUE), file="air-sparge-pos-camera-out.RData")
+save(list=ls(all=TRUE), file="pos-camera-out.RData")install_github("stanstrup/chemhelper")
 
 cleanParallel(anP)
 
