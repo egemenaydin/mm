@@ -13,7 +13,7 @@ dataP$ionization <- "positive"
 if("name" %in% colnames(dataP)){
         cat("names were defined\n")
 } else{
-        dataP$name <- paste("M", round(dataP$mz, 2), "T", round(dataP$rt, 3), sep = "")        
+        dataP$name <- paste("M", round(dataP$mz, 3), "T", round(dataP$rt, 3), sep = "")        
 }
 
 iso.dataP <- filter(dataP, isotopes != "")
