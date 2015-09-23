@@ -43,6 +43,7 @@ xset2P <- group(xset1P, bw = 2, minfrac = 0.5, mzwid = 0.015)
 xset3P <- fillPeaks(xset2P)
 #peaktable_P <- peakTable(xset3P, filebase = "peaktable")
 #annotateDiffreport(xset3P, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, calcCaS = TRUE, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015)
+#diffreport(xset3P, "SDB_tp0", "SDB_tp5", eicmax = 500, filebase = "SDB_tp0vstp5")
 write.csv(xsetP@phenoData, "PhDP.csv")
 
 save(list=ls(all=TRUE), file="pos-xcms-out.RData")
