@@ -62,7 +62,7 @@ anP <- findAdducts(an_P, polarity="positive", rules = rulesP)
 peaklistP <- getPeaklist(anP)
 write.csv(peaklistP, file = "positive_featurelist.csv")
 
-save(list=ls(all=TRUE), file="pos-camera-out.RData")install_github("stanstrup/chemhelper")
+save(list=ls(all=TRUE), file="pos-camera-out.RData")
 
 cleanParallel(anP)
 
