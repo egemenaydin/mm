@@ -38,11 +38,11 @@ tBase <- data.frame(t(baseAll))
 write.csv(tBase, "transpose_base_peaks.csv")
 
 #lists for plots
-dataAll_PCA <- dataP[ , c("name", fNames)]
+dataAll_PCA <- dataAll[ , c("name", fNames)]
 rownames(dataAll_PCA) <- dataAll_PCA$name
 dataAll_PCA$name <- NULL
 dataAll_PCA <- data.frame(t(dataAll_PCA))
-baseAll_PCA <- baseP[ , c("name", fNames)]
+baseAll_PCA <- baseAll[ , c("name", fNames)]
 rownames(baseAll_PCA) <- baseAll_PCA$name
 baseAll_PCA$name <- NULL
 baseAll_PCA <- data.frame(t(baseAll_PCA))
