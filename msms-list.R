@@ -56,7 +56,7 @@ library(RColorBrewer)
 data_polished <- dataAll_PCA[, apply(dataAll_PCA, 2, var, na.rm = TRUE) != 0]
 data_polished[data_polished == 0] <- 0.5*(min(data_polished[data_polished>0],na.rm=TRUE))
 log.data <- log(data_polished[ , 1:length(data_polished)], base = 2)
-
+Samples <- fSamples
 pca <- prcomp(log.data, center = TRUE, scale. = TRUE)
 
 PC <- predict(pca)
@@ -78,7 +78,7 @@ x_lab <- sprintf ('PC1 (%0.1f%%)', 100*pca$sdev[1]^2/sum(pca$sdev^2))
 y_lab <- sprintf ('PC2 (%0.1f%%)', 100*pca$sdev[2]^2/sum(pca$sdev^2))
 
 g <- ggplot(x, aes(PC1, PC2))
-g + geom_point(aes(color = fSamples), size = 5) + theme_bw(base_size = 22) + xlab(x_lab) + ylab(y_lab) + scale_colour_manual(values = my.palette)
+g + geom_point(aes(color = Samples), size = 5) + theme_bw(base_size = 22) + xlab(x_lab) + ylab(y_lab) + scale_colour_manual(values = my.palette)
 
 dev.print(pdf, file = "PCA.pdf", height=11, width=11)
 
