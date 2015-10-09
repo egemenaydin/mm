@@ -98,35 +98,35 @@ write.csv(mol.mat, "formula.csv")
 save(list=ls(all=TRUE), file="pos-camera-out.RData")
 
 
-
+##not used anymore
 #positive mode creating peaklists
 
-masses_P <- do.call("rbind", lapply(1:length(anP@pspectra), function(x) {
-        neutral_masses_P <- do.call("rbind", lapply(anP@pspectra[[x]], function(y) {
-                do.call("rbind", lapply(anP@derivativeIons[[y]], function(z) {
-                        cbind(mass = z$mass, rule = z$rule_id, peaknum=y, psg = x)
-                }))
-        }))
-}))
-
-
-masses_data_P <- as.data.frame(masses_P)
-
-intensity_P <- as.matrix(anP@groupInfo[masses_data_P$peaknum[1:length(masses_data_P$peaknum)], c(1, 4, (8+n_samples_P):ncol(anP@groupInfo))])
-
-P_all <- cbind(masses_data_P, intensity_P)
-
-P_all_ionization <- cbind(P_all, ionization = "positive")
-
-P_all_ionization <- distinct(P_all_ionization, mass)
-
-write.csv(P_all_ionization, "positive_all_int.csv")
-
-P_base <- subset(P_all_ionization, P_all_ionization$rule == 1)
-
-write.csv(P_base, "positive_base_int.csv")
-
-save(list=ls(all=TRUE), file="air-sparge-pos-peak-list-out.RData")
+# masses_P <- do.call("rbind", lapply(1:length(anP@pspectra), function(x) {
+#         neutral_masses_P <- do.call("rbind", lapply(anP@pspectra[[x]], function(y) {
+#                 do.call("rbind", lapply(anP@derivativeIons[[y]], function(z) {
+#                         cbind(mass = z$mass, rule = z$rule_id, peaknum=y, psg = x)
+#                 }))
+#         }))
+# }))
+# 
+# 
+# masses_data_P <- as.data.frame(masses_P)
+# 
+# intensity_P <- as.matrix(anP@groupInfo[masses_data_P$peaknum[1:length(masses_data_P$peaknum)], c(1, 4, (8+n_samples_P):ncol(anP@groupInfo))])
+# 
+# P_all <- cbind(masses_data_P, intensity_P)
+# 
+# P_all_ionization <- cbind(P_all, ionization = "positive")
+# 
+# P_all_ionization <- distinct(P_all_ionization, mass)
+# 
+# write.csv(P_all_ionization, "positive_all_int.csv")
+# 
+# P_base <- subset(P_all_ionization, P_all_ionization$rule == 1)
+# 
+# write.csv(P_base, "positive_base_int.csv")
+# 
+# save(list=ls(all=TRUE), file="air-sparge-pos-peak-list-out.RData")
 
 #XCMS for negative mode
 
