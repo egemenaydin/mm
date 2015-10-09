@@ -36,7 +36,7 @@ setwd(wd_P)
 
 n_samples_P <- length(list.dirs(recursive = FALSE))
 
-xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 10, peakwidth = c(2 , 20), snthr = 6, mzdiff = 0.001, prefilter = c(0, 300), polarity = "positive")
+xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 10, peakwidth = c(2 , 20), snthr = 6, prefilter = c(0, 300), polarity = "positive")
 xset1P <- retcor(xsetP, method = "obiwarp", plottype = c("deviation"), profStep = 0.01)
 dev.print(pdf, "RTDvsRT_pos.pdf", height = 10, width = 10)
 xset2P <- group(xset1P, bw = 2, minfrac = 0.5, mzwid = 0.015)
@@ -55,17 +55,47 @@ save(list=ls(all=TRUE), file="pos-xcms-out.RData")
 
 library(chemhelper)
 rulesP <- load.camera.rules("pos")
-an_P <- xsAnnotate(xset3P, nSlaves = slaves)
-an_P <- groupFWHM(an_P, perfwhm = 0.6)
-an_P <- findIsotopes(an_P, mzabs = 0.01, ppm = 5, minfrac = 0.1)
-an_P <- groupCorr(an_P, cor_eic_th = 0.75)
-anP <- findAdducts(an_P, polarity="positive", rules = rulesP)
-peaklistP <- getPeaklist(anP)
-write.csv(peaklistP, file = "positive_featurelist.csv")
+anP1 <- xsAnnotate(xset3P, nSlaves = slaves, polarity = "positive")
+anP2 <- groupFWHM(anP1, perfwhm = 0.6, sigma = 2)
+anP3 <- findIsotopes(anP2, ppm = 5, minfrac = 0.05)
+anP4 <- groupCorr(anP3, cor_eic_th = 0.75)
+anP5 <- findAdducts(anP4, polarity="positive", rules = rulesP)
+cleanParallel(anP5)
+peaklistP2 <- getPeaklist(anP5)
+isotopes <- getIsotopeCluster(anP5)
+write.csv(peaklistP2, file = "positive_featurelist2.csv")
 
-save(list=ls(all=TRUE), file="pos-camera-out.RData")
 
-cleanParallel(anP)
+
+library(Rdisop)
+mols <- lapply(isotopes, function(x) decomposeIsotopes(x$peaks[,1]-1.007276, x$peaks[,2], z = x$charge, minElements = "C2"))
+
+mol.mat <- matrix(c(lapply(mols, function(x) x$formula[1]), 
+                    lapply(mols, (function(x) x$score[1])), 
+                    lapply(mols, function(x) x$exactmass[1]), 
+                    lapply(mols, function(x) x$DBE[1])), 
+                  ncol = 4
+                  )
+
+colnames(mol.mat) <- c("formula", "score", "exactmass", "DBE")
+mol.mat[mol.mat == "NULL"] <- 0
+mol.mat <- data.frame(mol.mat)
+
+mol.mat$formula <- unlist(mol.mat$formula)
+mol.mat$score <- unlist(mol.mat$score)
+mol.mat$exactmass <- unlist(mol.mat$exactmass)
+mol.mat$DBE <- unlist(mol.mat$DBE)
+
+
+mol.mat <- filter(mol.mat, score > 0.75)
+mol.mat$mz <- as.numeric(mol.mat$exactmass) + 1.007276
+
+write.csv(mol.mat, "formula.csv")
+
+
+save(list=ls(all=TRUE), file="pos-camera-out2.RData")
+
+
 
 #positive mode creating peaklists
 
