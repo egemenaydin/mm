@@ -63,24 +63,26 @@ anP5 <- findAdducts(anP4, polarity="positive", rules = rulesP)
 cleanParallel(anP5)
 peaklistP2 <- getPeaklist(anP5)
 isotopes <- getIsotopeCluster(anP5)
-write.csv(peaklistP2, file = "positive_featurelist2.csv")
+write.csv(peaklistP2, file = "positive_featurelist.csv")
 
 
 
 library(Rdisop)
 mols <- lapply(isotopes, function(x) decomposeIsotopes(x$peaks[,1]-1.007276, x$peaks[,2], z = x$charge, minElements = "C2"))
 
-mol.mat <- matrix(c(lapply(mols, function(x) x$formula[1]), 
+mol.mat <- matrix(c(1:length(mols),
+                    lapply(mols, function(x) x$formula[1]), 
                     lapply(mols, (function(x) x$score[1])), 
                     lapply(mols, function(x) x$exactmass[1]), 
                     lapply(mols, function(x) x$DBE[1])), 
-                  ncol = 4
+                  ncol = 5
                   )
 
-colnames(mol.mat) <- c("formula", "score", "exactmass", "DBE")
+colnames(mol.mat) <- c("iso.no", "formula", "score", "exactmass", "DBE")
 mol.mat[mol.mat == "NULL"] <- 0
 mol.mat <- data.frame(mol.mat)
 
+mol.mat$iso.no <- unlist(mol.mat$iso.no)
 mol.mat$formula <- unlist(mol.mat$formula)
 mol.mat$score <- unlist(mol.mat$score)
 mol.mat$exactmass <- unlist(mol.mat$exactmass)
@@ -88,12 +90,12 @@ mol.mat$DBE <- unlist(mol.mat$DBE)
 
 
 mol.mat <- filter(mol.mat, score > 0.75)
-mol.mat$mz <- as.numeric(mol.mat$exactmass) + 1.007276
+mol.mat$mz.teo <- as.numeric(mol.mat$exactmass) + 1.007276
 
 write.csv(mol.mat, "formula.csv")
 
 
-save(list=ls(all=TRUE), file="pos-camera-out2.RData")
+save(list=ls(all=TRUE), file="pos-camera-out.RData")
 
 
 
