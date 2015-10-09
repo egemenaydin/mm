@@ -74,11 +74,12 @@ mol.mat <- matrix(c(1:length(mols),
                     lapply(mols, function(x) x$formula[1]), 
                     lapply(mols, (function(x) x$score[1])), 
                     lapply(mols, function(x) x$exactmass[1]), 
-                    lapply(mols, function(x) x$DBE[1])), 
-                  ncol = 5
+                    lapply(mols, function(x) x$DBE[1]),
+                    lapply(mols, function(x) x$charge[1])),  
+                  ncol = 6
                   )
 
-colnames(mol.mat) <- c("iso.no", "formula", "score", "exactmass", "DBE")
+colnames(mol.mat) <- c("iso.no", "formula", "score", "exactmass", "DBE", "charge")
 mol.mat[mol.mat == "NULL"] <- 0
 mol.mat <- data.frame(mol.mat)
 
@@ -87,7 +88,9 @@ mol.mat$formula <- unlist(mol.mat$formula)
 mol.mat$score <- unlist(mol.mat$score)
 mol.mat$exactmass <- unlist(mol.mat$exactmass)
 mol.mat$DBE <- unlist(mol.mat$DBE)
+mol.mat$charge<- unlist(mol.mat$charge)
 
+mol.mat <- filter(mol.mat, charge == 1)
 
 mol.mat <- filter(mol.mat, score > 0.75)
 mol.mat$mz.teo <- as.numeric(mol.mat$exactmass) + 1.007276
