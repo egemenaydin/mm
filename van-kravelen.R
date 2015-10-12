@@ -62,20 +62,34 @@ df.b$normMW8 <- -1+2*(df.b$MW8-df.b$min)/(df.b$max-df.b$min)
 p1 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = normMW2)) +
         geom_point(size = 3) +
         scale_color_gradientn(colours = rainbow(7)) +
+        #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=0.7,ymax=1.5), fill="#FFFFFF", alpha = 0.0008) +
+        #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=1,ymax=2), fill="#FFFFFF", alpha = 0.0008) +
+        geom_rect(data = NULL, aes(xmin=0.0,xmax=0.3,ymin=1.5,ymax=2), color = "black", fill="#FFFFFF", alpha = 0.0008) +
+        geom_rect(data = NULL, aes(xmin=0.0,xmax=0.1,ymin=0.7,ymax=1.5), color = "black", fill="#FFFFFF", alpha = 0.0008) +
+        geom_rect(data = NULL, aes(xmin=0.0,xmax=0.5,ymin=0.3,ymax=0.7), color = "black", fill="#FFFFFF", alpha = 0.0008) +
         scale_x_continuous(limits = c(0, 0.5)) +
-        scale_y_continuous(limits = c(0.3, 2)) +
-        xlab("O/C") +
-        ylab("H/C") +
+        scale_y_continuous(limits = c(0.1, 2)) +
+        xlab("O/C atom ratio") +
+        ylab("H/C atom ratio") +
         ggtitle("MW2") +
         theme_bw(base_size = 22, base_family = "georgia")
+        
+p1
 
 p2 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = MW5)) +
         geom_point(size = 3) +
         scale_color_gradientn(colours = rainbow(7)) +
         scale_x_continuous(limits = c(0, 0.5)) +
         scale_y_continuous(limits = c(0, 2)) +
-        xlab("O/C") +
-        ylab("H/C") +
+        #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=0.7,ymax=1.5), fill="#FFFFFF", alpha = 0.0008) +
+        #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=1,ymax=2), fill="#FFFFFF", alpha = 0.0008) +
+        geom_rect(data = NULL, aes(xmin=0.0,xmax=0.3,ymin=1.5,ymax=2), color = "black", fill="#FFFFFF", alpha = 0.0008) +
+        geom_rect(data = NULL, aes(xmin=0.0,xmax=0.1,ymin=0.7,ymax=1.5), color = "black", fill="#FFFFFF", alpha = 0.0008) +
+        geom_rect(data = NULL, aes(xmin=0.0,xmax=0.5,ymin=0.3,ymax=0.7), color = "black", fill="#FFFFFF", alpha = 0.0008) +
+        scale_x_continuous(limits = c(0, 0.5)) +
+        scale_y_continuous(limits = c(0.1, 2)) +
+        xlab("O/C atom ratio") +
+        ylab("H/C atom ratio") +
         ggtitle("MW5") +
         theme_bw(base_size = 22, base_family = "georgia")
 
@@ -84,10 +98,19 @@ p3 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = normMW8)) +
         scale_color_gradientn(colours = rainbow(7)) +
         scale_x_continuous(limits = c(0, 0.5)) +
         scale_y_continuous(limits = c(0.3, 2)) +
-        xlab("O/C") +
-        ylab("H/C") +
+        #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=0.7,ymax=1.5), fill="#FFFFFF", alpha = 0.0008) +
+        #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=1,ymax=2), fill="#FFFFFF", alpha = 0.0008) +
+        geom_rect(data = NULL, aes(xmin=0.0,xmax=0.3,ymin=1.5,ymax=2), color = "black", fill="#FFFFFF", alpha = 0.0008) +
+        geom_rect(data = NULL, aes(xmin=0.0,xmax=0.1,ymin=0.7,ymax=1.5), color = "black", fill="#FFFFFF", alpha = 0.0008) +
+        geom_rect(data = NULL, aes(xmin=0.0,xmax=0.5,ymin=0.3,ymax=0.7), color = "black", fill="#FFFFFF", alpha = 0.0008) +
+        scale_x_continuous(limits = c(0, 0.5)) +
+        scale_y_continuous(limits = c(0.1, 2)) +
+        xlab("O/C atom ratio") +
+        ylab("H/C atom ratio") +
         ggtitle("MW8") +
         theme_bw(base_size = 22, base_family = "georgia")
+
+p3
 
 grid.arrange(p1, p2, p3)
 
