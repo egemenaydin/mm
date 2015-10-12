@@ -27,6 +27,13 @@ if("name" %in% colnames(df.m)){
 } else{
         df.m$name <- paste("M", round(df.m$mz, 3), "T", round(df.m$rt, 3), sep = "")        
 }
+#read phenodata
+PhD <- data.frame(read.csv("PhDP.csv"))
+fNames <- as.vector(PhD$X)
+fNames <- gsub("-", "\\.", fNames)
+fSamples <- as.vector(PhD$class)
+fSamples <- gsub("-", "\\.", fSamples)
+grs <- unique(fSamples)
 
 dfx <- filter(df.m, grepl("\\[M\\]\\+", isotopes))
 dfx$iso.no <- gsub("[^0-9]", "", dfx$isotopes)
@@ -39,27 +46,24 @@ write.csv(df.S, "S_containing.csv")
 df.b$OC <- df.b$O/df.b$C
 df.b$HC <- df.b$H/df.b$C
 
-df.b$MW2 <- apply(select(df.b, MW2a:MW2c), 1, function(x){
-        log2(mean(x[1:3]))
-})
+for (i in length(grs)) {
+        df.b[[paste(grs[[i]])]] <- apply(df.b[,grepl(grs[[i]], colnames(df.b))], 1, mean)
+}
 
-df.b$MW4 <- apply(select(df.b, MW4a:MW4c), 1, function(x){
-        log2(mean(x[1:3]))
-})
+df.b$min <- apply(select(df.b, MW1:MW8), 1, min)
+df.b$max <- apply(select(df.b, MW1:MW8), 1, max)
+df.b$mean <- apply(select(df.b, MW1:MW8), 1, mean)
 
-df.b$MW8 <- apply(select(df.b, MW8a:MW8c), 1, function(x){
-        log2(mean(x[1:3]))
-})
+df.b$normMW2 <- -1+2*(df.b$MW2-df.b$min)/(df.b$max-df.b$min)
+df.b$normMW8 <- -1+2*(df.b$MW8-df.b$min)/(df.b$max-df.b$min)
 
-df.b$MW5 <- apply(select(df.b, MW5a:MW5c), 1, function(x){
-        log2(mean(x[1:3]))
-})
 
-p1 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = MW2)) +
+
+p1 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = normMW2)) +
         geom_point(size = 3) +
         scale_color_gradientn(colours = rainbow(7)) +
         scale_x_continuous(limits = c(0, 0.5)) +
-        scale_y_continuous(limits = c(0, 2)) +
+        scale_y_continuous(limits = c(0.3, 2)) +
         xlab("O/C") +
         ylab("H/C") +
         ggtitle("MW2") +
@@ -75,11 +79,11 @@ p2 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = MW5)) +
         ggtitle("MW5") +
         theme_bw(base_size = 22, base_family = "georgia")
 
-p3 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = MW8)) +
+p3 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = normMW8)) +
         geom_point(size = 3) +
         scale_color_gradientn(colours = rainbow(7)) +
         scale_x_continuous(limits = c(0, 0.5)) +
-        scale_y_continuous(limits = c(0, 2)) +
+        scale_y_continuous(limits = c(0.3, 2)) +
         xlab("O/C") +
         ylab("H/C") +
         ggtitle("MW8") +
