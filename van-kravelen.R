@@ -21,6 +21,13 @@ df[is.na(df)] <- 0
 df$DBE <- df$C - (df$H/2) + (df$N/2) + 1
 
 df.m <- read.csv("positive_featurelist.csv")
+#create names
+if("name" %in% colnames(df.m)){
+        cat("names were defined\n")
+} else{
+        df.m$name <- paste("M", round(df.m$mz, 3), "T", round(df.m$rt, 3), sep = "")        
+}
+
 dfx <- filter(df.m, grepl("\\[M\\]\\+", isotopes))
 dfx$iso.no <- gsub("[^0-9]", "", dfx$isotopes)
 df.b <- merge(df,dfx, by = "iso.no")
