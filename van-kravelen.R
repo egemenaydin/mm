@@ -20,7 +20,7 @@ df$S <- as.numeric(genXtract(df$formula, "S", "~"))
 df[is.na(df)] <- 0
 df$DBE <- df$C - (df$H/2) + (df$N/2) + 1
 
-df.m <- read.csv("positive_featurelist.csv")
+df.m <- read.csv("positive_featurelist2.csv")
 #create names
 if("name" %in% colnames(df.m)){
         cat("names were defined\n")
@@ -36,43 +36,43 @@ df.S <- filter(df.b, S > 0)
 write.csv(df.S, "S_containing.csv")
 
 
-df$OC <- df$O/df$C
-df$HC <- df$H/df$C
+df.b$OC <- df.b$O/df.b$C
+df.b$HC <- df.b$H/df.b$C
 
-df$tp0 <- apply(select(df, FE1.tp0.a, FE1.tp0.b), 1, function(x){
-        log2(mean(x[1:2]))
+df.b$MW2 <- apply(select(df.b, MW2a:MW2c), 1, function(x){
+        log2(mean(x[1:3]))
 })
 
-df$tp1 <- apply(select(df, FE1.tp2.a, FE1.tp2.b), 1, function(x){
-        log2(mean(x[1:2]))
+df.b$MW4 <- apply(select(df.b, MW4a:MW4c), 1, function(x){
+        log2(mean(x[1:3]))
 })
 
-df$tp2 <- apply(select(df, FE1.tp4.a, FE1.tp4.b), 1, function(x){
-        log2(mean(x[1:2]))
+df.b$MW8 <- apply(select(df.b, MW8a:MW8c), 1, function(x){
+        log2(mean(x[1:3]))
 })
 
-p1 <- ggplot(df, aes(df$HC, df$OC, colour = tp0)) +
-        geom_point(size = 4) +
-        scale_color_gradient2() +
+p1 <- ggplot(df.b, aes(df.b$HC, df.b$OC, colour = MW2)) +
+        geom_point(size = 1) +
+        scale_color_gradient2(low = "red", mid = "white", high = "blue") +
         xlab("H/C") +
         ylab("O/C") +
-        ggtitle("Camelina day 0") +
+        ggtitle("MW2") +
         theme_bw()
 
-p2 <- ggplot(df, aes(df$HC, df$OC, colour = tp1)) +
-        geom_point(size = 4) +
+p2 <- ggplot(df.b, aes(df.b$HC, df.b$OC, colour = MW4)) +
+        geom_point(size = 1) +
         scale_color_gradient2() +
         xlab("H/C") +
         ylab("O/C") +
-        ggtitle("Camelina day 20") +
+        ggtitle("MW4") +
         theme_bw()
 
-p3 <- ggplot(df, aes(df$HC, df$OC, colour = tp2)) +
-        geom_point(size = 4) +
+p3 <- ggplot(df.b, aes(df.b$HC, df.b$OC, colour = MW8)) +
+        geom_point(size = 1) +
         scale_color_gradient2() +
         xlab("H/C") +
         ylab("O/C") +
-        ggtitle("Camelina day 40") +
+        ggtitle("MW8") +
         theme_bw()
 
 grid.arrange(p1, p2, p3)
