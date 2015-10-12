@@ -93,6 +93,7 @@ mol.mat$charge<- unlist(mol.mat$charge)
 mol.mat <- filter(mol.mat, charge == 1)
 
 mol.mat <- filter(mol.mat, score > 0.75)
+mol.mat <- filter(mol.mat, DBE > 0)
 mol.mat$mz.teo <- as.numeric(mol.mat$exactmass) + 1.007276
 
 write.csv(mol.mat, "formula.csv")
