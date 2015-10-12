@@ -25,6 +25,9 @@ dfx <- filter(df.m, grepl("\\[M\\]\\+", isotopes))
 dfx$iso.no <- gsub("[^0-9]", "", dfx$isotopes)
 df.b <- merge(df,dfx, by = "iso.no")
 
+df.S <- filter(df.b, S > 0)
+write.csv(df.S, "S_containing.csv")
+
 
 df$OC <- df$O/df$C
 df$HC <- df$H/df$C
