@@ -17,7 +17,7 @@ log_data <- data.frame(log2(data[ , 1:length(data)]))
 data_matrix <- data.matrix(log_data[ , 1:length(log_data)])
 rownames(data_matrix) <- rnames
 
-cols <- colorRampPalette(c("black","red"))(75)
+cols <- colorRampPalette(c("cyan","magenta"))(16)
 
 heatmap.2(data_matrix, Rowv = TRUE, Colv = "NA", 
           dendrogram = "row", col = cols, scale = c("none"),
