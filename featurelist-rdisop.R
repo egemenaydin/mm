@@ -1,6 +1,7 @@
 library(dplyr)
 library(ggplot2)
 
+
 #load data
 df.m <- read.csv("positive_featurelist2.csv")
 
@@ -23,6 +24,7 @@ grs <- unique(fSamples)
 #tidy data
 ##select base peaks
 df <- filter(df.m, grepl("\\[M\\]\\+", isotopes))
-df$iso.no <- grep("\\[[0123456789]+\\]", df$isotopes, value = FALSE)
+df$iso.no <- gsub("[^0-9]", "", df$isotopes)
+        
 f <- read.csv("formula.csv")
 df.b <- merge(f,df, by = "iso.no")
