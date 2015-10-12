@@ -51,28 +51,40 @@ df.b$MW8 <- apply(select(df.b, MW8a:MW8c), 1, function(x){
         log2(mean(x[1:3]))
 })
 
-p1 <- ggplot(df.b, aes(df.b$HC, df.b$OC, colour = MW2)) +
-        geom_point(size = 1) +
-        scale_color_gradient2(low = "red", mid = "white", high = "blue") +
-        xlab("H/C") +
-        ylab("O/C") +
+df.b$MW5 <- apply(select(df.b, MW5a:MW5c), 1, function(x){
+        log2(mean(x[1:3]))
+})
+
+p1 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = MW2)) +
+        geom_point(size = 3) +
+        scale_color_gradientn(colours = rainbow(7)) +
+        scale_x_continuous(limits = c(0, 0.5)) +
+        scale_y_continuous(limits = c(0, 2)) +
+        xlab("O/C") +
+        ylab("H/C") +
         ggtitle("MW2") +
-        theme_bw()
+        theme_bw(base_size = 22, base_family = "georgia")
 
-p2 <- ggplot(df.b, aes(df.b$HC, df.b$OC, colour = MW4)) +
-        geom_point(size = 1) +
-        scale_color_gradient2() +
-        xlab("H/C") +
-        ylab("O/C") +
-        ggtitle("MW4") +
-        theme_bw()
+p2 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = MW5)) +
+        geom_point(size = 3) +
+        scale_color_gradientn(colours = rainbow(7)) +
+        scale_x_continuous(limits = c(0, 0.5)) +
+        scale_y_continuous(limits = c(0, 2)) +
+        xlab("O/C") +
+        ylab("H/C") +
+        ggtitle("MW5") +
+        theme_bw(base_size = 22, base_family = "georgia")
 
-p3 <- ggplot(df.b, aes(df.b$HC, df.b$OC, colour = MW8)) +
-        geom_point(size = 1) +
-        scale_color_gradient2() +
-        xlab("H/C") +
-        ylab("O/C") +
+p3 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = MW8)) +
+        geom_point(size = 3) +
+        scale_color_gradientn(colours = rainbow(7)) +
+        scale_x_continuous(limits = c(0, 0.5)) +
+        scale_y_continuous(limits = c(0, 2)) +
+        xlab("O/C") +
+        ylab("H/C") +
         ggtitle("MW8") +
-        theme_bw()
+        theme_bw(base_size = 22, base_family = "georgia")
 
 grid.arrange(p1, p2, p3)
+
+
