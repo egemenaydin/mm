@@ -57,7 +57,12 @@ df.b$mean <- apply(select(df.b, MW1:MW8), 1, mean)
 df.b$normMW2 <- -1+2*(df.b$MW2-df.b$min)/(df.b$max-df.b$min)
 df.b$normMW8 <- -1+2*(df.b$MW8-df.b$min)/(df.b$max-df.b$min)
 
-
+CHO <- data.frame(a = c(0, 0.5, 1, 1.5, 2, 2.5), 
+                  b = c(1, 1, 1, 1, 1, 1), 
+                  c = c("CHO = 0", "CHO = -0.5", "CHO = -1", "CHO = -1.5", "CHO = -2", "CHO = -2.5"), 
+                  x = c(0.4, 0.4, 0.4, 0.4, 0.4, 0.4),
+                  y = c(0.45, 0.95, 1.45, 1.95, 2.45, 2.95)
+                  )
 
 p1 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = normMW2)) +
         geom_point(size = 3) +
@@ -97,14 +102,14 @@ p3 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = normMW8)) +
         geom_point(size = 3) +
         scale_color_gradientn(colours = rainbow(7)) +
         scale_x_continuous(limits = c(0, 0.5)) +
-        scale_y_continuous(limits = c(0.3, 2)) +
+        scale_y_continuous(limits = c(0.1, 2)) +
         #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=0.7,ymax=1.5), fill="#FFFFFF", alpha = 0.0008) +
         #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=1,ymax=2), fill="#FFFFFF", alpha = 0.0008) +
         geom_rect(data = NULL, aes(xmin=0.0,xmax=0.3,ymin=1.5,ymax=2), color = "black", fill="#FFFFFF", alpha = 0.0008) +
         geom_rect(data = NULL, aes(xmin=0.0,xmax=0.1,ymin=0.7,ymax=1.5), color = "black", fill="#FFFFFF", alpha = 0.0008) +
         geom_rect(data = NULL, aes(xmin=0.0,xmax=0.5,ymin=0.3,ymax=0.7), color = "black", fill="#FFFFFF", alpha = 0.0008) +
-        scale_x_continuous(limits = c(0, 0.5)) +
-        scale_y_continuous(limits = c(0.1, 2)) +
+        geom_abline(aes(intercept = a, slope = b), data = CHO, size = 1.3) +
+        annotate("text", label = CHO$c, x= CHO$x, y= CHO$y, angle = 20, size = 6, family = "georgia") +
         xlab("O/C atom ratio") +
         ylab("H/C atom ratio") +
         ggtitle("MW8") +
