@@ -33,7 +33,7 @@ wd_P <- jchoose.dir(default = getwd(), caption = "Please select directory for po
 wd_N <- jchoose.dir(default = getwd(), caption = "Please select directory for negative mode")
 
 setwd(wd_P)
-
+sink("output.txt")
 n_samples_P <- length(list.dirs(recursive = FALSE))
 
 xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 10, peakwidth = c(2 , 20), snthr = 6, prefilter = c(0, 300), polarity = "positive")
@@ -65,9 +65,10 @@ peaklistP2 <- getPeaklist(anP5)
 isotopes <- getIsotopeCluster(anP5)
 write.csv(peaklistP2, file = "positive_featurelist.csv")
 
-
+save(list=ls(all=TRUE), file="pos-camera-out.RData")
 
 library(Rdisop)
+library(dplyr)
 mols <- lapply(isotopes, function(x) decomposeIsotopes(x$peaks[,1]-1.007276, x$peaks[,2], z = x$charge, minElements = "C2"))
 
 mol.mat <- matrix(c(1:length(mols),
@@ -99,9 +100,10 @@ mol.mat$mz.teo <- as.numeric(mol.mat$exactmass) + 1.007276
 write.csv(mol.mat, "formula.csv")
 
 
-save(list=ls(all=TRUE), file="pos-camera-out.RData")
+save(list=ls(all=TRUE), file="pos-rdisop-out.RData")
 
-
+sink()
+savehistory(file = "xcms.Rhistory")
 ##not used anymore
 #positive mode creating peaklists
 
