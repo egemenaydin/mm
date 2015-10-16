@@ -16,11 +16,13 @@ df$C <- as.numeric(genXtract(df$formula, "C", "~"))
 df$H <- as.numeric(genXtract(df$formula, "H", "~"))
 df$O <- as.numeric(genXtract(df$formula, "O", "~"))
 df$N <- as.numeric(genXtract(df$formula, "N", "~"))
+df$P <- as.numeric(genXtract(df$formula, "P", "~"))
 df$S <- as.numeric(genXtract(df$formula, "S", "~"))
+
 df[is.na(df)] <- 0
 df$DBE <- df$C - (df$H/2) + (df$N/2) + 1
 
-df.m <- read.csv("positive_featurelist2.csv")
+df.m <- read.csv("positive_featurelist.csv")
 #create names
 if("name" %in% colnames(df.m)){
         cat("names were defined\n")
