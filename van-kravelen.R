@@ -20,7 +20,7 @@ df$P <- as.numeric(genXtract(df$formula, "P", "~"))
 df$S <- as.numeric(genXtract(df$formula, "S", "~"))
 
 df[is.na(df)] <- 0
-df$DBE <- df$C - (df$H/2) + (df$N/2) + 1
+#df$DBE2 <- df$C - (df$H/2) + (df$N/2) + 1
 
 df.m <- read.csv("positive_featurelist.csv")
 #create names
