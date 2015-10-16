@@ -40,6 +40,7 @@ grs <- unique(fSamples)
 dfx <- filter(df.m, grepl("\\[M\\]\\+", isotopes))
 dfx$iso.no <- gsub("[^0-9]", "", dfx$isotopes)
 df.b <- merge(df,dfx, by = "iso.no")
+df.b <- df.b[, !names(df.b) %in% grs[]]
 
 df.S <- filter(df.b, S > 0)
 write.csv(df.S, "S_containing.csv")
@@ -48,7 +49,7 @@ write.csv(df.S, "S_containing.csv")
 df.b$OC <- df.b$O/df.b$C
 df.b$HC <- df.b$H/df.b$C
 
-for (i in length(grs)) {
+for (i in 1:length(grs)) {
         df.b[[paste(grs[[i]])]] <- apply(df.b[,grepl(grs[[i]], colnames(df.b))], 1, mean)
 }
 
@@ -66,9 +67,9 @@ CHO <- data.frame(a = c(0, 0.5, 1, 1.5, 2, 2.5),
                   y = c(0.45, 0.95, 1.45, 1.95, 2.45, 2.95)
                   )
 
-p1 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = normMW2)) +
+p1 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = log(MW2, base = 10))) +
         geom_point(size = 3) +
-        scale_color_gradientn(colours = rainbow(7)) +
+        scale_color_gradient(low = "cyan", high = "magenta", expression("log10(Abundance)")) +
         #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=0.7,ymax=1.5), fill="#FFFFFF", alpha = 0.0008) +
         #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=1,ymax=2), fill="#FFFFFF", alpha = 0.0008) +
         geom_rect(data = NULL, aes(xmin=0.0,xmax=0.3,ymin=1.5,ymax=2), color = "black", fill="#FFFFFF", alpha = 0.0008) +
@@ -100,9 +101,9 @@ p2 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = MW5)) +
         ggtitle("MW5") +
         theme_bw(base_size = 22, base_family = "georgia")
 
-p3 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = normMW8)) +
+p3 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = log(MW8, base = 10))) +
         geom_point(size = 3) +
-        scale_color_gradientn(colours = rainbow(7)) +
+        scale_color_gradient(low = "cyan", high = "magenta", expression("log10(Abundance)")) +
         scale_x_continuous(limits = c(0, 0.5)) +
         scale_y_continuous(limits = c(0.1, 2)) +
         #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=0.7,ymax=1.5), fill="#FFFFFF", alpha = 0.0008) +
@@ -119,6 +120,6 @@ p3 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = normMW8)) +
 
 p3
 
-grid.arrange(p1, p2, p3)
+grid.arrange(p1,  p3)
 
 
