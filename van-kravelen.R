@@ -48,17 +48,18 @@ write.csv(df.S, "S_containing.csv")
 
 df.b$OC <- df.b$O/df.b$C
 df.b$HC <- df.b$H/df.b$C
+df.b$CHO <- (2*df.b$O - df.b$H)/df.b$C
 
 for (i in 1:length(grs)) {
         df.b[[paste(grs[[i]])]] <- apply(df.b[,grepl(grs[[i]], colnames(df.b))], 1, mean)
 }
 
-df.b$min <- apply(select(df.b, MW1:MW8), 1, min)
-df.b$max <- apply(select(df.b, MW1:MW8), 1, max)
-df.b$mean <- apply(select(df.b, MW1:MW8), 1, mean)
-
-df.b$normMW2 <- -1+2*(df.b$MW2-df.b$min)/(df.b$max-df.b$min)
-df.b$normMW8 <- -1+2*(df.b$MW8-df.b$min)/(df.b$max-df.b$min)
+# df.b$min <- apply(select(df.b, MW1:MW8), 1, min)
+# df.b$max <- apply(select(df.b, MW1:MW8), 1, max)
+# df.b$mean <- apply(select(df.b, MW1:MW8), 1, mean)
+# 
+# df.b$normMW2 <- -1+2*(df.b$MW2-df.b$min)/(df.b$max-df.b$min)
+# df.b$normMW8 <- -1+2*(df.b$MW8-df.b$min)/(df.b$max-df.b$min)
 
 CHO <- data.frame(a = c(0, 0.5, 1, 1.5, 2, 2.5), 
                   b = c(1, 1, 1, 1, 1, 1), 
