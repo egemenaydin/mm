@@ -43,6 +43,7 @@ df.b <- merge(df,dfx, by = "iso.no")
 df.b <- df.b[, !names(df.b) %in% grs[]]
 
 df.S <- filter(df.b, S > 0)
+df.S$CHO <- (2*df.S$O - df.S$H)/df.S$C
 write.csv(df.S, "S_containing.csv")
 
 
@@ -121,6 +122,25 @@ p3 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = log(MW8, base = 10))) +
 
 p3
 
+
+p4 <- ggplot(df.S, aes(df.S$S, df.S$CHO, colour = log(MW8, base = 10))) +
+        geom_point(size = 3) +
+        scale_color_gradient(low = "cyan", high = "magenta", expression("log10(Abundance)")) +
+        scale_x_continuous(limits = c(0, 0.5)) +
+        scale_y_continuous(limits = c(0.1, 2)) +
+        #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=0.7,ymax=1.5), fill="#FFFFFF", alpha = 0.0008) +
+        #geom_rect(data = NULL, aes(xmin=0.1,xmax=0.5,ymin=1,ymax=2), fill="#FFFFFF", alpha = 0.0008) +
+        geom_rect(data = NULL, aes(xmin=0.0,xmax=0.3,ymin=1.5,ymax=2), color = "black", fill="#FFFFFF", alpha = 0.0008) +
+        geom_rect(data = NULL, aes(xmin=0.0,xmax=0.1,ymin=0.7,ymax=1.5), color = "black", fill="#FFFFFF", alpha = 0.0008) +
+        geom_rect(data = NULL, aes(xmin=0.0,xmax=0.5,ymin=0.3,ymax=0.7), color = "black", fill="#FFFFFF", alpha = 0.0008) +
+        geom_abline(aes(intercept = a, slope = b), data = CHO, size = 1.3) +
+        annotate("text", label = CHO$c, x= CHO$x, y= CHO$y, angle = 20, size = 6, family = "georgia") +
+        xlab("O/C atom ratio") +
+        ylab("H/C atom ratio") +
+        ggtitle("MW8") +
+        theme_bw(base_size = 22, base_family = "georgia")
+
+p4
 grid.arrange(p1,  p3)
 
 
