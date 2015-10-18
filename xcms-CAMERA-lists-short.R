@@ -99,6 +99,10 @@ mol.mat$mz.teo <- as.numeric(mol.mat$exactmass) + 1.007276
 
 write.csv(mol.mat, "formula.csv")
 
+dfx <- filter(peaklistP2, grepl("\\[M\\]\\+", isotopes))
+dfx$iso.no <- gsub("[^0-9]", "", dfx$isotopes)
+for.int <- merge(mol.mat, dfx, by = "iso.no")
+write.csv(for.int, "pt_id.csv")
 
 save(list=ls(all=TRUE), file="pos-rdisop-out.RData")
 
