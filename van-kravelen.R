@@ -50,7 +50,12 @@ write.csv(df.S, "S_containing.csv")
 df.N <- filter(df.b, N > 0)
 df.N$CHO <- (2*df.N$O - df.N$H)/df.N$C
 df.N$formula <- gsub("~", "", df.N$formula)
+df.N$NO <- paste("N", df.N$N, "O", df.N$O, sep = "")
+df.N$NO <- gsub("1", "", df.N$NO)
 write.csv(df.N, "N_containing.csv")
+df.N.sel <- filter(df.N, NO == "NO" | NO == "NO2" |NO == "NO3" |NO == "N2O" |NO == "N2O2")
+df.N.sel <- filter(df.N.sel, df.N.sel$P == 0)
+df.N.sel <- filter(df.N.sel, df.N.sel$S == 0)
 
 df.b$OC <- df.b$O/df.b$C
 df.b$HC <- df.b$H/df.b$C
