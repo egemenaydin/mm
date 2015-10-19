@@ -46,6 +46,10 @@ df.S <- filter(df.b, S > 0)
 df.S$CHO <- (2*df.S$O - df.S$H)/df.S$C
 write.csv(df.S, "S_containing.csv")
 
+df.N <- filter(df.b, N > 0)
+df.N$CHO <- (2*df.N$O - df.N$H)/df.N$C
+df.N$formula <- gsub("~", "", df.N$formula)
+write.csv(df.N, "N_containing.csv")
 
 df.b$OC <- df.b$O/df.b$C
 df.b$HC <- df.b$H/df.b$C
@@ -123,7 +127,7 @@ p3 <- ggplot(df.b, aes(df.b$OC, df.b$HC, colour = log(MW8, base = 10))) +
 p3
 
 
-p4 <- ggplot(df.S, aes(df.S$S, df.S$CHO, colour = log(MW2, base = 10))) +
+p4 <- ggplot(df.S, aes(df.S$S, df.S$CHO, colour = log(MW8, base = 10))) +
         geom_point(size = 3) +
         scale_color_gradient(low = "cyan", high = "magenta", expression("log10(Abundance)")) +
         scale_x_continuous(limits = c(0, 5.5)) +
@@ -137,7 +141,7 @@ p4 <- ggplot(df.S, aes(df.S$S, df.S$CHO, colour = log(MW2, base = 10))) +
         #annotate("text", label = CHO$c, x= CHO$x, y= CHO$y, angle = 20, size = 6, family = "georgia") +
         xlab("S") +
         ylab("CHO") +
-        ggtitle("MW2") +
+        ggtitle("MW8") +
         theme_bw(base_size = 22, base_family = "georgia")
 
 p4
