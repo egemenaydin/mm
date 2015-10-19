@@ -44,6 +44,7 @@ df.b <- df.b[, !names(df.b) %in% grs[]]
 
 df.S <- filter(df.b, S > 0)
 df.S$CHO <- (2*df.S$O - df.S$H)/df.S$C
+df.S$formula <- gsub("~", "", df.S$formula)
 write.csv(df.S, "S_containing.csv")
 
 df.N <- filter(df.b, N > 0)
