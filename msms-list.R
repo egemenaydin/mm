@@ -9,6 +9,7 @@ fSamples <- gsub("-", "\\.", fSamples)
 #positive ionization mode
 dataP <- read.csv("positive_featurelist.csv")
 dataP$ionization <- "positive"
+grs <- unique(fSamples)
 #create names
 if("name" %in% colnames(dataP)){
         cat("names were defined\n")
