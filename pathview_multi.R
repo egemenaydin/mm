@@ -34,7 +34,7 @@ cch_deg <- merge(pv.out_cch_deg$plot.data.cpd, pathview1, by.x = "kegg.names", b
 pv.out_ab_deg <- pathview(cpd.data = pv_matrix[, 1:ncol(pv_matrix)], pathway.id = "00627", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T, new.signature = F)
 ab_deg <- merge(pv.out_ab_deg$plot.data.cpd, pathview1, by.x = "kegg.names", by.y = "KEGG.ID")
 
-save(list=ls(all=TRUE), file="air-sparge-pathview-out.RData")
+save(list=ls(all=TRUE), file="pathview-out.RData")
 
 #lipids
 pv.out_fa_bio <- pathview(cpd.data = pv_matrix[, 1:ncol(pv_matrix)], pathway.id = "00061", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T)
