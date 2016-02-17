@@ -8,6 +8,7 @@ setwd(wd)
 
 s <- importBrukerFlex(wd)
 export(s, path = wd, type = "csv")
+tit <- as.list(sapply(s, function(x)metaData(x)$sampleName))
 
 #Quality control
 any(sapply(s, isEmpty))
@@ -16,7 +17,7 @@ any(sapply(s, isRegular))
 
 #Plot mass spectra
 for (i in 1:length(s)) {
-        png(file = paste(i, ".png", sep = ""), width = 16, height = 9, units = "in", res = 600)
+        png(file = paste(tit[[i]], ".png", sep = ""), width = 16, height = 9, units = "in", res = 600)
         plot(s[[i]])
         dev.off()
 }
@@ -37,7 +38,7 @@ plot(spectra[[1]])
 
 #Plot baseline corrected mass spectra
 for (i in 1:length(spectra)) {
-        png(file = paste("BC", i, ".png", sep = ""), width = 16, height = 9, units = "in", res = 600)
+        png(file = paste("BC", tit[[i]], ".png", sep = ""), width = 16, height = 9, units = "in", res = 600)
         plot(spectra[[i]])
         dev.off()
 }
