@@ -34,7 +34,7 @@ plot(spectra[[2]])
 lines(baseline, col = "red")
 
 spectra <- removeBaseline(spectra, method = "SNIP", iterations = 100)
-plot(spectra[[1]])
+plot(spectra[[2]])
 
 #Plot baseline corrected mass spectra
 for (i in 1:length(spectra)) {
@@ -47,7 +47,9 @@ for (i in 1:length(spectra)) {
 spectra <- calibrateIntensity(spectra, method = "TIC")
 
 #Wrapping/Alignment
-spectra <- alignSpectra(spectra, halfWindowSize = 20, SNR = 2, tolerance = 0.002, warpingMethod = "lowess")
+peaks_wr <- detectPeaks(spectra, SNR=5)
+reference <- referencePeaks(peaks_wr, minFrequency = 0.5)
+spectra <- alignSpectra(spectra, reference = reference)
 
 samples <- factor(sapply(spectra, function(x)metaData(x)$sampleName))
 avgSpectra <- averageMassSpectra(spectra, labels = samples, method = "mean")
