@@ -72,3 +72,4 @@ FM <- intensityMatrix(peaks, avgSpectra)
 rownames(FM) <- samples
 
 write.csv(FM, "feature_matrix.csv")
+save(list=ls(all=TRUE), file="maldiquant-out.RData")
