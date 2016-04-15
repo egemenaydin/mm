@@ -48,7 +48,7 @@ spectra <- calibrateIntensity(spectra, method = "TIC")
 
 #Wrapping/Alignment
 peaks_wr <- detectPeaks(spectra, SNR=5)
-reference <- referencePeaks(peaks_wr, minFrequency = 0.5)
+reference <- referencePeaks(peaks_wr, minFrequency = 0.9)
 spectra <- alignSpectra(spectra, reference = reference)
 
 samples <- factor(sapply(spectra, function(x)metaData(x)$sampleName))
@@ -71,5 +71,5 @@ peaks <- filterPeaks(peaks, minFrequency = 0.25)
 FM <- intensityMatrix(peaks, avgSpectra)
 rownames(FM) <- samples
 
-write.csv(FM, "feature_matrix.csv")
+write.csv(FM, "PC_lowmass_feature_matrix.csv")
 save(list=ls(all=TRUE), file="maldiquant-out.RData")
