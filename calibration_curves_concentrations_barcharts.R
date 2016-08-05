@@ -18,6 +18,7 @@ p1 <- plyr::dlply(if (exists("d3")) {
 },
         "variable", function(x){
         ggplot(x, aes(x = Standard, y = value)) +
+                geom_point(aes(cex = 1.2)) +
                 geom_smooth(method="lm",se=FALSE, color = "black", formula = my.formula) +
                 stat_poly_eq(formula = my.formula, 
                              aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~~")), rr.digits = 4, 
@@ -26,6 +27,7 @@ p1 <- plyr::dlply(if (exists("d3")) {
                 xlab("Concentration (ng/L)") +
                 ylab("Area/Area") +
                 theme_bw(base_size =16)+
+                theme(legend.position = "none") +
                 ggtitle(x$variable) 
 })
 
