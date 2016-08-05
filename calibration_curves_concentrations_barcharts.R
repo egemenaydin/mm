@@ -57,7 +57,10 @@ c$concentration <- c$value/2
 
 c_stat <- summarySEwithin(c, measurevar = "concentration", withinvars = c("Numune", "variable"), idvar = "variable")
 
+l <- unique(r1$Numune)
+
 p2 <- plyr::dlply(c_stat, "variable", function (x){
+        x <- transform(x, Numune = ordered(Numune, l))
         ggplot(x, aes(x = Numune, y= concentration, fill = Numune)) +
                 geom_bar(position = position_dodge(), stat = "identity") +
                 geom_errorbar(position = position_dodge(), 
@@ -65,7 +68,6 @@ p2 <- plyr::dlply(c_stat, "variable", function (x){
                 scale_fill_brewer(palette = "Set1") +
                 ylab("Konsantrasyon (ng/L)") +
                 theme_bw(base_size =16)+
-                scale_x_discrete(limits = unique(r1$Numune)) +
                 theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
                 ggtitle(x$variable) 
 })
