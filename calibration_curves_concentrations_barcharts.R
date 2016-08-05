@@ -1,5 +1,6 @@
 library(ggplot2)
 library(ggpmisc)
+library(RColorBrewer)
 
 source("~/mm/summarySEwithin.R")
 source("~/mm/normDataWithin.R")
@@ -60,6 +61,7 @@ p2 <- plyr::dlply(c_stat, "variable", function (x){
         ggplot(x, aes(x = Numune, y= concentration, fill = Numune)) +
                 geom_bar(position = position_dodge(), stat = "identity") +
                 geom_errorbar(position = position_dodge(), aes(ymin = concentration - sd, ymax = concentration + sd)) +
+                scale_fill_brewer(palette = "Set1") +
                 ylab("Konsantrasyon (ng/L)") +
                 theme_bw(base_size =16)+
                 scale_x_discrete(limits = unique(r1$Numune)) +
@@ -75,3 +77,4 @@ for (i in 1:y){
         print(p2[[i]])
         dev.off()
 }
+
