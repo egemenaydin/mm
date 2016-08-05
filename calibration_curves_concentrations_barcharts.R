@@ -20,7 +20,7 @@ p1 <- plyr::dlply(if (exists("d3")) {
         ggplot(x, aes(x = Standard, y = value)) +
                 geom_smooth(method="lm",se=FALSE, color = "black", formula = my.formula) +
                 stat_poly_eq(formula = my.formula, 
-                             aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+                             aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~~")), rr.digits = 4, 
                              parse = TRUE) +   
                 geom_point()+
                 xlab("Concentration (ng/L)") +
