@@ -60,7 +60,8 @@ c_stat <- summarySEwithin(c, measurevar = "concentration", withinvars = c("Numun
 p2 <- plyr::dlply(c_stat, "variable", function (x){
         ggplot(x, aes(x = Numune, y= concentration, fill = Numune)) +
                 geom_bar(position = position_dodge(), stat = "identity") +
-                geom_errorbar(position = position_dodge(), aes(ymin = concentration - sd, ymax = concentration + sd)) +
+                geom_errorbar(position = position_dodge(), 
+                              aes(ymin = concentration - sd, ymax = concentration + sd), width = 0.3) +
                 scale_fill_brewer(palette = "Set1") +
                 ylab("Konsantrasyon (ng/L)") +
                 theme_bw(base_size =16)+
