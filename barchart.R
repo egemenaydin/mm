@@ -1,9 +1,9 @@
 library(ggplot2)
-library(dplyr)
+library(plyr)
 source("~/mm/summarySEwithin.R")
 source("~/mm/normDataWithin.R")
 source("~/mm/summarySE.R")
-d1 <- read.csv("nano-sentetik-negatif.csv")
+d1 <- read.csv("nano-sentetik-all.csv")
 d2 <- reshape2::melt(d1, id = c("Malzeme", "pH", "Süre"))
 #when there are replicates use this for summary statistics
 d3 <- summarySEwithin(d2, measurevar = "value", withinvars = c("pH", "Süre", "Malzeme", "variable"), idvar = "Malzeme")
@@ -27,10 +27,11 @@ p1 <- plyr::dlply(if (exists("d3")) {
 
 
 x <- length(p1)
-tit <- colnames(d1[2:12])
+tit <- colnames(d1[2:21])
 
 for (i in 1:x){
         png(file = paste(tit[[i]], ".png", sep = ""))
         print(p1[[i]])
         dev.off()
 }
+
