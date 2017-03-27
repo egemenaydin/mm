@@ -16,7 +16,9 @@ ggplot(td2, aes(x = Numune, y = variable)) +
         geom_tile(aes(fill = log2(value))) + 
         geom_text(aes(label = round(td2$value, 0))) +
         scale_fill_gradient(low = "green", high = "red") +
-        theme_bw(base_size =14) +
+        theme_minimal(base_size =14) +
         xlab("WWTP Unit") +
         ylab("Compound") +
         theme(legend.position = "none")
+
+dev.print(png, "heatmap.png", height = 5, width = 10, res = 600, unit = "in")
