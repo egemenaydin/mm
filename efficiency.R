@@ -1,7 +1,7 @@
 source("~/mm/summarySEwithin.R")
 source("~/mm/normDataWithin.R")
 source("~/mm/summarySE.R")
-d1 <- read.csv("tesis.csv")
+d1 <- read.csv("tesis_tuzla_sb.csv")
 d2 <- reshape2::melt(d1, id = c("Numune"))
 #when there are replicates use this for summary statistics
 #d3 <- summarySEwithin(d1, measurevar = "concentration", withinvars = c("Numune", "variable", "value", "X"), idvar = "variable")
