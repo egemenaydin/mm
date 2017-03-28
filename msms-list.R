@@ -24,9 +24,15 @@ write.csv(baseP, "positive_base_in_feature_extract.csv")
 #negative ionization mode
 dataN <- read.csv("negative_featurelist.csv")
 dataN$ionization <- "negative"
+
+if("name" %in% colnames(dataN)){
+        cat("names were defined\n")
+} else{
+        dataN$name <- paste("M", round(dataN$mz, 3), "T", round(dataN$rt, 3), sep = "")        
+}
 iso.dataN <- filter(dataN, isotopes != "")
 baseN <- filter(iso.dataN, grepl("\\[M\\]\\-", isotopes))
-write.csv(baseN, "positive_base_in_feature_extract.csv")
+write.csv(baseN, "negative_base_in_feature_extract.csv")
 
 #merge lists
 dataAll <- bind_rows(dataP, dataN)
@@ -153,3 +159,5 @@ sel2$rt.min <- sel2$rt/60
 
 msms.list <- select(sel2, mz, rt.min)
 write.csv(msms.list, "msms_list.csv")
+
+save(list=ls(all=TRUE), file="data-clean-out.RData")
