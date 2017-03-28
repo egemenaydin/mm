@@ -2,7 +2,7 @@ library(CAMERA)
 library(rChoiceDialogs)
 library(Rdisop)
 
-slaves <- 1 #I use it as 1 for now because it looks like there is a bug on CAMERA. When 4 coresused all masses under annoID is represented in last pspgrp.
+slaves <- 8 #I use it as 1 for now because it looks like there is a bug on CAMERA. When 4 coresused all masses under annoID is represented in last pspgrp.
 
 
 #XCMS for positive mode 
@@ -15,14 +15,15 @@ setwd(wd_P)
 sink("output.txt")
 n_samples_P <- length(list.dirs(recursive = FALSE))
 
-xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 5, peakwidth = c(10 , 100), snthr = 6, prefilter = c(3, 5000), polarity = "positive")
-xset1P <- retcor(xsetP, method = "obiwarp", plottype = c("deviation"), profStep = 0.5)
+xsetP <- xcmsSet(method ="centWave", nSlaves = slaves, ppm = 5, peakwidth = c(10, 60), 
+                 fitgauss = T, verbose.columns = T, snthr = 6, prefilter = c(2, 5000), polarity = "positive")
+xset1P <- retcor(xsetP, method = "obiwarp", plottype = c("deviation"), profStep = 1)
 dev.print(pdf, "RTDvsRT_pos.pdf", height = 10, width = 10)
 xset2P <- group(xset1P, bw = 2, minfrac = 0.5, mzwid = 0.015)
 xset3P <- fillPeaks(xset2P)
 #peaktable_P <- peakTable(xset3P, filebase = "peaktable")
 #annotateDiffreport(xset3P, nSlaves = slaves, perfwhm = 0.6, cor_eic_th = 0.75, calcCaS = TRUE, minfrac = 0.5, ppm = 5, polarity = "positive", mzabs = 0.015)
-#diffreport(xset3P, "SDB_tp0", "SDB_tp5", eicmax = 500, filebase = "SDB_tp0vstp5")
+diffreport(xset3P, "SDB_tp0", "SDB_tp5", eicmax = 500, filebase = "SDB_tp0vstp5")
 write.csv(xsetP@phenoData, "PhDP.csv")
 
 save(list=ls(all=TRUE), file="pos-xcms-out.RData")
