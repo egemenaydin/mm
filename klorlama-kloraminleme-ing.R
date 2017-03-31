@@ -1,5 +1,5 @@
 library(ggplot2)
-library(ggpmisc)
+#library(ggpmisc)
 library(RColorBrewer)
 
 
@@ -7,7 +7,7 @@ source("~/mm/summarySEwithin.R")
 source("~/mm/normDataWithin.R")
 source("~/mm/summarySE.R")
 
-d1 <- read.csv("tummadeler_ing.csv")
+d1 <- read.csv("carb_ing.csv")
 d1$ContactTime <- as.factor(d1$ContactTime)
 d1$pH <- as.factor(d1$pH)
 d1$Dosage <- as.factor(d1$Dosage)
@@ -17,7 +17,7 @@ d3 <- summarySEwithin(d2, measurevar = "value",
                                      "Disinfection"), idvar = "ContactTime")
 d3[is.na(d3)] <- 0
 d3$pH <- factor(d3$pH, levels=c("Unchanged", "10"))
-
+my.pallette <- "#377eb8"
 p1 <- plyr::dlply(if (exists("d3")) {
         .data = d3      
 } else {
@@ -29,7 +29,7 @@ p1 <- plyr::dlply(if (exists("d3")) {
                 geom_errorbar(position = position_dodge(width = 0.9), 
                               aes(ymin = value - sd, ymax = value + sd), width = 0.3)+
                 facet_grid(Dosage~pH, labeller = label_both)+
-                scale_fill_brewer(palette = "Set1", name = "")+
+                scale_fill_manual(values = my.pallette)+
                 ylab(expression(paste("C/",C[0], sep = ""))) +
                 xlab("Time (hour)") +
                 theme_bw(base_size =16)+
