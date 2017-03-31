@@ -7,7 +7,7 @@ source("~/mm/summarySEwithin.R")
 source("~/mm/normDataWithin.R")
 source("~/mm/summarySE.R")
 
-d1 <- read.csv("tum_numuneler_tuzla_sb_ing.csv")
+d1 <- read.csv("tummadeler_ing.csv")
 d1$ContactTime <- as.factor(d1$ContactTime)
 d1$pH <- as.factor(d1$pH)
 d1$Dosage <- as.factor(d1$Dosage)
