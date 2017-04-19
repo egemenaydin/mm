@@ -29,7 +29,7 @@ p1 <- plyr::dlply(if (exists("d3")) {
                 geom_errorbar(position = position_dodge(width = 0.9), 
                               aes(ymin = value - sd, ymax = value + sd), width = 0.3)+
                 facet_grid(Dosage~pH, labeller = label_both)+
-                scale_fill_manual(values = my.pallette)+
+                scale_fill_manual(values = my.pallette,guide = guide_legend(title = NULL))+
                 ylab(expression(paste("C/",C[0], sep = ""))) +
                 xlab("Time (hour)") +
                 theme_bw(base_size =16)+
@@ -46,3 +46,4 @@ for (i in 1:x){
         print(p1[[i]])
         dev.off()
 }
+
