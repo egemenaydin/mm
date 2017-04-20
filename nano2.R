@@ -22,7 +22,7 @@ p1 <- plyr::dlply(if (exists("d3")) {
                 geom_errorbar(position = position_dodge(width = 0.9), aes(ymin = value - sd, ymax = value + sd), width = 0.3)+
                 scale_fill_brewer(palette = "Set1", name = "Adsorban \nkonsantrasyonu (mg/L)") +
                 facet_grid(Sure~pH, labeller = labeller(pH = label_both))+
-                ylab("Konsantrasyon (ng/L)") +
+                ylab("C/C0") +
                 xlab("Malzeme") +
                 theme_bw(base_size =16)+
                 theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "bottom") + 
@@ -34,7 +34,7 @@ tit <- colnames(d1[5:length(d1)])
 
 x <- length(p1)
 for (i in 1:x){
-        png(file = paste(tit[[i]], "_nano-atakoy_kis",".png", sep = ""))
+        png(file = paste(tit[[i]], "_nano-atakoy-kis",".png", sep = ""))
         print(p1[[i]])
         dev.off()
 }
