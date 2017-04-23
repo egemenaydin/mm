@@ -27,12 +27,16 @@ nt_deg <- merge(pv.out_nt_deg$plot.data.cpd, pathview1, by.x = "kegg.names", by.
 pv.out_PAH_deg <- pathview(cpd.data = pv_matrix[, 1:ncol(pv_matrix)], pathway.id = "00624", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T, new.signature = F)
 PAH_deg <- merge(pv.out_PAH_deg$plot.data.cpd, pathview1, by.x = "kegg.names", by.y = "KEGG.ID")
 pv.out_P450 <- pathview(cpd.data = pv_matrix[, 1:ncol(pv_matrix)], pathway.id = "00980", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T, new.signature = F)
+P450_deg <- merge(pv.out_P450$plot.data.cpd, pathview1, by.x = "kegg.names", by.y = "KEGG.ID")
 pv.out_DDT_deg <- pathview(cpd.data = pv_matrix[, 1:ncol(pv_matrix)], pathway.id = "00351", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T, new.signature = F)
 DDT_deg <- merge(pv.out_DDT_deg$plot.data.cpd, pathview1, by.x = "kegg.names", by.y = "KEGG.ID")
 pv.out_cch_deg <- pathview(cpd.data = pv_matrix[, 1:ncol(pv_matrix)], pathway.id = "00361", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T, new.signature = F)
 cch_deg <- merge(pv.out_cch_deg$plot.data.cpd, pathview1, by.x = "kegg.names", by.y = "KEGG.ID")
 pv.out_ab_deg <- pathview(cpd.data = pv_matrix[, 1:ncol(pv_matrix)], pathway.id = "00627", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T, new.signature = F)
 ab_deg <- merge(pv.out_ab_deg$plot.data.cpd, pathview1, by.x = "kegg.names", by.y = "KEGG.ID")
+pv.out_at_deg <- pathview(cpd.data = pv_matrix[, 1:ncol(pv_matrix)], pathway.id = "00791", species = "ko", keys.align = "y", kegg.native = T, match.data = F, multi.state = T, same.layer = T, new.signature = F)
+at_deg <- merge(pv.out_at_deg$plot.data.cpd, pathview1, by.x = "kegg.names", by.y = "KEGG.ID")
+
 
 save(list=ls(all=TRUE), file="pathview-out.RData")
 
