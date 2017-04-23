@@ -56,15 +56,15 @@ KEGG_int <- merge(KEGG_comparison, data, by = "mz")
 
 pathview1 <- filter(KEGG_int, KEGG.ID != "no match")
 pathview2 <- pathview1[, c("KEGG.ID", fNames)]
-pathview2 <- distinct(pathview2, KEGG.ID)
-rownames(pathview2) <- pathview2$KEGG.ID
-pathview2$KEGG.ID <- NULL
+pathview22 <- pathview2[!duplicated(pathview2$KEGG.ID),]
+rownames(pathview22) <- pathview22$KEGG.ID
+pathview22$KEGG.ID <- NULL
 
 for (i in 1:length(grs)) {
-        pathview2[[paste(grs[[i]])]] <- apply(pathview2[,grepl(grs[[i]], colnames(pathview2))], 1, mean)
+        pathview22[[paste(grs[[i]])]] <- apply(pathview22[,grepl(grs[[i]], colnames(pathview22))], 1, mean)
 }
 
-pathview3 <- pathview2[, grs]
+pathview3 <- pathview22[, grs]
 pv_norm <- data.frame(apply(pathview3, 1, function(x) -1+2*(x-min(x))/(max(x)-min(x))))
 pv_matrix <- t(as.matrix(pv_norm))
 head(pv_matrix)
