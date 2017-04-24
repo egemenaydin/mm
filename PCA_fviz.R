@@ -38,7 +38,7 @@ my.palette <- c('#ffffb2','#fed976','#feb24c','#fd8d3c','#f03b20','#bd0026',
                 '#edf8fb','#bfd3e6','#9ebcda','#8c96c6','#8856a7','#810f7c',
                 '#54278f')
 
-fviz_pca_ind(PCA,  geom = "point", habillage = as.factor(df$X), pointshape = 19, pointsize = 2) + 
+fviz_pca_ind(PCA,  geom = "point", habillage = as.factor(df$X), pointshape = 19, pointsize = 3) + 
         scale_color_manual(values = my.palette) +
         theme_bw(base_size = 20)+
         xlab("PC1 (28%)") + 
@@ -47,7 +47,7 @@ fviz_pca_ind(PCA,  geom = "point", habillage = as.factor(df$X), pointshape = 19,
         theme(legend.title = element_blank())
 
 
-dev.print(png, file = "PCA_dots.png", height=6, width=8, res = 600, units = "in")
+dev.print(png, file = "PCA_dots.png", height=6, width=10, res = 600, units = "in")
 
 
 d1 <- read.csv("yuzeysel_su_CYA_normalize_kons-AO-RA.csv", header = TRUE, check.names = FALSE)
