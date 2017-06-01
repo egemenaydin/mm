@@ -3,10 +3,10 @@ library(plyr)
 source("~/mm/summarySEwithin.R")
 source("~/mm/normDataWithin.R")
 source("~/mm/summarySE.R")
-d1 <- read.csv("tesis_tuzla_sb.csv")
+d1 <- read.csv("tummmaddeler_konsantrasyon.csv")
 d2 <- reshape2::melt(d1, id = c("Numune"))
 #when there are replicates use this for summary statistics
-d3 <- summarySEwithin(d2, measurevar = "value", withinvars = c("Numune" ,"variable"), idvar = "Numune")
+d3 <- summarySEwithin(d2, measurevar = "value", withinvars = c("Numune" ,"variable"), idvar = "Numune", na.rm = T)
 
 l <- unique(d1$Numune)
 
