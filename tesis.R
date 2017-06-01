@@ -32,4 +32,7 @@ for (i in 1:x){
         print(p1[[i]])
         dev.off()
 }
-
+names(d3)[4] <- paste("concentration")
+names(d3)[2] <- paste("compound")
+d4 <- dplyr::select(d3, Numune, compound, concentration, sd)
+xlsx::write.xlsx(d4, "olcum_sonuc.xlsx")
