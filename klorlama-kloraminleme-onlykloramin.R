@@ -10,7 +10,7 @@ source("~/mm/summarySE.R")
 d1 <- read.csv("tummaddeler.csv")
 d2 <- reshape2::melt(d1, id = c("Sure", "pH", "Doz", "Dezenfeksiyon"))
 d3 <- summarySEwithin(d2, measurevar = "value", 
-                      withinvars = c("pH", "Sure", "variable", "Doz", "Dezenfeksiyon"), idvar = "Sure")
+                      withinvars = c("pH", "Sure", "variable", "Doz", "Dezenfeksiyon"), idvar = "Sure", na.rm = T)
 d3[is.na(d3)] <- 0
 d3$pH <- factor(d3$pH, levels=c("Orijinal", "10"))
 my.pallette <- "#377eb8"
