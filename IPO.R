@@ -21,3 +21,21 @@ time.xcmsSet <- system.time({ # measuring time
                                 nSlaves = 1, 
                                 subdir = NULL)
 })
+
+resultPeakpicking$best_settings$result
+
+optimizedXcmsSetObject <- resultPeakpicking$best_settings$xset
+
+retcorGroupParameters <- getDefaultRetGroupStartingParams()
+retcorGroupParameters$profStep <- 1
+retcorGroupParameters$gapExtend <- 2.7
+time.RetGroup <- system.time({ # measuring time
+        resultRetcorGroup <-
+                optimizeRetGroup(xset = optimizedXcmsSetObject, 
+                                 params = retcorGroupParameters, 
+                                 nSlaves = 1, 
+                                 subdir = NULL)
+})
+
+writeRScript(resultPeakpicking$best_settings$parameters, 
+             resultRetcorGroup$best_settings)
