@@ -18,6 +18,9 @@ df <- dplyr::filter(df, X != "blank8")
 rownames(df) <- df$X
 df$X <- fSamples[3:88]
 
+l <- unique(df$X)
+
+
 #PCA
 PCA <- PCA(df[,-1], scale.unit = TRUE, ncp = 5, graph = F)
 
@@ -31,14 +34,15 @@ my.palette <- c("#000000","#831E3F", "#38D750", "#779BFB", "#7E6E0B", "#399EA4",
 my.palette <- c("#FE39CD", "#79B609", "#17B9FB", "#C82519", "#122818", "#E9CBBD", "#FBB34B", "#671B62", "#00C684", "#711624", "#4A86FC", "#1E6015", "#F9366A", "#FF94B3", "#E8E207", "#2DE3F1", "#126C58", "#FADE8F", "#A9E9AA", "#A16C0B", "#241720", "#36A5B5", "#239D25", "#AC0337", "#F56828", "#501513")
 
 #26 color palette with 4 groups and 2 separate samples
-my.palette <- c('#ffffb2','#fed976','#feb24c','#fd8d3c','#f03b20','#bd0026',
+my.palette <- c('#252525',
+                '#54278f',
+                '#ffffb2','#fed976','#feb24c','#fd8d3c','#f03b20','#bd0026',
                 '#ffffcc','#c7e9b4','#7fcdbb','#41b6c4','#2c7fb8','#253494',
                 '#ffffcc','#d9f0a3','#addd8e','#78c679','#31a354','#006837',
-                '#252525',
-                '#edf8fb','#bfd3e6','#9ebcda','#8c96c6','#8856a7','#810f7c',
-                '#54278f')
+                '#edf8fb','#bfd3e6','#9ebcda','#8c96c6','#8856a7','#810f7c'
+                )
 
-fviz_pca_ind(PCA,  geom = "point", habillage = as.factor(df$X), pointshape = 19, pointsize = 3) + 
+fviz_pca_ind(PCA,  geom = "point", habillage = ordered(df$X, l), pointshape = 19, pointsize = 3) + 
         scale_color_manual(values = my.palette) +
         theme_bw(base_size = 20)+
         xlab("PC1 (28%)") + 
@@ -47,7 +51,7 @@ fviz_pca_ind(PCA,  geom = "point", habillage = as.factor(df$X), pointshape = 19,
         theme(legend.title = element_blank())
 
 
-dev.print(png, file = "PCA_dots.png", height=6, width=10, res = 600, units = "in")
+dev.print(png, file = "PCA_almet.png", height=6, width=10, res = 600, units = "in")
 
 
 d1 <- read.csv("yuzeysel_su_CYA_normalize_kons-AO-RA.csv", header = TRUE, check.names = FALSE)
