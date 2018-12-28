@@ -30,7 +30,11 @@ ggplot(dt, aes(Date)) +
         ylim(0, NA) +
         ylab("Cannabis consumption (mg/1000 inhabitants)") +
         scale_color_brewer(palette = "Set1") +
-        theme_bw()
+        scale_x_discrete(limits = dt$Date) +
+        theme_bw() +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) 
+
+ggsave("MTL_N_Cannabis.png", height = 5, width = 10, dpi = 600, unit = "in")
 
 ggplot(dt, aes(Date, group = week)) +
         geom_point(aes(y=Cocaine, color = day), size = 4) +
@@ -38,32 +42,48 @@ ggplot(dt, aes(Date, group = week)) +
         ylim(0, NA) +
         ylab("Cocaine consumption (mg/1000 inhabitants)") +
         scale_color_brewer(palette = "Set1") +
-        theme_bw()
+        scale_x_discrete(limits = dt$Date) +
+        theme_bw() +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) 
+
+ggsave("MTL_N_Cocaine.png", height = 5, width = 10, dpi = 600, unit = "in")
 
 ggplot(dt, aes(Date, group = week)) +
         geom_point(aes(y=METH, color = day), size = 4) +
         geom_ribbon(aes(ymin = METH - METH_UC, ymax = METH + METH_UC, group = week), alpha = 0.2) + 
         ylim(0, NA) +
         scale_color_brewer(palette = "Set1") +
+        scale_x_discrete(limits = dt$Date) +
         ylab("METH consumption (mg/1000 inhabitants)") +
         theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-        theme_bw()
+        theme_bw() +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) 
+
+ggsave("MTL_N_METH.png", height = 5, width = 10, dpi = 600, unit = "in")
 
 ggplot(dt, aes(Date, group = week)) +
         geom_point(aes(y=MDMA, color = day), size = 4) +
         geom_ribbon(aes(ymin = MDMA - MDMA_UC, ymax = MDMA + MDMA_UC, group = week), alpha = 0.2) + 
         ylim(0, NA) +
         scale_color_brewer(palette = "Set1") +
+        scale_x_discrete(limits = dt$Date) +
         ylab("MDMA consumption (mg/1000 inhabitants)") +
         theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-        theme_bw()
+        theme_bw() +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) 
+
+ggsave("MTL_N_MDMA.png", height = 5, width = 10, dpi = 600, unit = "in")
 
 ggplot(dt, aes(Date, group = week)) +
         geom_point(aes(y=AMP, color = day), size = 4) +
         geom_ribbon(aes(ymin = AMP - AMP_UC, ymax = AMP + AMP_UC, group = week), alpha = 0.2) + 
         ylim(0, NA) +
         scale_color_brewer(palette = "Set1") +
+        scale_x_discrete(limits = dt$Date) +
         ylab("AMP consumption (mg/1000 inhabitants)") +
         theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-        theme_bw()
+        theme_bw() +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) 
+
+ggsave("MTL_N_AMP.png", height = 5, width = 10, dpi = 600, unit = "in")
 
