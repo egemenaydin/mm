@@ -1,7 +1,7 @@
 library(ggplot2)
 library(RColorBrewer)
 
-dt <- read.csv("MTL_consumption.csv")
+dt <- read.csv("MTL_consumption_V2.csv")
 
 dt_tidy <- reshape2::melt(dt, id = c("Date", "Flowrate", "P_BOD", "day", "week", "Location"))
 
