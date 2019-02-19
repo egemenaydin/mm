@@ -13,7 +13,7 @@ wbe.pca <- prcomp(dt_pca[, -length(dt_pca)],  scale = TRUE)
 
 fviz_pca_biplot(wbe.pca, label="var", habillage=dt_pca$Location,
              addEllipses=TRUE, ellipse.level=0.95, pointsize = 2,
-             labelsize = 5, repel = T) + 
+             labelsize = 5, repel = T, invisible = "quali") + 
         scale_color_brewer(palette="Dark2") +
         theme_minimal(base_size = 18)
 
