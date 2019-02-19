@@ -17,7 +17,8 @@ fviz_pca_biplot(wbe.pca, label="var", habillage=dt_pca$Location,
              labelsize = 5, repel = T, invisible = "quali",
              palette="Set1") + 
         #scale_color_brewer(palette="Dark2") +
-        theme_minimal(base_size = 18)
+        theme_minimal(base_size = 18) +
+        labs(fill = "Location", color = "Location", shape = "Location")
 
 ggsave("2city_PCA.png", height = 8, width = 8, dpi = 600, unit = "in")
 
@@ -38,6 +39,7 @@ fviz_pca_biplot(wbe.pca2, label="var", habillage=dt_pca2$Location,
                 labelsize = 5, repel = T, invisible = "quali",
                 palette="Set1") + 
         #scale_color_brewer(palette="Dark2") +
-        theme_minimal(base_size = 18)
+        theme_minimal(base_size = 18) +
+        labs(fill = "Location", color = "Location", shape = "Location")
 
 ggsave("MTL_PCA.png", height = 8, width = 8, dpi = 600, unit = "in")
