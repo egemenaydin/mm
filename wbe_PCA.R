@@ -14,8 +14,9 @@ wbe.pca <- prcomp(dt_pca[, -length(dt_pca)],  scale = TRUE)
 
 fviz_pca_biplot(wbe.pca, label="var", habillage=dt_pca$Location,
              addEllipses=TRUE, ellipse.level=0.95, pointsize = 2,
-             labelsize = 5, repel = T, invisible = "quali") + 
-        scale_color_brewer(palette="Dark2") +
+             labelsize = 5, repel = T, invisible = "quali",
+             palette="Set1") + 
+        #scale_color_brewer(palette="Dark2") +
         theme_minimal(base_size = 18)
 
 ggsave("2city_PCA.png", height = 8, width = 8, dpi = 600, unit = "in")
@@ -34,8 +35,9 @@ wbe.pca2 <- prcomp(dt_pca2[, -length(dt_pca)],  scale = TRUE)
 
 fviz_pca_biplot(wbe.pca2, label="var", habillage=dt_pca2$Location,
                 addEllipses=TRUE, ellipse.level=0.95, pointsize = 2,
-                labelsize = 5, repel = T, invisible = "quali") + 
-        scale_color_brewer(palette="Dark2") +
+                labelsize = 5, repel = T, invisible = "quali",
+                palette="Set1") + 
+        #scale_color_brewer(palette="Dark2") +
         theme_minimal(base_size = 18)
 
 ggsave("MTL_PCA.png", height = 8, width = 8, dpi = 600, unit = "in")
