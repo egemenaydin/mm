@@ -11,6 +11,7 @@ my_comparisons <- list(c("MTL_North", "MTL_South"), c("MTL_South", "SHB"), c("MT
 p1 <- plyr::dlply(dt_tidy, "variable", function(x){
         ggplot(x, aes(x = Location, y = value)) +
                 geom_boxplot(outlier.shape = NA) +
+                stat_boxplot(geom = "errorbar", width = 0.2) +
                 geom_point(aes(color = day), size = 3, 
                            position = position_jitterdodge(jitter.width = 0.25, 
                                                            dodge.width = 0.75)) +
