@@ -2,9 +2,9 @@ library(ggplot2)
 library(RColorBrewer)
 source("~/mm/wbe_mean_uncertainity.R")
 
-dt <- read.csv("MTL_consumption_V2.csv")
+dt <- read.csv("MTL_SHB_consumption_V1.csv")
 
-dtS <- dplyr::filter(dt, Location == "North")
+dtS <- dplyr::filter(dt, Location == "SHB")
 
 options(scipen = 100000)
 
