@@ -8,7 +8,7 @@ dt <- read.csv("MTL_SHB_consumption_V1.csv")
 row.names(dt) <- paste(dt$Date, dt$Location, sep = "_")
 
 
-dt_pca <- dplyr::select(dt, Cocaine:Codeine, Location)
+dt_pca <- dplyr::select(dt, Alcohol:Methamphetamine, Location)
 
 wbe.pca <- prcomp(dt_pca[, -length(dt_pca)],  scale = TRUE)
 
@@ -30,7 +30,9 @@ ggsave("2city_PCA_contributers.png", height = 8, width = 8, dpi = 600, unit = "i
 
 dt2 <- dplyr::filter(dt, Location == "MTL_South" | Location == "MTL_North")
 
-dt_pca2 <- dplyr::select(dt2, Cocaine:Codeine, Location)
+row.names(dt2) <- paste(dt2$Date, dt2$Location, sep = "_")
+
+dt_pca2 <- dplyr::select(dt2, Alcohol:Methamphetamine, Location)
 
 wbe.pca2 <- prcomp(dt_pca2[, -length(dt_pca)],  scale = TRUE)
 
@@ -43,3 +45,7 @@ fviz_pca_biplot(wbe.pca2, label="var", habillage=dt_pca2$Location,
         labs(fill = "Location", color = "Location", shape = "Location")
 
 ggsave("MTL_PCA.png", height = 8, width = 8, dpi = 600, unit = "in")
+
+fviz_pca_ind(wbe.pca2, select.ind = list(contrib = 15), repel = T)
+
+ggsave("MTL_PCA_contributers.png", height = 8, width = 8, dpi = 600, unit = "in")
